@@ -18,6 +18,9 @@
     /* COLORS */
     --backgroundgradient: linear-gradient(to bottom, #21599B, #1B3D70);
 
+    --color-white: #fff;
+    --color-links: #42ddf7;
+
     /* FONTS */
 
     /* SIZINGS */
@@ -25,11 +28,11 @@
     --fontsize-h2: 20px; /* Semibold weight */
     --fontsize-h3: 12px; /* Regular weight */
     --fontsize-storytitle: 12px; /* Semibold weight */
-    --fontsize-storydescr: 8px; /* Regular weight */
+    --fontsize-storydescr: 12px; /* Regular weight */
 
     /* WEIGHTS */
-    --font-weight-regular: 400;
-    --font-weight-semibold: 600;
+    --fontweight-regular: 400;
+    --fontweight-semibold: 600;
 }
 
 /* CSS RESET */
@@ -39,9 +42,69 @@
     box-sizing: border-box;   
 }
 
+/* ----------- */
+/* PAGE STYLES */
+/* ----------- */
+
 html, body {
     font-family: 'Poppins';
     font-weight: var(--font-weight-regular);
     height: 100dvh;
 }
 
+body {
+    background-image: var(--backgroundgradient);
+    color: var(--color-white);
+
+    padding: 2vh 5vw;
+}
+
+/* ---------- */
+/* TYPOGRAPHY */
+/* ---------- */
+
+h1, h2, h3 {
+    font-weight: var(--fontweight-semibold);
+}
+
+h1 {
+    /* Font */
+    font-size: var(--fontsize-h1);
+
+    /* Positioning */
+    text-align: center;
+}
+
+h2 {
+    /* Font */
+    font-size: var(--fontsize-h2);
+}
+
+h3 {
+    /* Font */
+    font-size: var(--fontsize-h3);
+}
+
+p {
+    /* Font */
+    font-size: var(--fontsize-storydescr);
+    font-weight: var(--fontweight-regular);
+
+    /* Positioning */
+}
+
+/* ------------------------------ */
+/* HTML ELEMENTS (LINKS, BUTTONS) */
+/* ------------------------------ */
+
+p a {
+    /* Font */
+    font-size: var(--fontsize-storydescr);
+    font-weight: var(--fontweight-regular);
+
+    /* Color */
+    color: var(--color-links);
+
+    /* Transitions and animations */
+    cursor: pointer;
+}
