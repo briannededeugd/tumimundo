@@ -1,0 +1,42 @@
+:root {
+    /* COLORS */
+    --backgroundgradient: linear-gradient(to bottom, #21599B, #1B3D70);
+
+    /* FONTS */
+
+    /* SIZINGS */
+    --fontsize-h1: 28px; /* Semibold weight */
+    --fontsize-h2: 20px; /* Semibold weight */
+    --fontsize-h3: 12px; /* Regular weight */
+    --fontsize-storytitle: 12px; /* Semibold weight */
+    --fontsize-storydescr: 8px; /* Regular weight */
+
+    /* WEIGHTS */
+    @font-face {
+        font-family: 'Poppins';
+        src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Poppins Semibold';
+        src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+        font-style: normal;
+    }
+
+    --fontweight-regular: 'Poppins'; 
+    --fontweight-semibold: 'Poppins Semibold'; 
+}
+
+/* CSS RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+}
+
+html, body {
+    font-family: var(--fontweight-regular);
+    height: 100dvh;
+}
+
