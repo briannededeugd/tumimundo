@@ -14,25 +14,49 @@
     font-style: normal;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 :root {
     /* COLORS */
     --backgroundgradient: linear-gradient(to bottom, #21599B, #1B3D70);
 
     --color-white: #fff;
+    --color-black: #000;
     --color-links: #42ddf7;
+    --color-inlinebutton: #434b75;
+
+    --color-accent-blue: #599ae7;
+    --color-accent-green: #1cb854;
+    --color-accent-lilac: #707fcf;
+    --color-accent-turqoise: #37c6ab;
 
     /* FONTS */
+    --font-materialsymbols: "Material Symbols Outlined";
+    --font-main: "Poppins";
 
     /* SIZINGS */
     --fontsize-h1: 28px; /* Semibold weight */
     --fontsize-h2: 20px; /* Semibold weight */
-    --fontsize-h3: 12px; /* Regular weight */
+    --fontsize-h3: 16px; /* Regular weight */
     --fontsize-storytitle: 12px; /* Semibold weight */
     --fontsize-storydescr: 12px; /* Regular weight */
+    --fontsize-buttons: 11px;
 
     /* WEIGHTS */
     --fontweight-regular: 400;
     --fontweight-semibold: 600;
+
+    /* BORDER-RADIUS */
+    --borderradius: 8px;
+
+    /* TRANSITIONS */
+    --transition-standard: all .3s ease-in-out;
 }
 
 /* CSS RESET */
@@ -83,6 +107,7 @@ h2 {
 h3 {
     /* Font */
     font-size: var(--fontsize-h3);
+    font-weight: var(--fontweight-regular);
 }
 
 p {
@@ -107,4 +132,88 @@ p a {
 
     /* Transitions and animations */
     cursor: pointer;
+}
+
+/* -------------------- */
+/* INFORMATION SECTIONS */
+/* -------------------- */
+
+/* privacy statement */
+
+details {
+    border-radius: var(--borderradius);
+    margin: 1em 0;
+    
+    summary {
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: .5em;
+        background-color: var(--color-accent-blue);
+        border-radius: var(--borderradius);
+
+        p {
+            &::after {
+                content: "keyboard_arrow_down";
+                
+                font-family: var(--font-materialsymbols);
+                font-size: var(--fontsize-h3);
+
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: .25em;
+
+                transition: var(--transition-standard);
+            }
+        }
+    }
+
+    section {
+        background-color: var(--color-white);
+        color: var(--color-black);
+        border-radius: 0 0 var(--borderradius) var(--borderradius);
+        padding: 1em;
+
+        p {
+            padding: .25em 0 1em;
+        }
+
+        a {
+            background-color: var(--color-inlinebutton);
+            font-size: var(--fontsize-buttons);
+            padding: .5em;
+            border-radius: var(--borderradius);
+            color: var(--color-white);
+            text-decoration: none;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+
+            color: var(--color-inlinebutton);
+            font-family: var(--font-main);
+            font-size: var(--fontsize-storydescr);
+
+            &::after {
+                content: "keyboard_arrow_up";
+                font-family: var(--font-materialsymbols);
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &[open] {
+        summary {
+            border-radius: var(--borderradius) var(--borderradius) 0 0;
+
+            p {
+                &::after {
+                    rotate: 180deg;
+                }
+            }
+        }
+    }
 }
