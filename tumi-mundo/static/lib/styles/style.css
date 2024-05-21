@@ -1,3 +1,19 @@
+/* Regular Weight */
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* SemiBold Weight */
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
 :root {
     /* COLORS */
     --backgroundgradient: linear-gradient(to bottom, #21599B, #1B3D70);
@@ -12,20 +28,8 @@
     --fontsize-storydescr: 8px; /* Regular weight */
 
     /* WEIGHTS */
-    @font-face {
-        font-family: 'Poppins';
-        src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'Poppins Semibold';
-        src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
-        font-style: normal;
-    }
-
-    --fontweight-regular: 'Poppins'; 
-    --fontweight-semibold: 'Poppins Semibold'; 
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
 }
 
 /* CSS RESET */
@@ -36,7 +40,8 @@
 }
 
 html, body {
-    font-family: var(--fontweight-regular);
+    font-family: 'Poppins';
+    font-weight: var(--font-weight-regular);
     height: 100dvh;
 }
 
