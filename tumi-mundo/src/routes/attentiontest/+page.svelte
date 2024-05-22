@@ -18,7 +18,7 @@
 	</section>
 	<hr />
 	<p>
-		<center><input type="button" value="Start webcam feed" onclick="button_callback()" /></center>
+		<center><input type="button" value="Start test" onclick="button_callback()" /></center>
 	</p>
 
 	<script>
@@ -462,6 +462,7 @@
 		 *               PICO INLINE JS
 		 *=============================================**/
 		var initialized = false;
+
 		function button_callback() {
 			if (initialized) return;
 
@@ -503,6 +504,8 @@
 				return gray;
 			}
 
+			var prevFaceDetected = false; // Add this variable to store the previous detection status
+
 			var processfn = function (video, dt) {
 				// Create an off-screen canvas for processing the video frame
 				var canvas = document.createElement('canvas');
@@ -538,10 +541,15 @@
 					}
 				}
 
-				if (faceDetected) {
-					// console.log('Baby started paying attention');
-				} else {
-					// console.log('Baby stopped paying attention');
+				// TIMER START / TIMER STOP
+				if (faceDetected !== prevFaceDetected) {
+					// Check if the detection status has changed
+					if (faceDetected) {
+						console.log('Baby started paying attention');
+					} else {
+						console.log('Baby stopped paying attention');
+					}
+					prevFaceDetected = faceDetected; // Update the previous detection status
 				}
 			};
 
