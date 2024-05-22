@@ -24,10 +24,10 @@
 
 :root {
     /* COLORS */
-    --backgroundgradient: linear-gradient(to bottom, #21599B, #1B3D70);
+    --background-gradient: linear-gradient(to bottom, #21599B, #1B3D70);
 
-    --color-white: #fff;
-    --color-black: #000;
+    --color-text: #fff;
+    --color-darktext: #000;
     --color-links: #42ddf7;
     --color-inlinebutton: #434b75;
 
@@ -41,19 +41,19 @@
     --font-main: "Poppins";
 
     /* SIZINGS */
-    --fontsize-h1: 28px; /* Semibold weight */
-    --fontsize-h2: 20px; /* Semibold weight */
-    --fontsize-h3: 16px; /* Regular weight */
-    --fontsize-storytitle: 12px; /* Semibold weight */
-    --fontsize-storydescr: 12px; /* Regular weight */
-    --fontsize-buttons: 11px;
+    --font-size-h1: 28px; /* Semibold weight */
+    --font-size-h2: 20px; /* Semibold weight */
+    --font-size-h3: 16px; /* Regular weight */
+    --font-size-storytitle: 12px; /* Semibold weight */
+    --font-size-storydescr: 12px; /* Regular weight */
+    --font-size-buttons: 11px; /* Inline buttons, subtle buttons etc. */
 
     /* WEIGHTS */
-    --fontweight-regular: 400;
-    --fontweight-semibold: 600;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
 
     /* BORDER-RADIUS */
-    --borderradius: 8px;
+    --border-radius: 8px;
 
     /* TRANSITIONS */
     --transition-standard: all .3s ease-in-out;
@@ -77,8 +77,8 @@ html, body {
 }
 
 body {
-    background-image: var(--backgroundgradient);
-    color: var(--color-white);
+    background-image: var(--background-gradient);
+    color: var(--color-text);
 
     padding: 2vh 5vw;
 }
@@ -88,12 +88,12 @@ body {
 /* ---------- */
 
 h1, h2, h3 {
-    font-weight: var(--fontweight-semibold);
+    font-weight: var(--font-weight-semibold);
 }
 
 h1 {
     /* Font */
-    font-size: var(--fontsize-h1);
+    font-size: var(--font-size-h1);
 
     /* Positioning */
     text-align: center;
@@ -101,19 +101,19 @@ h1 {
 
 h2 {
     /* Font */
-    font-size: var(--fontsize-h2);
+    font-size: var(--font-size-h2);
 }
 
 h3 {
     /* Font */
-    font-size: var(--fontsize-h3);
-    font-weight: var(--fontweight-regular);
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-regular);
 }
 
 p {
     /* Font */
-    font-size: var(--fontsize-storydescr);
-    font-weight: var(--fontweight-regular);
+    font-size: var(--font-size-storydescr);
+    font-weight: var(--font-weight-regular);
 
     /* Positioning */
 }
@@ -124,8 +124,8 @@ p {
 
 p a {
     /* Font */
-    font-size: var(--fontsize-storydescr);
-    font-weight: var(--fontweight-regular);
+    font-size: var(--font-size-storydescr);
+    font-weight: var(--font-weight-regular);
 
     /* Color */
     color: var(--color-links);
@@ -141,7 +141,7 @@ p a {
 /* privacy statement */
 
 details {
-    border-radius: var(--borderradius);
+    border-radius: var(--border-radius);
     margin: 1em 0;
     
     summary {
@@ -151,14 +151,14 @@ details {
         align-items: center;
         padding: .5em;
         background-color: var(--color-accent-blue);
-        border-radius: var(--borderradius);
+        border-radius: var(--border-radius);
 
         p {
             &::after {
                 content: "keyboard_arrow_down";
                 
                 font-family: var(--font-materialsymbols);
-                font-size: var(--fontsize-h3);
+                font-size: var(--font-size-h3);
 
                 display: inline-block;
                 vertical-align: middle;
@@ -170,9 +170,9 @@ details {
     }
 
     section {
-        background-color: var(--color-white);
-        color: var(--color-black);
-        border-radius: 0 0 var(--borderradius) var(--borderradius);
+        background-color: var(--color-text);
+        color: var(--color-darktext);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
         padding: 1em;
 
         p {
@@ -181,10 +181,10 @@ details {
 
         a {
             background-color: var(--color-inlinebutton);
-            font-size: var(--fontsize-buttons);
+            font-size: var(--font-size-buttons);
             padding: .5em;
-            border-radius: var(--borderradius);
-            color: var(--color-white);
+            border-radius: var(--border-radius);
+            color: var(--color-text);
             text-decoration: none;
         }
 
@@ -194,7 +194,7 @@ details {
 
             color: var(--color-inlinebutton);
             font-family: var(--font-main);
-            font-size: var(--fontsize-storydescr);
+            font-size: var(--font-size-storydescr);
 
             &::after {
                 content: "keyboard_arrow_up";
@@ -207,7 +207,7 @@ details {
 
     &[open] {
         summary {
-            border-radius: var(--borderradius) var(--borderradius) 0 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
 
             p {
                 &::after {
