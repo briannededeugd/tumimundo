@@ -8,7 +8,7 @@
 			detailsopen = true;
 		} else {
 			expandButton.textContent = 'Expand';
-            detailsopen = false;
+			detailsopen = false;
 		}
 	}
 </script>
@@ -40,10 +40,7 @@
 	</section>
 </details>
 
-<h2>
-    6-12 months
-</h2>
-
+<h2>6-12 months</h2>
 
 <!-- Attention span test -->
 <section class="attention-span">
@@ -53,11 +50,13 @@
 	</div>
 
 	<p><strong>How it works</strong></p>
-	<p>The reason to do this test is to measure how long the attention span is for the learned language(s). 
-		Before you start the test there will be a few short steps you will have to take before you can start the test. This will be explained to you through a few pictures. 
+	<p>
+		The reason to do this test is to measure how long the attention span is for the learned
+		language(s). Before you start the test there will be a few short steps you will have to take
+		before you can start the test. This will be explained to you through a few pictures.
 	</p>
 	<div class="section-button">
-		<a href="/">Start test</a>
+		<a href="/customization">Start test</a>
 	</div>
 </section>
 
@@ -69,17 +68,19 @@
 	</div>
 
 	<p><strong>How it works</strong></p>
-	<p>This test is provided through the University of Leiden. The results of these tests will be shared with the researchers directly. This is optional and not part of the method or the lessons. You will still receive results after the test. This is only for research purposes. How many of the words heard during the stories stay around? 
+	<p>
+		This test is provided through the University of Leiden. The results of these tests will be
+		shared with the researchers directly. This is optional and not part of the method or the
+		lessons. You will still receive results after the test. This is only for research purposes. How
+		many of the words heard during the stories stay around?
 	</p>
 	<div class="section-button">
-		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden">
+		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
 		<a href="/">Start test</a>
 	</div>
 </section>
 
-<h2>
-    1-2 years
-</h2>
+<h2>1-2 years</h2>
 
 <!-- The first words -->
 <section class="first-words">
@@ -89,10 +90,14 @@
 	</div>
 
 	<p><strong>How it works</strong></p>
-	<p>This test is provided through the University of Leiden. The results of these tests will be shared with the researchers directly. This is optional and not part of the method or the lessons. You will still receive results after the test. This is only for research purposes. How many of the words heard during the stories stay around? 
+	<p>
+		This test is provided through the University of Leiden. The results of these tests will be
+		shared with the researchers directly. This is optional and not part of the method or the
+		lessons. You will still receive results after the test. This is only for research purposes. How
+		many of the words heard during the stories stay around?
 	</p>
 	<div class="section-button">
-		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden">
+		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
 		<a href="/">Start test</a>
 	</div>
 </section>
@@ -104,10 +109,14 @@
 	</div>
 
 	<p><strong>How it works</strong></p>
-	<p>This test is provided through the University of Leiden. The results of these tests will be shared with the researchers directly. This is optional and not part of the method or the lessons. You will still receive results after the test. This is only for research purposes. How many of the words heard during the stories stay around? 
+	<p>
+		This test is provided through the University of Leiden. The results of these tests will be
+		shared with the researchers directly. This is optional and not part of the method or the
+		lessons. You will still receive results after the test. This is only for research purposes. How
+		many of the words heard during the stories stay around?
 	</p>
 	<div class="section-button">
-		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden">
+		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
 		<a href="/">Start test</a>
 	</div>
 </section>
