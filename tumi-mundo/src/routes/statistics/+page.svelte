@@ -2,13 +2,41 @@
 	<link rel="stylesheet" href="../lib/styles/style.css" />
 </svelte:head>
 
-    <h1>Statistics</h1>
+<script>
+    import { onMount, onDestroy } from 'svelte';
 
+  onMount(() => {
+    document.body.classList.add('statistics');
+    return () => {
+      document.body.classList.remove('statistics');
+    };
+  });
+
+  let storiesDataArray = [
+    {'stories read': 12},
+    {'minutes spent listening': 136},
+    {'tests taken': 8},
+    {'is your favorite moment': 'Morning'},
+    {'is your favorite speaker': 'Thuan-Hoa'}
+  ];
+
+// button switch
+function globalStats() {
+    const button = document.getElementById('children-global-stats-button');
+    button.classList.toggle('active');
+}
+
+</script>
+
+<h1>Statistics</h1>
+
+<section>
+    <h2>Today's activities</h2>
     <section>
-        <h2>Today's activities</h2>
-        <div class="activities process-bar">
+        <div class="activities">
+            <div class="activity-bar"></div>
             <h3>Today's listening</h3>
-            <p id="time">00.00</p>
+            <p id="activity-time">00.00</p>
             <p>of your 5-minute goal</p>
         </div>
 
@@ -16,39 +44,189 @@
             <a href="/">Change goal</a>
             <a href="/">Go to stories</a>
         </div>
-
     </section>
+</section>
 
+<section>
+    <h2>Total activities</h2>
     <section>
-        <h2>Total activities</h2>
-        <img src="/" alt="Raymond is sitting on the couch">
-
-        <section>
-            <h3>You have done a lot of learning!</h3>
+        <!-- TODO: Add  buddy -->
+        <img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="TO BE ADDED">
+        <div class="learning-stats">
+            <h2>You have done a lot of learning!</h2>
             <p>Here you can see everything you have done since you started learning with TuMi Mundo. 
-    I encourage you to keep going and do your best!</p>
-        </section>
-
-        <section>
-            <h3>The attention span test</h3>
-            <p>A test for the first phase of the method. Tap on the points to see more in depth numbers.</p>
-
-            <!-- graphic -->
-
-            <label>
-                See how other children are performing
-                <input type="checkbox" name="checkbox" value="value">
-            </label>
-        </section>
-
-        <section>
-            <h3>Stories</h3>
-            <ul>
-                <li>
-                    
-                    <p>Stories read</p>
-                </li>
-            </ul>
-        </section>
-
+            I encourage you to keep going and do your best!</p>
+        </div>
     </section>
+    
+</section>
+
+<section>
+    <h2>The attention span test</h2>
+    <p>A test for the first phase of the method. Tap on the points to see more in depth numbers.</p>
+
+    <!-- graphic -->
+
+    <div class="children-global-stats">
+        <p>See how other children are performing</p>
+        <button 
+			id="children-global-stats-button" 
+			class="children-global-stats-button" 
+			on:click={globalStats}>
+		</button>    
+    </div>
+
+</section>
+
+<section>
+    <h2>Stories</h2>
+    
+    <ul class="stories_container">
+        {#each storiesDataArray as storyData}
+            {#each Object.entries(storyData) as [key,value]}
+            <li class="story_item">
+                <div class="story_item_data">{value}</div>
+                <p>{key}</p>
+            </li>
+            {/each}
+        {/each}
+    </ul>
+</section>
+
+<section>
+    <h2>The roadmap</h2>
+    <p>Here you can see how far you are in the method!</p>
+    
+    <ol>
+        <li>Listening method</li>
+        <li>The first words</li>
+        <li>People and animals</li>
+        <li>Sentences</li>
+        <li>Reading and writing</li>
+    </ol>
+</section>
+
+<style>
+    :root {
+        /* COLORS */
+        --color-statistics-bg-light:#219B9B;
+        --color-statistics-bg-dark:#1B7070;
+
+        --story-item-background: #0B8FAC;
+        --statistics-switch-background-color: #1CB854;
+
+        --statistics-background-gradient: linear-gradient(to bottom, var(--color-statistics-bg-light), var(--color-statistics-bg-dark)); 
+
+        --color-button-goal: #27b16f;
+        --color-button-stories: #9264F4;
+
+    }
+
+    :global(body.statistics) {
+        background:var(--statistics-background-gradient);
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .section-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+        gap: 2rem;
+		padding: 1em;
+
+		& a {
+			background-color: var(--color-inlinebutton);
+			font-size: var(--font-size-buttons);
+			border-radius: var(--border-radius);
+			color: var(--color-text);
+            box-shadow: var(--box-shadow);
+
+			padding: .75em 1rem;
+			text-decoration: none;            
+		}
+	}
+
+    a:first-of-type {
+        background-color: var(--color-button-goal);
+    }
+
+    a:last-of-type {
+        background-color: var(--color-button-stories);
+    }
+
+    .stories_container {
+        display: flex;
+        flex-direction: column;
+        gap: .75em;
+
+        & .story_item {
+            display: flex;
+            align-items: center;
+            gap: .25em;
+
+            & .story_item_data {
+                padding: .25em .5em;
+                background-color: var(--story-item-background);
+                box-shadow: var(--box-shadow);
+                border-radius: 10px;
+            }
+        }
+    }
+    
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        & > section {
+            align-items: center;
+        }
+    }
+
+    .learning-stats h2 {
+        padding-bottom: .5rem;
+    }
+    
+
+    .children-global-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        & .children-global-stats-button {
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border: none;
+            border-radius: 1.2em;
+            cursor: pointer;
+            position: relative;
+
+                &::after {
+                content: '';
+                position: absolute;
+                width: 1.8em;
+                height: 1.8em;
+                background-color: white;
+                border-radius: 50%;
+                top: 0.21em;
+                left: 0.2em;
+                transition: transform 0.3s;
+                transform: translateX(2.3em);
+            }
+        }
+
+        & .active {
+            background-color: var(--statistics-switch-background-color);
+
+            &::after {
+                transform: translateX(0);
+            }
+        }
+    }
+
+</style>
+
+
