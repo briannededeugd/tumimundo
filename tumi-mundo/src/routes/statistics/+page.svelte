@@ -71,17 +71,5 @@
     </section>
 
 
-    
 
 
-
-<style>
-    .stories_container {
-        display: flex;
-        flex-direction: column;      
-        
-        & li {
-            display: flex;
-        }
-    }
-</style>
