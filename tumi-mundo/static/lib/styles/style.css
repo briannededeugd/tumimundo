@@ -24,7 +24,6 @@
 
 :root {
     /* COLORS */
-    --background-gradient: linear-gradient(to bottom, #21599B, #1B3D70);
 
     --color-text: #fff;
     --color-darktext: #000;
@@ -35,6 +34,11 @@
     --color-accent-green: #1cb854;
     --color-accent-lilac: #707fcf;
     --color-accent-turqoise: #37c6ab;
+
+    --color-bg-light: #21599B;
+    --color-bg-dark: #1b3d70;
+
+    --background-gradient: linear-gradient(to bottom, var(--color-bg-light), var(--color-bg-dark));
 
     /* FONTS */
     --font-materialsymbols: "Material Symbols Outlined";
@@ -47,6 +51,8 @@
     --font-size-storytitle: 12px; /* Semibold weight */
     --font-size-storydescr: 12px; /* Regular weight */
     --font-size-buttons: 11px; /* Inline buttons, subtle buttons etc. */
+    --font-size-icon: 150px;
+    --font-size-iconlabel: 80px;
 
     /* WEIGHTS */
     --font-weight-regular: 400;
@@ -220,8 +226,7 @@ details {
 
 /* attention span test */
 
-
-body div > section {
+.information-block {
         background-color: var(--color-text);
         color: var(--color-darktext);
         border-radius: var(--border-radius);
@@ -286,7 +291,7 @@ body div > section {
 }
 
 
-body div > .word-recognition, body div > .first-words {
+.word-recognition, .first-words {
 
     .section-button {
         display: flex;
@@ -294,14 +299,31 @@ body div > .word-recognition, body div > .first-words {
     }
 }
 
-body div > .word-recognition {
+.word-recognition {
     .header-container {
         background-color: var(--color-accent-lilac);
     }
 }
 
-body div > .first-words {
+.first-words {
     .header-container {
         background-color: var(--color-accent-turqoise);
+    }
+}
+
+/* CUSTOMIZATION */
+
+.carousel {
+    text-align: center;
+
+    .carousel-main {
+        .icon {
+            font-size: var(--font-size-icon);
+        }
+
+        .icon-title {
+            font-size: var(--font-size-iconlabel);
+            margin: -1em 0 1em;
+        }
     }
 }
