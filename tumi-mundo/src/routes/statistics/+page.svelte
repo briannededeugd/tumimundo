@@ -13,12 +13,19 @@
   });
 
   let storiesDataArray = [
-    {},
-    {},
-    {},
-    {},
-    {}
-  ]
+    {'stories read': 12},
+    {'minutes spent listening': 136},
+    {'tests taken': 8},
+    {'is your favorite moment': 'Morning'},
+    {'is your favorite speaker': 'Thuan-Hoa'}
+  ];
+
+// button switch
+function globalStats() {
+    const button = document.getElementById('children-global-stats-button');
+    button.classList.toggle('active');
+}
+
 </script>
 
 <h1>Statistics</h1>
@@ -45,7 +52,7 @@
     <section>
         <!-- TODO: Add  buddy -->
         <img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="TO BE ADDED">
-        <div>
+        <div class="learning-stats">
             <h2>You have done a lot of learning!</h2>
             <p>Here you can see everything you have done since you started learning with TuMi Mundo. 
             I encourage you to keep going and do your best!</p>
@@ -60,36 +67,29 @@
 
     <!-- graphic -->
 
-    <label>
-        See how other children are performing
-        <input type="checkbox" name="checkbox" value="value">
-    </label>
+    <div class="children-global-stats">
+        <p>See how other children are performing</p>
+        <button 
+			id="children-global-stats-button" 
+			class="children-global-stats-button" 
+			on:click={globalStats}>
+		</button>    
+    </div>
+
 </section>
 
 <section>
     <h2>Stories</h2>
     
     <ul class="stories_container">
-        <li class="story_item">
-            <div class="story_item_data">12</div>
-            <p>stories read</p>
-        </li>
-        <li class="story_item">
-            <div class="story_item_data">136</div>
-            <p>minutes spent listening</p>
-        </li>
-        <li class="story_item">
-            <div class="story_item_data">8</div>
-            <p>tests taken</p>
-        </li>
-        <li class="story_item">
-            <div class="story_item_data">Morning</div>
-            <p>is your favorite moment</p>
-        </li>
-        <li class="story_item">
-            <div class="story_item_data">Thuan-Hoa</div>
-            <p>is your favorite speaker</p>
-        </li>
+        {#each storiesDataArray as storyData}
+            {#each Object.entries(storyData) as [key,value]}
+            <li class="story_item">
+                <div class="story_item_data">{value}</div>
+                <p>{key}</p>
+            </li>
+            {/each}
+        {/each}
     </ul>
 </section>
 
@@ -113,12 +113,47 @@
         --color-statistics-bg-dark:#1B7070;
 
         --story-item-background: #0B8FAC;
+        --statistics-switch-background-color: #1CB854;
 
         --statistics-background-gradient: linear-gradient(to bottom, var(--color-statistics-bg-light), var(--color-statistics-bg-dark)); 
+
+        --color-button-goal: #27b16f;
+        --color-button-stories: #9264F4;
+
     }
 
     :global(body.statistics) {
         background:var(--statistics-background-gradient);
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .section-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+        gap: 2rem;
+		padding: 1em;
+
+		& a {
+			background-color: var(--color-inlinebutton);
+			font-size: var(--font-size-buttons);
+			border-radius: var(--border-radius);
+			color: var(--color-text);
+            box-shadow: var(--box-shadow);
+
+			padding: .75em 1rem;
+			text-decoration: none;            
+		}
+	}
+
+    a:first-of-type {
+        background-color: var(--color-button-goal);
+    }
+
+    a:last-of-type {
+        background-color: var(--color-button-stories);
     }
 
     .stories_container {
@@ -134,18 +169,64 @@
             & .story_item_data {
                 padding: .25em .5em;
                 background-color: var(--story-item-background);
-                box-shadow: 0px 5px 3px var(--color-statistics-bg-dark);
+                box-shadow: var(--box-shadow);
                 border-radius: 10px;
             }
         }
     }
-
-    section > section {
+    
+    section {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        background-color: red;
+        gap: 1rem;
+
+        & > section {
+            align-items: center;
+        }
     }
+
+    .learning-stats h2 {
+        padding-bottom: .5rem;
+    }
+    
+
+    .children-global-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        & .children-global-stats-button {
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border: none;
+            border-radius: 1.2em;
+            cursor: pointer;
+            position: relative;
+
+                &::after {
+                content: '';
+                position: absolute;
+                width: 1.8em;
+                height: 1.8em;
+                background-color: white;
+                border-radius: 50%;
+                top: 0.21em;
+                left: 0.2em;
+                transition: transform 0.3s;
+                transform: translateX(2.3em);
+            }
+        }
+
+        & .active {
+            background-color: var(--statistics-switch-background-color);
+
+            &::after {
+                transform: translateX(0);
+            }
+        }
+    }
+
 </style>
 
 

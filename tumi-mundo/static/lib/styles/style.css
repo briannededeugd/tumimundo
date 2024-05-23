@@ -152,6 +152,10 @@ p a {
 	cursor: pointer;
 }
 
+ul li {
+    list-style: none;
+}
+
 /* -------------------- */
 /* INFORMATION SECTIONS */
 /* -------------------- */
