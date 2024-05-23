@@ -463,6 +463,31 @@
 		 *=============================================**/
 		var initialized = false;
 
+		var elapsedTime = 0; // elapsed time in milliseconds
+		var seconds = 0;
+
+		var random;
+		var prevRandom;
+		var timer;
+
+		var arrLookAway = [];
+		var arrLookAtScreen = [];
+
+		function formatTime() {
+			seconds = Math.floor(elapsedTime / 1000);
+		}
+
+		// Function to start a timer
+		function startTimer() {
+			let startTime = Date.now();
+
+			timer = setInterval(() => {
+				let now = Date.now();
+				elapsedTime = now - startTime;
+				formatTime();
+			}, 1000);
+		}
+
 		function button_callback() {
 			if (initialized) return;
 
@@ -545,8 +570,12 @@
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
 					if (faceDetected) {
+						arrLookAway.push(seconds);
+						console.log(arrLookAway);
 						console.log('Baby started paying attention');
 					} else {
+						arrLookAtScreen.push(seconds);
+						console.log(arrLookAtScreen);
 						console.log('Baby stopped paying attention');
 					}
 					prevFaceDetected = faceDetected; // Update the previous detection status
@@ -558,5 +587,6 @@
 
 			initialized = true;
 		}
+		startTimer();
 	</script>
 </body>
