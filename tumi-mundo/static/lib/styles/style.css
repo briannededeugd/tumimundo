@@ -14,22 +14,49 @@
     font-style: normal;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 :root {
     /* COLORS */
-    --backgroundgradient: linear-gradient(to bottom, #21599B, #1B3D70);
+    --background-gradient: linear-gradient(to bottom, #21599B, #1B3D70);
+
+    --color-text: #fff;
+    --color-darktext: #000;
+    --color-links: #42ddf7;
+    --color-inlinebutton: #434b75;
+
+    --color-accent-blue: #599ae7;
+    --color-accent-green: #1cb854;
+    --color-accent-lilac: #707fcf;
+    --color-accent-turqoise: #37c6ab;
 
     /* FONTS */
+    --font-materialsymbols: "Material Symbols Outlined";
+    --font-main: "Poppins";
 
     /* SIZINGS */
-    --fontsize-h1: 28px; /* Semibold weight */
-    --fontsize-h2: 20px; /* Semibold weight */
-    --fontsize-h3: 12px; /* Regular weight */
-    --fontsize-storytitle: 12px; /* Semibold weight */
-    --fontsize-storydescr: 8px; /* Regular weight */
+    --font-size-h1: 28px; /* Semibold weight */
+    --font-size-h2: 20px; /* Semibold weight */
+    --font-size-h3: 16px; /* Regular weight */
+    --font-size-storytitle: 12px; /* Semibold weight */
+    --font-size-storydescr: 12px; /* Regular weight */
+    --font-size-buttons: 11px; /* Inline buttons, subtle buttons etc. */
 
     /* WEIGHTS */
     --font-weight-regular: 400;
     --font-weight-semibold: 600;
+
+    /* BORDER-RADIUS */
+    --border-radius: 8px;
+
+    /* TRANSITIONS */
+    --transition-standard: all .3s ease-in-out;
 }
 
 /* CSS RESET */
@@ -39,8 +66,242 @@
 	box-sizing: border-box;
 }
 
+/* ----------- */
+/* PAGE STYLES */
+/* ----------- */
+
 html, body {
     font-family: 'Poppins';
     font-weight: var(--font-weight-regular);
     height: 100dvh;
+}
+
+body {
+    background-image: var(--background-gradient);
+    color: var(--color-text);
+
+    padding: 2vh 5vw;
+}
+
+/* ---------- */
+/* TYPOGRAPHY */
+/* ---------- */
+
+h1, h2, h3 {
+    font-weight: var(--font-weight-semibold);
+}
+
+h1 {
+    /* Font */
+    font-size: var(--font-size-h1);
+
+    /* Positioning */
+    text-align: center;
+}
+
+h2 {
+    /* Font */
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    /* Font */
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-regular);
+}
+
+p {
+    /* Font */
+    font-size: var(--font-size-storydescr);
+    font-weight: var(--font-weight-regular);
+
+    /* Positioning */
+}
+
+/* ------------------------------ */
+/* HTML ELEMENTS (LINKS, BUTTONS) */
+/* ------------------------------ */
+
+p a {
+    /* Font */
+    font-size: var(--font-size-storydescr);
+    font-weight: var(--font-weight-regular);
+
+    /* Color */
+    color: var(--color-links);
+
+    /* Transitions and animations */
+    cursor: pointer;
+}
+
+/* -------------------- */
+/* INFORMATION SECTIONS */
+/* -------------------- */
+
+/* privacy statement */
+
+details {
+    border-radius: var(--border-radius);
+    margin: 1em 0;
+    
+    summary {
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: .5em;
+        background-color: var(--color-accent-blue);
+        border-radius: var(--border-radius);
+
+        p {
+            &::after {
+                content: "keyboard_arrow_down";
+                
+                font-family: var(--font-materialsymbols);
+                font-size: var(--font-size-h3);
+
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: .25em;
+
+                transition: var(--transition-standard);
+            }
+        }
+    }
+
+    section {
+        background-color: var(--color-text);
+        color: var(--color-darktext);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        padding: 1em;
+
+        p {
+            padding: .25em 0 1em;
+        }
+
+        a {
+            background-color: var(--color-inlinebutton);
+            font-size: var(--font-size-buttons);
+            padding: .5em;
+            border-radius: var(--border-radius);
+            color: var(--color-text);
+            text-decoration: none;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+
+            color: var(--color-inlinebutton);
+            font-family: var(--font-main);
+            font-size: var(--font-size-storydescr);
+
+            &::after {
+                content: "keyboard_arrow_up";
+                font-family: var(--font-materialsymbols);
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &[open] {
+        summary {
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+            p {
+                &::after {
+                    rotate: 180deg;
+                }
+            }
+        }
+    }
+}
+
+/* attention span test */
+
+
+body div > section {
+        background-color: var(--color-text);
+        color: var(--color-darktext);
+        border-radius: var(--border-radius);
+        margin: 1em 0 2em 0;
+
+        p {
+            padding: 1em 1em 0 1em;
+        }
+
+        .section-button {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding: 1em;
+
+            a {
+                background-color: var(--color-inlinebutton);
+                font-size: var(--font-size-buttons);
+                border-radius: var(--border-radius);
+                color: var(--color-text);
+    
+                padding: 0.5em;
+                text-decoration: none;
+            }
+        }
+    
+    
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+    
+            background-color: var(--color-accent-green);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+    
+        h3 {
+            color: var(--color-text);
+            padding: 0.5em;
+            margin: 0;
+        }
+    
+        .time {
+            display:inline-flex;
+            justify-content: end;
+            color: var(--color-text);
+            padding: 0.5em;
+            align-items: center;
+
+            &::before {
+                content: "schedule";
+                font-family: var(--font-materialsymbols);
+                display: inline-block;
+                vertical-align: middle; 
+                padding: 0 .25em 0 0;
+            }
+        }
+
+        img {
+            position: relative;
+            width: 15%;
+        }
+}
+
+
+body div > .word-recognition, body div > .first-words {
+
+    .section-button {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+body div > .word-recognition {
+    .header-container {
+        background-color: var(--color-accent-lilac);
+    }
+}
+
+body div > .first-words {
+    .header-container {
+        background-color: var(--color-accent-turqoise);
+    }
 }
