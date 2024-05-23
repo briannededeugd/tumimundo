@@ -43,7 +43,7 @@
 <h2>6-12 months</h2>
 
 <!-- Attention span test -->
-<section class="attention-span">
+<section class="attention-span information-block">
 	<div class="header-container">
 		<h3>Attention span test</h3>
 		<p class="time">10-15 minutes</p>
@@ -61,7 +61,7 @@
 </section>
 
 <!-- Word recognition -->
-<section class="word-recognition">
+<section class="word-recognition information-block">
 	<div class="header-container">
 		<h3>Word recognition</h3>
 		<p class="time">5-10 minutes</p>
@@ -83,7 +83,7 @@
 <h2>1-2 years</h2>
 
 <!-- The first words -->
-<section class="first-words">
+<section class="first-words information-block">
 	<div class="header-container">
 		<h3>The first words</h3>
 		<p class="time">10-15 minutes</p>
@@ -102,7 +102,7 @@
 	</div>
 </section>
 
-<section class="first-words">
+<section class="first-words information-block">
 	<div class="header-container">
 		<h3>The first words</h3>
 		<p class="time">10-15 minutes</p>

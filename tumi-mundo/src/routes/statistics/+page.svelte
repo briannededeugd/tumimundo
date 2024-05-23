@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <svelte:head>
 	<link rel="stylesheet" href="../lib/styles/style.css" />
 </svelte:head>
@@ -56,6 +52,3 @@
         </section>
 
     </section>
-
-
-
