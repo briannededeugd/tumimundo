@@ -1,4 +1,3 @@
-
 <svelte:head>
 	<link rel="stylesheet" href="../lib/styles/style.css" />
 </svelte:head>
@@ -81,10 +80,8 @@
         display: flex;
         flex-direction: column;      
         
-        &li {
+        & li {
             display: flex;
-            background: red;
         }
     }
-
 </style>
