@@ -11,35 +11,47 @@
       document.body.classList.remove('statistics');
     };
   });
+
+  let storiesDataArray = [
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
 </script>
 
 <h1>Statistics</h1>
 
 <section>
     <h2>Today's activities</h2>
-    <div class="activities">
-        <div class="activity-bar"></div>
-        <h3>Today's listening</h3>
-        <p id="activity-time">00.00</p>
-        <p>of your 5-minute goal</p>
-    </div>
+    <section>
+        <div class="activities">
+            <div class="activity-bar"></div>
+            <h3>Today's listening</h3>
+            <p id="activity-time">00.00</p>
+            <p>of your 5-minute goal</p>
+        </div>
 
-    <div class="section-button">
-        <a href="/">Change goal</a>
-        <a href="/">Go to stories</a>
-    </div>
+        <div class="section-button">
+            <a href="/">Change goal</a>
+            <a href="/">Go to stories</a>
+        </div>
+    </section>
 </section>
 
 <section>
     <h2>Total activities</h2>
-    <!-- TODO: Add  buddy -->
-    <img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="TO BE ADDED">
-
-    <div>
-        <h2>You have done a lot of learning!</h2>
-        <p>Here you can see everything you have done since you started learning with TuMi Mundo. 
-I encourage you to keep going and do your best!</p>
-    </div>
+    <section>
+        <!-- TODO: Add  buddy -->
+        <img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="TO BE ADDED">
+        <div>
+            <h2>You have done a lot of learning!</h2>
+            <p>Here you can see everything you have done since you started learning with TuMi Mundo. 
+            I encourage you to keep going and do your best!</p>
+        </div>
+    </section>
+    
 </section>
 
 <section>
@@ -55,7 +67,6 @@ I encourage you to keep going and do your best!</p>
 </section>
 
 <section>
-  
     <h2>Stories</h2>
     
     <ul class="stories_container">
@@ -77,7 +88,7 @@ I encourage you to keep going and do your best!</p>
         </li>
         <li class="story_item">
             <div class="story_item_data">Thuan-Hoa</div>
-            <p>is your favoirite speaker</p>
+            <p>is your favorite speaker</p>
         </li>
     </ul>
 </section>
@@ -87,7 +98,7 @@ I encourage you to keep going and do your best!</p>
     <p>Here you can see how far you are in the method!</p>
     
     <ol>
-        <li>listening method</li>
+        <li>Listening method</li>
         <li>The first words</li>
         <li>People and animals</li>
         <li>Sentences</li>
@@ -123,10 +134,17 @@ I encourage you to keep going and do your best!</p>
             & .story_item_data {
                 padding: .25em .5em;
                 background-color: var(--story-item-background);
-                box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.336);
+                box-shadow: 0px 5px 3px var(--color-statistics-bg-dark);
                 border-radius: 10px;
             }
         }
+    }
+
+    section > section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: red;
     }
 </style>
 
