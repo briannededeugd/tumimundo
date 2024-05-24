@@ -451,16 +451,3 @@ details {
 	.active::before {
 		transform: translateX(0);
 	}
-
-
-
-
-
-
-    /* ON BIG SCREENS */
-
-    @media (min-width: 400px) {
-        body {
-            padding: 3vh 30vw;
-        }
-    }
