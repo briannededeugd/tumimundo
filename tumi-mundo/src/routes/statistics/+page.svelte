@@ -3,41 +3,47 @@
 </svelte:head>
 
 <script>
-    import { onMount, onDestroy } from 'svelte';
+    import { onMount } from 'svelte';
 
-  onMount(() => {
-    document.body.classList.add('statistics');
-    return () => {
-      document.body.classList.remove('statistics');
-    };
-  });
+    onMount(() => {
+        document.body.classList.add('statistics');
 
-  let storiesDataArray = [
-    {'stories read': 12},
-    {'minutes spent listening': 136},
-    {'tests taken': 8},
-    {'is your favorite moment': 'Morning'},
-    {'is your favorite speaker': 'Thuan-Hoa'}
-  ];
+        return () => {
+            document.body.classList.remove('statistics');
+        };
+        });
 
-// button switch
-function globalStats() {
-    const button = document.getElementById('children-global-stats-button');
-    button.classList.toggle('active');
-}
+        let storiesDataArray = [
+            {'stories read': 12},
+            {'minutes spent listening': 136},
+            {'tests taken': 8},
+            {'is your favorite moment': 'Morning'},
+            {'is your favorite speaker': 'Thuan-Hoa'}
+        ];
+
+        // button switch
+        function globalStats() {
+            const button = document.getElementById('children-global-stats-button');
+            button.classList.toggle('active');
+    }
 
 </script>
 
 <h1>Statistics</h1>
 
-<section>
+<section class="activities-wrapper">
     <h2>Today's activities</h2>
-    <section>
-        <div class="activities">
-            <div class="activity-bar"></div>
+    <section class="activities-data-container">
+        <div class="activities-data">
+            <div class="progress">
+                <div class="barOverflow">
+                    <div class="bar"></div>
+                </div>
+            </div>
+
             <h3>Today's listening</h3>
-            <p id="activity-time">00.00</p>
-            <p>of your 5-minute goal</p>
+            <p id="activity-time">00:00</p>
+            <p>of your <span>5-minute</span> goal</p>
         </div>
 
         <div class="section-button">
@@ -114,6 +120,7 @@ function globalStats() {
 
         --story-item-background: #0B8FAC;
         --statistics-switch-background-color: #1CB854;
+        --progress-bar-unfilled: #70cfae8b;
 
         --statistics-background-gradient: linear-gradient(to bottom, var(--color-statistics-bg-light), var(--color-statistics-bg-dark)); 
 
@@ -129,11 +136,71 @@ function globalStats() {
         gap: 2.5rem;
     }
 
+    .activities-wrapper {
+        & .activities-data-container {
+                & .activities-data {
+                    /* progress bar */
+                    width:100%;
+                    height:100%;
+                    text-align: center;
+                    position: relative;
+                    & .progress {
+                            width:100%;
+                            height: calc(100% + 23px);
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            margin: 4px;
+                            float:left;
+                            text-align: center;
+                            z-index:-1;
+
+                        & .barOverflow {
+                            position: absolute;
+                            top: 50%;
+                            left:50%;
+                            transform: translate(-50%, -50%);
+                            overflow: hidden; 
+                            width: 100%; 
+                            height:100%; /* Half circle (overflow) */
+                            margin-bottom: -14px; /* bring the numbers up */
+
+                            & .bar {
+                                position: absolute;
+                                top: 0; left: 0;
+                                width: 100%; height: 369px; /* full circle! */
+                                border-radius: 50%;
+                                box-sizing: border-box;
+                                border: 7px solid var(--progress-bar-unfilled);
+                                /* border-top-color: var(--progress-bar-unfilled);
+                                border-left-color: var(--progress-bar-unfilled); */
+                            }
+                        }
+
+                    }
+
+                    & h3 {
+                        padding-top: 3em;
+                    }
+
+                    & #activity-time {
+                        font-size: 3rem;
+                    }
+
+                    & span {
+                        font-weight: var(--font-weight-semibold);
+                        text-decoration: underline;
+                    }
+                }
+        }
+    }
+
     .section-button {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-        gap: 2rem;
+        gap: 1.25rem;
 		padding: 1em;
 
 		& a {
@@ -144,17 +211,17 @@ function globalStats() {
             box-shadow: var(--box-shadow);
 
 			padding: .75em 1rem;
-			text-decoration: none;            
+			text-decoration: none;
+            
+            &:first-of-type {
+                background-color: var(--color-button-goal);
+            }
+
+            &:last-of-type {
+                background-color: var(--color-button-stories);
+            }
 		}
 	}
-
-    a:first-of-type {
-        background-color: var(--color-button-goal);
-    }
-
-    a:last-of-type {
-        background-color: var(--color-button-stories);
-    }
 
     .stories_container {
         display: flex;
