@@ -8,19 +8,14 @@
 <body>
 	<hr />
 	<section>
-		<h3>Using pico.js and lploc.js for real-time localization of eye pupils</h3>
-		<p>Click the button below and allow the page to access your webcam.</p>
-		<p>
-			<b>All the processing is done on the client side, i.e., without sending images to a server.</b
-			>
-		</p>
-		<p>More information about the algorithm is available <a href="../">here</a>.</p>
+		<h3>Start testing</h3>
+		<p>Click the button below when ready for testing</p>
 	</section>
 	<hr />
 	<p>
 		<center><input type="button" value="Start test" onclick="button_callback()" /></center>
 	</p>
-
+	<p><center><canvas width="640" height="480"></canvas></center></p>
 	<script>
 		// NOTE: This code is sourced from https://github.com/nenadmarkus/picojs. All credits go to the owner!
 
@@ -516,7 +511,7 @@
 					console.log('* puploc loaded');
 				});
 			});
-
+			var ctx = document.getElementsByTagName('canvas')[0].getContext('2d');
 			function rgba_to_grayscale(rgba, nrows, ncols) {
 				var gray = new Uint8Array(nrows * ncols);
 				for (var r = 0; r < nrows; ++r)
@@ -533,10 +528,10 @@
 
 			var processfn = function (video, dt) {
 				// Create an off-screen canvas for processing the video frame
-				var canvas = document.createElement('canvas');
-				canvas.width = 640;
-				canvas.height = 480;
-				var ctx = canvas.getContext('2d');
+				// var canvas = document.createElement('canvas');
+				// canvas.width = 640;
+				// canvas.height = 480;
+				// var ctx = canvas.getContext('2d');
 
 				ctx.drawImage(video, 0, 0);
 				var rgba = ctx.getImageData(0, 0, 640, 480).data;
@@ -560,7 +555,42 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					if (dets[i][3] > 50.0) {
+					if (dets[i][3] > 700.0) {
+						var r, c, s;
+						//
+						ctx.beginPath();
+						ctx.arc(dets[i][1], dets[i][0], dets[i][2] / 2, 0, 2 * Math.PI, false);
+						ctx.lineWidth = 3;
+						ctx.strokeStyle = 'red';
+						ctx.stroke();
+						//
+						// find the eye pupils for each detected face
+						// starting regions for localization are initialized based on the face bounding box
+						// (parameters are set empirically)
+						// first eye
+						r = dets[i][0] - 0.075 * dets[i][2];
+						c = dets[i][1] - 0.175 * dets[i][2];
+						s = 0.35 * dets[i][2];
+						[r, c] = do_puploc(r, c, s, 63, image);
+						if (r >= 0 && c >= 0) {
+							ctx.beginPath();
+							ctx.arc(c, r, 1, 0, 2 * Math.PI, false);
+							ctx.lineWidth = 3;
+							ctx.strokeStyle = 'red';
+							ctx.stroke();
+						}
+						// second eye
+						r = dets[i][0] - 0.075 * dets[i][2];
+						c = dets[i][1] + 0.175 * dets[i][2];
+						s = 0.35 * dets[i][2];
+						[r, c] = do_puploc(r, c, s, 63, image);
+						if (r >= 0 && c >= 0) {
+							ctx.beginPath();
+							ctx.arc(c, r, 1, 0, 2 * Math.PI, false);
+							ctx.lineWidth = 3;
+							ctx.strokeStyle = 'red';
+							ctx.stroke();
+						}
 						faceDetected = true;
 						break;
 					}
@@ -582,8 +612,8 @@
 				}
 			};
 
-			var ctx = document.createElement('canvas').getContext('2d');
-			new camvas(ctx, processfn);
+			// var ctx = document.createElement('canvas').getContext('2d');
+			var mycamvas = new camvas(ctx, processfn);
 
 			initialized = true;
 		}
