@@ -30,15 +30,17 @@
 	--color-links: #42ddf7;
 	--color-inlinebutton: #434b75;
 
-	--color-accent-blue: #599ae7;
-	--color-accent-green: #1cb854;
-	--color-accent-lilac: #707fcf;
-	--color-accent-turqoise: #37c6ab;
+    --color-accent-blue: #599ae7;
+    --color-accent-green: #1cb854;
+    --color-accent-lilac: #707fcf; 
+    --color-accent-turqoise: #37c6ab;
+    --color-accent-salmon: #fd8c73;
 
 	--color-bg-light: #21599b;
 	--color-bg-dark: #1b3d70;
 
-	--background-gradient: linear-gradient(to bottom, var(--color-bg-light), var(--color-bg-dark));
+    --background-gradient: linear-gradient(to bottom, var(--color-bg-light), var(--color-bg-dark));
+    --background-overlay: linear-gradient(to top, #000000b0, #00000000);
 
 	/* FONTS */
 	--font-materialsymbols: 'Material Symbols Outlined';
@@ -79,11 +81,10 @@
 /* PAGE STYLES */
 /* ----------- */
 
-html,
-body {
-	font-family: 'Poppins';
-	font-weight: var(--font-weight-regular);
-	/* height: 100dvh; */
+html, body {
+    font-family: 'Poppins';
+    font-weight: var(--font-weight-regular);
+    min-height: 100dvh;
 }
 
 body {
@@ -93,9 +94,7 @@ body {
     background-repeat: no-repeat;
 	color: var(--color-text);
 
-	padding: 2vh 5vw;
-
-	
+    padding: 3vh 5vw;
 }
 
 
@@ -141,20 +140,48 @@ p {
 /* ------------------------------ */
 
 p a {
-	/* Font */
-	font-size: var(--font-size-storydescr);
-	font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-storydescr);
+    font-weight: var(--font-weight-regular);
 
-	/* Color */
-	color: var(--color-links);
+    color: var(--color-links);
 
-	/* Transitions and animations */
-	cursor: pointer;
-}
+    cursor: pointer;
 
 ul li {
     list-style: none;
 }
+
+label {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.back-button {
+    position: absolute;
+    left: 5vw;
+    top: 4vh;
+    color: var(--color-text);
+}
+
+.fullbutton {
+    color: var(--color-text);
+    text-decoration: none;
+    background-color: var(--color-accent-lilac);
+    border-radius: var(--border-radius);
+    padding: .5em 2em;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    /* max-width: max-content; */
+    text-align: center;
+    display: block;
+}
+
+.introtext {
+    margin-top: 1em;
+}
+
 
 /* -------------------- */
 /* INFORMATION SECTIONS */
@@ -327,23 +354,36 @@ details {
 
 /* CUSTOMIZATION */
 
+.characters {
+    margin: 1.5em 0;
+}
+
 .carousel {
     text-align: center;
-    margin-bottom: 1.5em;
 
-	.carousel-main {
-		.icon {
-			font-size: var(--font-size-icon);
-		}
+    .carousel-main {
+        /* background-image: var(--background-overlay), url('../images/panda.jpg'); */
+        background-image: linear-gradient(to bottom right, var(--color-text), var(--color-accent-blue), var(--color-accent-lilac)); /* panda */
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow: var(--box-shadow);
+        border-radius: var(--border-radius);
+        margin: 1.2em 0 1em;
+        display: flex;
+        flex-direction: column;
+
+        .icon {
+            font-size: var(--font-size-icon);
+        }
 
         .icon-title {
             font-size: var(--font-size-iconlabel);
-            margin: -.5em 0 .5em;
+            margin: -1.5em 0 .5em;
         }
     }
 
     .carousel-nav {
-        /* display: flex; */
 
         label {
             display: inline-flex;
@@ -361,49 +401,65 @@ details {
             }
 
             &:has(input[type=radio]:checked) {
-                background-color: var(--color-accent-blue);
+                background-color: var(--color-bg-light);
                 border: 2px solid var(--color-text);
             }
         }
     }
 }
 
+.motion,
+	.speed {
+		margin: 1.5em 0;
+	}
 
-/* Motion controls */
+	/* Motion controls */
 
-.motion-main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+	.motion-main {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
-.motionToggle {
-    width: 60px;
-    height: 30px;
-    background-color: #ccc;
-    border: none;
-    border-radius: 1.2em;
-    cursor: pointer;
-    position: relative;
-    
-}
+	.motionToggle {
+		width: 60px;
+		height: 30px;
+		background-color: #ccc;
+		border: none;
+		border-radius: 1.2em;
+		cursor: pointer;
+		position: relative;
+	}
 
-.motionToggle::before {
-    content: '';
-    position: absolute;
-    width: 1.8em;
-    height: 1.8em;
-    background-color: white;
-    border-radius: 50%;
-    top: 0.21em;
-    left: 0.2em;
-    transition: transform 0.3s;
-    transform: translateX(2.3em);
-}
+	.motionToggle::before {
+		content: '';
+		position: absolute;
+		width: 1.8em;
+		height: 1.8em;
+		background-color: white;
+		border-radius: 50%;
+		top: 0.21em;
+		left: 0.2em;
+		transition: transform 0.3s;
+		transform: translateX(2.3em);
+	}
 
-.active {
-  background-color: green;
-}
-.active::before {
-    transform: translateX(0);
-}
+	.active {
+		background-color: green;
+	}
+	.active::before {
+		transform: translateX(0);
+	}
+
+
+
+
+
+
+    /* ON BIG SCREENS */
+
+    @media (min-width: 400px) {
+        body {
+            padding: 3vh 30vw;
+        }
+    }
