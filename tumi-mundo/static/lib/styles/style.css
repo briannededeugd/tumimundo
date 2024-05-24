@@ -146,6 +146,7 @@ p a {
     color: var(--color-links);
 
     cursor: pointer;
+}
 
 ul li {
     list-style: none;
