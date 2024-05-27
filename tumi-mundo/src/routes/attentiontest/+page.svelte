@@ -1,17 +1,22 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-	<title>Using pico.js and lploc.js for real-time localization of eye pupils</title>
+	<title>TuMi Mundo - Attention Test</title>
 	<link rel="stylesheet" href="../lib/styles/style.css" />
 </head>
 
 <body>
-	<hr />
 	<section>
-		<h3>Start testing</h3>
-		<p>Click the button below when ready for testing</p>
+		<h1>Attention Test</h1>
+		<p>
+			To discover if and how your child's target language captures their attention, the attention
+			test will present them with common tones in this language as well as tones that are uncommon
+			or in another language entirely.<br/>
+
+			<br/>
+			The only data collected during this test will be numerical and text-based - no footage is ever saved or recorded. 
+		</p>
 	</section>
-	<hr />
 	<p>
 		<center><input type="button" value="Start test" onclick="button_callback()" /></center>
 	</p>
