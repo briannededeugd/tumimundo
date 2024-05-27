@@ -42,6 +42,10 @@
 <a href="/attentiontest" class="fullbutton">Continue</a>
 
 <style>
+	body {
+		padding: 3vh 5vw;
+	}
+
 	h1 + p {
 		margin-top: 1em;
 	}

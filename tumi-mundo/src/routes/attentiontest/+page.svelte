@@ -15,7 +15,7 @@
 	<title>Attention Test</title>
 </svelte:head>
 
-<body class="testbody">
+<body>
 	<a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
@@ -26,6 +26,9 @@
 	</div>
 
 	<div class="popup">
+		<a href="/onboarding" class="back-button"
+			><span class="material-symbols-outlined"> arrow_back_ios </span></a
+		>
 		<div>
 			<p>Are you and your child properly seated? If yes, let's start!</p>
 			<button onclick="button_callback()" class="fullbutton">Start test</button>
