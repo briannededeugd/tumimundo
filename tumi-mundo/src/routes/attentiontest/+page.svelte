@@ -1,26 +1,39 @@
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-	<title>TuMi Mundo - Attention Test</title>
-	<link rel="stylesheet" href="../lib/styles/style.css" />
-</head>
+<script>
+	import { onMount } from 'svelte';
 
-<body>
-	<section>
-		<h1>Attention Test</h1>
-		<p>
-			To discover if and how your child's target language captures their attention, the attention
-			test will present them with common tones in this language as well as tones that are uncommon
-			or in another language entirely.<br/>
+	onMount(() => {
+		var popup = document.querySelector('.popup');
+		var popupButton = document.querySelector('.popup button');
 
-			<br/>
-			The only data collected during this test will be numerical and text-based - no footage is ever saved or recorded. 
-		</p>
-	</section>
-	<p>
-		<center><input type="button" value="Start test" onclick="button_callback()" /></center>
-	</p>
+		popupButton.addEventListener('click', () => {
+			popup.style.display = 'none';
+		});
+	});
+</script>
+
+<svelte:head>
+	<title>Attention Test</title>
+</svelte:head>
+
+<body class="testbody">
+	<a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
+	>
+
+	<h1>Attention Test</h1>
+
+	<div class="progressbg">
+		<div class="progressbar"></div>
+	</div>
+
+	<div class="popup">
+		<div>
+			<p>Are you and your child properly seated? If yes, let's start!</p>
+			<button onclick="button_callback()" class="fullbutton">Start test</button>
+		</div>
+	</div>
+
 	<p><center><canvas width="0" height="0"></canvas></center></p>
+
 	<script>
 		// NOTE: This code is sourced from https://github.com/nenadmarkus/picojs. All credits go to the owner!
 
@@ -589,3 +602,47 @@
 		startTimer();
 	</script>
 </body>
+
+<style>
+	html {
+		overflow: hidden;
+		max-width: 100dvw;
+		max-height: 100dvh;
+	}
+
+	body {
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+
+		& body {
+			padding: 3vh 5vw;
+			max-width: 100dvw;
+			max-height: 100dvh;
+			overflow: hidden;
+		}
+	}
+
+	button.fullbutton {
+		border: none;
+		/* width: 100%; */
+	}
+
+	.progressbg {
+		height: 25px;
+		width: 110vw;
+		margin: 0 -5vw 0;
+		position: absolute;
+		bottom: 0;
+		background-color: var(--color-bg-dark);
+
+		& .progressbar {
+			position: relative;
+			left: 0;
+			height: 100%;
+			width: 80%;
+			background-color: var(--color-bg-light);
+			opacity: 0.4;
+		}
+	}
+</style>
