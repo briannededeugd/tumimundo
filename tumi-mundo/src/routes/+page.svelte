@@ -77,7 +77,7 @@
 		many of the words heard during the stories stay around?
 	</p>
 	<div class="section-button">
-		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
+		<img src="../lib/images/icons/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
 		<a href="/">Start test</a>
 	</div>
 </section>
@@ -99,7 +99,7 @@
 		many of the words heard during the stories stay around?
 	</p>
 	<div class="section-button">
-		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
+		<img src="../lib/images/icons/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
 		<a href="/">Start test</a>
 	</div>
 </section>
@@ -118,7 +118,7 @@
 		many of the words heard during the stories stay around?
 	</p>
 	<div class="section-button">
-		<img src="../lib/images/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
+		<img src="../lib/images/icons/universiteit-leiden-logo.png" alt="Logo of the University of Leiden" />
 		<a href="/">Start test</a>
 	</div>
 </section>
