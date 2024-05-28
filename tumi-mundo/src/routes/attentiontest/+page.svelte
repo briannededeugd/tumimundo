@@ -498,7 +498,7 @@
 
 		function formatTime() {
 			seconds = Math.floor(elapsedTime / 1000);
-			minutes = Math.floor(elap)
+			// minutes = Math.floor(elapsedTime);
 		}
 
 		// Function to start a timer
