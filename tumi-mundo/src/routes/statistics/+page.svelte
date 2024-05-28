@@ -8,29 +8,58 @@
     onMount(() => {
         document.body.classList.add('statistics');
 
-        return () => {
-            document.body.classList.remove('statistics');
-        };
+        document.querySelectorAll(".progress").forEach(function(progress) {
+            var bar = progress.querySelector(".bar");
+            var perc = -100 ; 
+
+            var start = { p: -200 };
+            var end = { p: perc };
+            var duration = 3000;
+            var startTime = null;
+
+            function easeSwing(t) {
+                return 0.5 - Math.cos(t * Math.PI) / 2;
+            }
+
+            function animate(time) {
+                if (!startTime) startTime = time;
+                var elapsed = time - startTime;
+                var progress = Math.min(elapsed / duration, 1);
+                var easedProgress = easeSwing(progress);
+                var p = start.p + (end.p - start.p) * easedProgress;
+
+                bar.style.transform = "rotate(" + (135 + p * 1.8) + "deg)";
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            requestAnimationFrame(animate);
         });
 
-        let storiesDataArray = [
-            {'stories read': 12},
-            {'minutes spent listening': 136},
-            {'tests taken': 8},
-            {'is your favorite moment': 'Morning'},
-            {'is your favorite speaker': 'Thuan-Hoa'}
-        ];
 
-        // button switch
-        function globalStats() {
-            const button = document.getElementById('children-global-stats-button');
-            button.classList.toggle('active');
+        return () => {
+            document.body.classList.remove('statistics');
+        }; 
+    });
+
+    let storiesDataArray = [
+        {'stories read': 12},
+        {'minutes spent listening': 136},
+        {'tests taken': 8},
+        {'is your favorite moment': 'Morning'},
+        {'is your favorite speaker': 'Thuan-Hoa'}
+    ];
+
+    // Button switch
+    function globalStats() {
+        const button = document.getElementById('children-global-stats-button');
+        button.classList.toggle('active');
     }
-
 </script>
 
 <h1>Statistics</h1>
-
 <section class="activities-wrapper">
     <h2>Today's activities</h2>
     <section class="activities-data-container">
@@ -103,13 +132,15 @@
     <h2>The roadmap</h2>
     <p>Here you can see how far you are in the method!</p>
     
-    <ol>
-        <li>Listening method</li>
-        <li>The first words</li>
-        <li>People and animals</li>
-        <li>Sentences</li>
-        <li>Reading and writing</li>
+    <ol class="roadmap_container">
+        <li><span>1.</span>Listening method <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <li class="opacity"><span>2.</span>The first words <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <li class="opacity"><span>3.</span>People and animals <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <li class="opacity"><span>4.</span>Sentences <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <li class="opacity"><span>5.</span>Reading and writing <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
     </ol>
+
+
 </section>
 
 <style>
@@ -120,13 +151,19 @@
 
         --story-item-background: #0B8FAC;
         --statistics-switch-background-color: #1CB854;
-        --progress-bar-unfilled: #70cfae8b;
+        --progress-bar-unfilled: white;
+        --progress-bar-filled: #1be0b9;
 
         --statistics-background-gradient: linear-gradient(to bottom, var(--color-statistics-bg-light), var(--color-statistics-bg-dark)); 
 
         --color-button-goal: #27b16f;
         --color-button-stories: #9264F4;
 
+        --roadmap-first-step: #1CB854;
+        --roadmap-second-step: #37C6AB;
+        --roadmap-third-step: #059CC0;
+        --roadmap-fourth-step: #FF8C59;
+        --roadmap-fifth-step: #FFA02E;
     }
 
     :global(body.statistics) {
@@ -139,13 +176,14 @@
     .activities-wrapper {
         & .activities-data-container {
                 & .activities-data {
+                    /* SRC Code from https://codepen.io/jagathish/pen/ZXzbzN */
                     /* progress bar */
                     width:100%;
                     height:100%;
                     text-align: center;
                     position: relative;
                     & .progress {
-                            width:100%;
+                            width:387px;
                             height: calc(100% + 23px);
                             position: absolute;
                             top: 50%;
@@ -169,12 +207,15 @@
                             & .bar {
                                 position: absolute;
                                 top: 0; left: 0;
-                                width: 100%; height: 369px; /* full circle! */
+                                width: 387px; height: 387px; /* full circle! */
                                 border-radius: 50%;
                                 box-sizing: border-box;
+                                /* transform: rotate(30deg); */
                                 border: 7px solid var(--progress-bar-unfilled);
-                                /* border-top-color: var(--progress-bar-unfilled);
-                                border-left-color: var(--progress-bar-unfilled); */
+                                border-top-color: var(--progress-bar-filled);       
+                                border-right-color: var(--progress-bar-filled);            
+                                /* transform: rotate(135deg); */
+                                box-shadow: 0 0 4px #00000040 inset;
                             }
                         }
 
@@ -292,6 +333,57 @@
                 transform: translateX(0);
             }
         }
+    }
+
+    ol { 
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        & li {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            background-color: #219B9B;
+            text-align: center;
+            list-style: decimal inside;
+            width: max-content;
+            padding: .5rem .75rem;
+            border-radius: .5rem;
+
+            & img {
+                max-height: 1rem;
+            }
+        }
+        
+        & li:nth-of-type(1) {
+            background-color: var(--roadmap-first-step);
+        }
+        & li:nth-of-type(2) {
+            background-color: var(--roadmap-second-step);
+        }
+        & li:nth-of-type(3) {
+            background-color: var(--roadmap-third-step);
+        }
+        & li:nth-of-type(4) {
+            background-color: var(--roadmap-fourth-step);
+        }
+        & li:nth-of-type(5) {
+            background-color: var(--roadmap-fifth-step);
+        }
+
+        & li:nth-of-type(2n) {
+            align-self: flex-end;
+        }
+        
+
+    }
+
+
+    .opacity {
+        opacity: 40%;
     }
 
 </style>
