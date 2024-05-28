@@ -158,6 +158,10 @@ label {
     }
 }
 
+button {
+	cursor: pointer;
+}
+
 .back-button {
     position: absolute;
     left: 5vw;
@@ -169,6 +173,7 @@ label {
     color: var(--color-text);
     text-decoration: none;
     background-color: var(--color-accent-lilac);
+	box-shadow: var(--box-shadow);
     border-radius: var(--border-radius);
     padding: .5em 2em;
     margin-top: 2em;
@@ -181,6 +186,36 @@ label {
 
 .introtext {
     margin-top: 1em;
+}
+
+
+/* ------ */
+/* POPUPS */
+/* ------ */
+
+.popup {
+	height: 100dvh;
+	width: 100dvw;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	backdrop-filter: blur(2px);
+	background-color: #00000040;
+
+	div {
+		background-color: var(--color-text);
+		color: var(--color-darktext);
+		position: absolute;
+		padding: .5em 1em;
+		border-radius: var(--border-radius);
+		box-shadow: var(--box-shadow);
+		position: relative;
+		width: 50%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 }
 
 

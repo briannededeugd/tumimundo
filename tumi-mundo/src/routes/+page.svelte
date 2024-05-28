@@ -22,7 +22,9 @@
 <h2>Tests</h2>
 <p>
 	While doing the TuMi Mundo method, you can do a couple of different tests to measure your child's
-	progress. You will be able to review all of your results on the <a href="/statistics">statistics</a> page.
+	progress. You will be able to review all of your results on the <a href="/statistics"
+		>statistics</a
+	> page.
 </p>
 
 <details>
@@ -56,7 +58,7 @@
 		before you can start the test. This will be explained to you through a few pictures.
 	</p>
 	<div class="section-button">
-		<a href="/customization">Start test</a>
+		<a href="/onboarding">Start test</a>
 	</div>
 </section>
 

@@ -145,7 +145,7 @@
 	</div>
 </section>
 
-<a href="/attentiontest" class="fullbutton">Continue</a>
+<a href="/onboarding" class="fullbutton">Continue</a>
 
 <style>
 	/* Speed controls */
