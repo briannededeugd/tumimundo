@@ -482,6 +482,8 @@
 
 		var elapsedTime = 0; // elapsed time in milliseconds
 		var seconds = 0;
+		var minutes = 0;
+		var hours = 0;
 
 		var random;
 		var prevRandom;
@@ -490,8 +492,13 @@
 		var arrLookAway = [];
 		var arrLookAtScreen = [];
 
+		var highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
+		var progressBackground = document.querySelector('.progressbg');
+		var progressBar = document.querySelector('.progressbar');
+
 		function formatTime() {
 			seconds = Math.floor(elapsedTime / 1000);
+			// minutes = Math.floor(elapsedTime);
 		}
 
 		// Function to start a timer
@@ -505,8 +512,17 @@
 			}, 1000);
 		}
 
+		function updateTime() {
+			var currentTime = highFreqAudio.currentTime;
+			var duration = highFreqAudio.duration;
+
+			progressBar.style.width = (currentTime / duration) * 100 + '%';
+		}
+
 		function button_callback() {
 			if (initialized) return;
+
+			highFreqAudio.play();
 
 			var update_memory = pico.instantiate_detection_memory(5);
 			var facefinder_classify_region = function (r, c, s, pixels, ldim) {
@@ -603,16 +619,11 @@
 			initialized = true;
 		}
 		startTimer();
+		setInterval(updateTime, 100);
 	</script>
 </body>
 
 <style>
-	html {
-		overflow: hidden;
-		max-width: 100dvw;
-		max-height: 100dvh;
-	}
-
 	body {
 		padding: 0;
 		margin: 0;
@@ -643,9 +654,10 @@
 			position: relative;
 			left: 0;
 			height: 100%;
-			width: 80%;
+			width: 0%;
 			background-color: var(--color-bg-light);
 			opacity: 0.4;
+			transition: all 0.3s ease-in-out;
 		}
 	}
 </style>
