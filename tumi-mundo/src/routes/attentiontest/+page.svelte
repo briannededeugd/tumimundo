@@ -484,6 +484,7 @@
 		var seconds = 0;
 		var minutes = 0;
 		var hours = 0;
+		var timeFormat = 0;
 
 		var random;
 		var prevRandom;
@@ -497,8 +498,15 @@
 		var progressBar = document.querySelector('.progressbar');
 
 		function formatTime() {
-			seconds = Math.floor(elapsedTime / 1000);
-			// minutes = Math.floor(elapsedTime);
+			seconds = Math.floor((elapsedTime / 1000) % 60),
+    		minutes = Math.floor((elapsedTime / (1000 * 60)) % 60),
+    		hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
+
+  			hours = (hours < 10) ? "0" + hours : hours;
+  			minutes = (minutes < 10) ? "0" + minutes : minutes;
+  			seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  			timeFormat = hours + ":" + minutes + ":" + seconds;
 		}
 
 		// Function to start a timer
@@ -601,11 +609,11 @@
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
 					if (faceDetected) {
-						arrLookAway.push(seconds);
+						arrLookAway.push(timeFormat);
 						console.log(arrLookAway);
 						console.log('Baby started paying attention');
 					} else {
-						arrLookAtScreen.push(seconds);
+						arrLookAtScreen.push(timeFormat);
 						console.log(arrLookAtScreen);
 						console.log('Baby stopped paying attention');
 					}
