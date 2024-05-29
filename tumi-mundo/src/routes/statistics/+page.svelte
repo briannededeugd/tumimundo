@@ -86,7 +86,7 @@
     <h2>Total activities</h2>
     <section>
         <!-- TODO: Add  buddy -->
-        <img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="TO BE ADDED">
+        <img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="The rat on the couch">
         <div class="learning-stats">
             <h2>You have done a lot of learning!</h2>
             <p>Here you can see everything you have done since you started learning with TuMi Mundo. 
@@ -132,11 +132,15 @@
     <h2>The roadmap</h2>
     <p>Here you can see how far you are in the method!</p>
     
-    <ol class="roadmap_container">
+    <ol>
         <li><span>1.</span>Listening method <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <img src="../lib/images/icons/active-arrow.svg" alt="an arrow that connect with second task">
         <li class="opacity"><span>2.</span>The first words <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <img src="../lib/images/icons/disabled-arrow-left.svg" alt="an arrow that connect with second task">
         <li class="opacity"><span>3.</span>People and animals <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <img src="../lib/images/icons/disabled-arrow-right.svg" alt="an arrow that connect with second task">
         <li class="opacity"><span>4.</span>Sentences <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
+        <img src="../lib/images/icons/disabled-arrow-left.svg" alt="an arrow that connect with second task">
         <li class="opacity"><span>5.</span>Reading and writing <img src="../lib/images/icons/music-note.svg" alt="Musical note"></li>
     </ol>
 
@@ -336,9 +340,18 @@
     }
 
     ol { 
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(9, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+
+        justify-items: stretch;
+        align-items: stretch;
+        justify-content: center;
+
+        max-width: 35rem;
+
 
         & li {
             display: flex;
@@ -349,38 +362,62 @@
             background-color: #219B9B;
             text-align: center;
             list-style: decimal inside;
-            width: max-content;
+            /* width: max-content; */
             padding: .5rem .75rem;
             border-radius: .5rem;
 
             & img {
                 max-height: 1rem;
             }
+
         }
-        
+
+        & img {
+            max-height: 4rem;
+        }
+
         & li:nth-of-type(1) {
             background-color: var(--roadmap-first-step);
+            grid-area: 1 / 1 / 2 / 4;
+            /* justify-items: stretch; */
+
         }
         & li:nth-of-type(2) {
             background-color: var(--roadmap-second-step);
+            grid-area: 3 / 3 / 4 / 6;
         }
         & li:nth-of-type(3) {
             background-color: var(--roadmap-third-step);
+            grid-area: 5 / 1 / 6 / 4;
         }
         & li:nth-of-type(4) {
             background-color: var(--roadmap-fourth-step);
+            grid-area: 7 / 3 / 8 / 6;
         }
         & li:nth-of-type(5) {
             background-color: var(--roadmap-fifth-step);
+            grid-area: 9 / 1 / 10 / 4;
+        }
+        & img:nth-of-type(1) {
+            grid-area: 2 / 1 / 4 / 3;
+            /* padding-left: 1rem; */
+            /* width: 13rem; */
+        }
+        & img:nth-of-type(2) {
+            grid-area: 4 / 4 / 6 / 5;
+        }
+        & img:nth-of-type(3) {
+            grid-area: 6 / 1 / 8 / 3;
+        }
+        & img:nth-of-type(4) {
+            grid-area: 8 / 4 / 10 / 5;
         }
 
-        & li:nth-of-type(2n) {
-            align-self: flex-end;
-        }
-        
 
     }
 
+
+ 
 
     .opacity {
         opacity: 40%;
