@@ -2,12 +2,27 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		var popup = document.querySelector('.popup');
-		var popupButton = document.querySelector('.popup button');
+		const popup = document.querySelector('.popup');
+		const popupButton = document.querySelector('.popup button');
 
 		popupButton.addEventListener('click', () => {
 			popup.style.display = 'none';
 		});
+
+		const video = document.getElementById('webcam');
+
+		if (navigator.mediaDevices.getUserMedia) {
+			navigator.mediaDevices
+				.getUserMedia({ video: true })
+				.then(function (stream) {
+					video.srcObject = stream;
+				})
+				.catch(function (error) {
+					console.log('Something went wrong!');
+				});
+		} else {
+			console.log('getUserMedia not supported!');
+		}
 	});
 </script>
 
@@ -31,8 +46,14 @@
 			><span class="material-symbols-outlined"> arrow_back_ios </span></a
 		>
 		<div>
-			<p>Are you and your child properly seated? If yes, let's start!</p>
-			<button onclick="button_callback()" class="fullbutton">Start test</button>
+			<p>
+				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
+				in the window below. If all is in order, we can start.
+			</p>
+			<video id="webcam" autoplay="true">
+				<track kind="captions" />
+			</video>
+			<button onclick="button_callback()" class="start">Start the test</button>
 		</div>
 	</div>
 
@@ -649,36 +670,22 @@
 </body>
 
 <style>
-	body {
-		padding: 0;
-		margin: 0;
-		overflow: hidden;
-
-		& body {
-			padding: 3vh 5vw;
-			max-width: 100dvw;
-			max-height: 100dvh;
-			overflow: hidden;
-		}
+	h1 {
+		margin-top: -3vh;
 	}
-
-	button.fullbutton {
-		border: none;
-		/* width: 100%; */
-	}
-
 	.progressbg {
 		height: 25px;
-		width: 110vw;
-		margin: 0 -5vw 0;
+		width: 100%;
 		position: absolute;
-		bottom: 0;
+		border-radius: var(--border-radius);
+		bottom: 2vh;
 		background-color: var(--color-bg-dark);
 
 		& .progressbar {
 			position: relative;
 			left: 0;
 			height: 100%;
+			border-radius: var(--border-radius);
 			width: 0%;
 			background-color: var(--color-bg-light);
 			opacity: 0.4;
@@ -696,5 +703,19 @@
 		border-radius: var(--border-radius);
 		background-color: var(--color-accent-blue);
 		text-align: center;
+	}
+
+	.start {
+		color: var(--color-text);
+		text-decoration: none;
+		background-color: var(--color-accent-lilac);
+		box-shadow: var(--box-shadow);
+		border-radius: var(--border-radius);
+		border: none;
+		padding: 0.5em 2em;
+		width: 100%;
+		margin-top: 1em;
+		text-align: center;
+		display: block;
 	}
 </style>
