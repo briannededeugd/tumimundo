@@ -20,6 +20,7 @@
 	>
 
 	<h1>Attention Test</h1>
+	<p id="feedback">Let's start!</p>
 
 	<div class="progressbg">
 		<div class="progressbar"></div>
@@ -478,7 +479,6 @@
 		 *               PICO INLINE JS
 		 *=============================================**/
 		var initialized = false;
-		var initialized = false;
 
 		var elapsedTime = 0; // elapsed time in milliseconds
 		var seconds = 0;
@@ -497,25 +497,32 @@
 		var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 
+		// format the timer to be hh:mm:ss
 		function formatTime() {
-			seconds = Math.floor((elapsedTime / 1000) % 60),
-    		minutes = Math.floor((elapsedTime / (1000 * 60)) % 60),
-    		hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
+			(seconds = Math.floor((elapsedTime / 1000) % 60)),
+				(minutes = Math.floor((elapsedTime / (1000 * 60)) % 60)),
+				(hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24));
 
-  			hours = (hours < 10) ? "0" + hours : hours;
-  			minutes = (minutes < 10) ? "0" + minutes : minutes;
-  			seconds = (seconds < 10) ? "0" + seconds : seconds;
+			hours = hours < 10 ? '0' + hours : hours;
+			minutes = minutes < 10 ? '0' + minutes : minutes;
+			seconds = seconds < 10 ? '0' + seconds : seconds;
 
-  			timeFormat = hours + ":" + minutes + ":" + seconds;
+			// save format in variable timeFormat
+			timeFormat = hours + ':' + minutes + ':' + seconds;
 		}
 
 		// Function to start a timer
 		function startTimer() {
+			// start time of the test
 			let startTime = Date.now();
 
+			// start interval every 1000ms
 			timer = setInterval(() => {
+				// new time of test every 1000ms
 				let now = Date.now();
+				// elapsed time between start time and new time
 				elapsedTime = now - startTime;
+				// format time from ms to hh:mm:ss
 				formatTime();
 			}, 1000);
 		}
@@ -605,6 +612,8 @@
 					break;
 				}
 
+				const feedbackText = document.querySelector('#feedback');
+
 				// TIMER START / TIMER STOP
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
@@ -612,10 +621,14 @@
 						arrLookAway.push(timeFormat);
 						console.log(arrLookAway);
 						console.log('Baby started paying attention');
+						feedbackText.textContent = 'Baby started paying attention';
+						feedbackText.style.backgroundColor = 'var(--color-accent-green)';
 					} else {
 						arrLookAtScreen.push(timeFormat);
 						console.log(arrLookAtScreen);
 						console.log('Baby stopped paying attention');
+						feedbackText.textContent = 'Baby stopped paying attention';
+						feedbackText.style.backgroundColor = 'var(--color-accent-salmon)';
 					}
 					prevFaceDetected = faceDetected; // Update the previous detection status
 				}
@@ -628,6 +641,10 @@
 		}
 		startTimer();
 		setInterval(updateTime, 100);
+
+		highFreqAudio.addEventListener('ended', () => {
+			window.location.pathname = 'offboarding';
+		});
 	</script>
 </body>
 
@@ -667,5 +684,17 @@
 			opacity: 0.4;
 			transition: all 0.3s ease-in-out;
 		}
+	}
+
+	#feedback {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		padding: 0.5em 1em;
+		border-radius: var(--border-radius);
+		background-color: var(--color-accent-blue);
+		text-align: center;
 	}
 </style>
