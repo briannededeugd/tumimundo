@@ -1,7 +1,4 @@
 <script>
-
-
-
 // DATA IN THE JSON (SHOULD BE TESTED FIRST)
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
@@ -12,68 +9,67 @@
         const height = 300 - margin.top - margin.bottom;
 
         const svg = d3.select("#attention_test_results_graph")
-        .append("svg")
-        // .attr("width", width + margin.left + margin.right)
-        // .attr("height", height + margin.top + margin.bottom)
-        .attr("viewBox", '0 0 500 300')
-        .style("background-color", "#165d64")
+            .append("svg")
+            // .attr("width", width + margin.left + margin.right)
+            // .attr("height", height + margin.top + margin.bottom)
+            .attr("viewBox", '0 0 500 300')
+            .style("background-color", "#165d64")
 
-        .style("border-radius", "10px")
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+            .style("border-radius", "10px")
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // JSON data
         d3.json("https://raw.githubusercontent.com/briannededeugd/tumimundo/main/tumi-mundo/src/fakedata/fake-dataset.json")
         .then(data => {
-            const parseTime = d3.timeParse("%Y-%m-%d");
-
-            data.forEach(d => {
-                d.date = parseTime(d.date);
-                d.value = +d.value;
-            });
+            // Filter data to include only the last four dates
+            const lastFourDates = data.slice(-4);
 
             // x-as
-            const x = d3.scaleTime()
-            .domain(d3.extent(data, d => d.date))
-            .range([0, width]);
+            const x = d3.scalePoint()
+                .domain(lastFourDates.map(d => d.date))
+                .range([0, width])
+                .padding(0.5);
             svg.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x));
 
             // y-as
+            // Use Math.ceil alongside this formula to make it calculate up to the next highest rounded number.
             const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.value)])
-            .range([height, 0]);
+                .domain([0, d3.max(data, d => Math.ceil(d.value / 10) * 10)])
+                .range([height, 0]);
             svg.append("g")
-            .call(d3.axisLeft(y));
+                .call(d3.axisLeft(y));
 
             // line
             svg.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 3)
-            .attr("d", d3.line()
-                .x(d => x(d.date))
-                .y(d => y(d.value)));
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 3)
+                .attr("d", d3.line()
+                    .x(d => x(d.date))
+                    .y(d => y(d.value)));
 
             // points
             svg.selectAll("dot")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", d => x(d.date))
-            .attr("cy", d => y(d.value))
-            .attr("r", 5)
-            .attr("fill", "#563783")
-            .attr("stroke-width", 3)
-            .attr("stroke", "#fff");
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", d => x(d.date))
+                .attr("cy", d => y(d.value))
+                .attr("r", 5)
+                .attr("fill", "#563783")
+                .attr("stroke-width", 3)
+                .attr("stroke", "#fff");
 
         })
         .catch(error => {
             console.error('Error loading data:', error);
         });
-    }); 
+  });
+
 
 </script>
 
