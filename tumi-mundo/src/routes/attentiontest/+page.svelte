@@ -628,8 +628,10 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					faceDetected = true;
-					break;
+					if(dets[i][3]>100.0) {
+						faceDetected = true;
+						break;
+					}
 				}
 
 				const feedbackText = document.querySelector('#feedback');
