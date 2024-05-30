@@ -630,8 +630,13 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					faceDetected = true;
-					break;
+					if(dets[i][3] > 100.0) {
+						faceDetected = true;
+						break;
+					} else if(dets[i][3] < 96.0) {
+						faceDetected = false;
+						break;
+					}
 				}
 
 				const feedbackText = document.querySelector('#feedback');
@@ -656,7 +661,6 @@
 				}
 			};
 
-			// var ctx = document.createElement('canvas').getContext('2d');
 			var mycamvas = new camvas(ctx, processfn);
 
 			initialized = true;
