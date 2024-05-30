@@ -694,6 +694,7 @@
 	h1 {
 		margin-top: -3vh;
 	}
+	
 	.progressbg {
 		height: 25px;
 		width: 100%;
