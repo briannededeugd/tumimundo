@@ -545,6 +545,7 @@ button {
 
 @media (min-width: 900px) {
 	body {
+	/* body {
 		padding: 5vh 20vw;
-	}
+	} */
 }

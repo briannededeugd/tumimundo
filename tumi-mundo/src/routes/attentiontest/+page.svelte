@@ -2,9 +2,6 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		const testBody = document.querySelector('html');
-		testBody.classList.add('tight');
-
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
 
@@ -34,27 +31,27 @@
 </svelte:head>
 
 <body>
-	<a href="/onboarding" class="back-button"
-		><span class="material-symbols-outlined"> arrow_back_ios </span></a
+	<a href="/onboarding" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
 	<h1>Attention Test</h1>
 	<p id="feedback">Let's start!</p>
 
-	<div class="progressbg">
-		<div class="progressbar"></div>
+	<div class="progress-element">
+		<div class="progressbg">
+			<div class="progressbar"></div>
+		</div>
 	</div>
 
 	<div class="popup">
-		<a href="/onboarding" class="back-button"
-			><span class="material-symbols-outlined"> arrow_back_ios </span></a
-		>
+		<a href="/onboarding" class="back-button">
+			<span class="material-symbols-outlined"> arrow_back_ios </span></a>
 		<div>
 			<p>
 				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
 				in the window below. If all is in order, we can start.
 			</p>
-			<video id="webcam" autoplay="true" playsinline>
+			<video id="webcam" autoplay="true">
 				<track kind="captions" />
 			</video>
 			<button onclick="button_callback()" class="start">Start the test</button>
@@ -515,7 +512,8 @@
 		var prevRandom;
 		var timer;
 
-		var timestampsObject = [];
+		var arrLookAway = [];
+		var arrLookAtScreen = [];
 
 		var highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
 		var progressBackground = document.querySelector('.progressbg');
@@ -632,10 +630,8 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					if(dets[i][3]>100.0) {
-						faceDetected = true;
-						break;
-					}
+					faceDetected = true;
+					break;
 				}
 
 				const feedbackText = document.querySelector('#feedback');
@@ -644,21 +640,15 @@
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
 					if (faceDetected) {
-						timestampsObject.push({
-							time: timeFormat,
-							type: 'attention_start',
-							description: 'Baby started paying attention'
-						});
-						console.log(timestampsObject);
+						arrLookAway.push(timeFormat);
+						console.log(arrLookAway);
+						console.log('Baby started paying attention');
 						feedbackText.textContent = 'Baby started paying attention';
 						feedbackText.style.backgroundColor = 'var(--color-accent-green)';
 					} else {
-						timestampsObject.push({
-							time: timeFormat,
-							type: 'attention_stop',
-							description: 'Baby stopped paying attention'
-						});
-						console.log(timestampsObject);
+						arrLookAtScreen.push(timeFormat);
+						console.log(arrLookAtScreen);
+						console.log('Baby stopped paying attention');
 						feedbackText.textContent = 'Baby stopped paying attention';
 						feedbackText.style.backgroundColor = 'var(--color-accent-salmon)';
 					}
@@ -675,32 +665,28 @@
 		setInterval(updateTime, 100);
 
 		highFreqAudio.addEventListener('ended', () => {
-			// turn object into JSON
-			var jsonObj = JSON.stringify(timestampsObject);
-			// CODE TO SEND TO SERVER HERE...
-
 			window.location.pathname = 'offboarding';
 		});
 	</script>
 </body>
 
 <style>
-	.tight {
-		max-width: 100dvw;
-		max-height: 100dvh;
-		overflow: hidden;
-	}
 
 	h1 {
 		margin-top: -3vh;
 	}
-	
+
+	.progress-element {
+		position: relative;
+		top: 85vh; 
+		left: 0;
+    	width: 100%; 
+	}
+
 	.progressbg {
 		height: 25px;
 		width: 100%;
-		position: absolute;
 		border-radius: var(--border-radius);
-		bottom: 2vh;
 		background-color: var(--color-bg-dark);
 
 		& .progressbar {
