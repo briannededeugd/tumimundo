@@ -2,6 +2,9 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
+		const testBody = document.querySelector('html');
+		testBody.classList.add('tight');
+
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
 
@@ -50,7 +53,7 @@
 				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
 				in the window below. If all is in order, we can start.
 			</p>
-			<video id="webcam" autoplay="true">
+			<video id="webcam" autoplay="true" playsinline>
 				<track kind="captions" />
 			</video>
 			<button onclick="button_callback()" class="start">Start the test</button>
@@ -679,6 +682,13 @@
 </body>
 
 <style>
+
+	.tight {
+		max-width: 100dvw;
+		max-height: 100dvh;
+		overflow: hidden;
+	}
+
 	h1 {
 		margin-top: -3vh;
 	}
