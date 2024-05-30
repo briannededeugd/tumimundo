@@ -31,7 +31,7 @@
 </svelte:head>
 
 <body>
-	<a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
+	<a href="/onboarding" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
 	<h1>Attention Test</h1>
