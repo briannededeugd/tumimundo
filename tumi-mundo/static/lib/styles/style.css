@@ -239,9 +239,10 @@ button {
 
 /* privacy statement */
 
-details {
+.accordion {
 	border-radius: var(--border-radius);
-	margin: 1em 0;
+	margin: 1em 0 2em;
+	max-width: 420px;
 
 	summary {
 		display: inline-flex;
@@ -324,6 +325,7 @@ details {
 	color: var(--color-darktext);
 	border-radius: var(--border-radius);
 	margin: 1em 0 2em 0;
+	max-width: 420px;
 
 	p {
 		padding: 1em 1em 0 1em;
@@ -500,3 +502,50 @@ details {
 	.active::before {
 		transform: translateX(0);
 	}
+
+
+/* -------------- */
+/* RESPONSIVENESS */
+/* -------------- */
+
+@media (max-width: 650px) {
+	.modules {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@media  (min-width: 650px) {
+	.modules {
+		display: flex;
+		justify-content: center;
+		align-items: stretch;
+		gap: 25px;
+
+		.information-block {
+			min-width: 50%;
+			max-width: 420px;
+		}
+	}
+
+	.steps {
+		& > div {
+			flex-direction: row !important;
+			align-items: stretch !important;
+			gap: 20px !important; 
+
+			& > div {
+				max-width: 420px;
+			}
+		}
+	}
+}
+
+@media (min-width: 900px) {
+	body {
+	/* body {
+		padding: 5vh 20vw;
+	} */
+}

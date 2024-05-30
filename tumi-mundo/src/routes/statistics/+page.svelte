@@ -118,7 +118,7 @@
     </div>
 
     <div>
-        <!-- <LineChart></LineChart> -->
+        <LineChart></LineChart>
     </div>
 
 
