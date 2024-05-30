@@ -509,11 +509,16 @@ button {
 /* -------------- */
 
 @media (max-width: 650px) {
+	.accordion {
+		min-width: 100%;
+	}
+	
 	.modules {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+		max-width: 100%;
+
+		.information-block {
+			min-width: 100%;
+		}
 	}
 }
 
@@ -544,7 +549,6 @@ button {
 }
 
 @media (min-width: 900px) {
-	body {
 	/* body {
 		padding: 5vh 20vw;
 	} */
