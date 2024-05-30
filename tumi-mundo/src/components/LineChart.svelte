@@ -1,4 +1,7 @@
 <script>
+
+
+
 // DATA IN THE JSON (SHOULD BE TESTED FIRST)
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
@@ -37,14 +40,14 @@
             // y-as
             // Use Math.ceil alongside this formula to make it calculate up to the next highest rounded number.
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => Math.ceil(d.value / 10) * 10)])
+                .domain([0, d3.max(lastFourDates, d => Math.ceil(d.value / 10) * 10)])
                 .range([height, 0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
 
             // line
             svg.append("path")
-                .datum(data)
+                .datum(lastFourDates)
                 .attr("fill", "none")
                 .attr("stroke", "#fff")
                 .attr("stroke-width", 3)
@@ -54,7 +57,7 @@
 
             // points
             svg.selectAll("dot")
-                .data(data)
+                .data(lastFourDates)
                 .enter()
                 .append("circle")
                 .attr("cx", d => x(d.date))
@@ -84,5 +87,8 @@
         align-items: center;
         width: 100vw;
     } */
+    svg {
+        
+    }
 
 </style>
