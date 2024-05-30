@@ -239,9 +239,10 @@ button {
 
 /* privacy statement */
 
-details {
+.accordion {
 	border-radius: var(--border-radius);
-	margin: 1em 0;
+	margin: 1em 0 2em;
+	max-width: 420px;
 
 	summary {
 		display: inline-flex;
@@ -324,6 +325,7 @@ details {
 	color: var(--color-darktext);
 	border-radius: var(--border-radius);
 	margin: 1em 0 2em 0;
+	max-width: 420px;
 
 	p {
 		padding: 1em 1em 0 1em;
@@ -500,3 +502,39 @@ details {
 	.active::before {
 		transform: translateX(0);
 	}
+
+
+/* -------------- */
+/* RESPONSIVENESS */
+/* -------------- */
+
+
+@media  (min-width: 650px) {
+	.modules {
+		display: flex;
+		gap: 25px;
+
+		.information-block {
+			max-width: 420px;
+		}
+	}
+
+	.steps {
+		& > div {
+			flex-direction: row !important;
+			/* justify-content: space-between; */
+			gap: 20px !important; 
+
+			& > div {
+				max-width: 420px;
+			}
+		}
+	}
+}
+
+@media (min-width: 900px) {
+
+	/* body {
+		padding: 5vh 20vw;
+	} */
+}
