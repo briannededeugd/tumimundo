@@ -512,8 +512,7 @@
 		var prevRandom;
 		var timer;
 
-		var arrLookAway = [];
-		var arrLookAtScreen = [];
+		var timestampsObject = [];
 
 		var highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
 		var progressBackground = document.querySelector('.progressbg');
@@ -630,10 +629,10 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					if(dets[i][3] > 100.0) {
+					if(dets[i][3] > 150.0) {
 						faceDetected = true;
 						break;
-					} else if(dets[i][3] < 96.0) {
+					} else if(dets[i][3] < 140.0) {
 						faceDetected = false;
 						break;
 					}
@@ -645,15 +644,21 @@
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
 					if (faceDetected) {
-						arrLookAway.push(timeFormat);
-						console.log(arrLookAway);
-						console.log('Baby started paying attention');
+						timestampsObject.push({
+							time: timeFormat,
+							type: 'attention_start',
+							description: 'Baby started paying attention'
+						});
+						console.log(timestampsObject);
 						feedbackText.textContent = 'Baby started paying attention';
 						feedbackText.style.backgroundColor = 'var(--color-accent-green)';
 					} else {
-						arrLookAtScreen.push(timeFormat);
-						console.log(arrLookAtScreen);
-						console.log('Baby stopped paying attention');
+						timestampsObject.push({
+							time: timeFormat,
+							type: 'attention_stop',
+							description: 'Baby stopped paying attention'
+						});
+						console.log(timestampsObject);
 						feedbackText.textContent = 'Baby stopped paying attention';
 						feedbackText.style.backgroundColor = 'var(--color-accent-salmon)';
 					}
@@ -669,6 +674,10 @@
 		setInterval(updateTime, 100);
 
 		highFreqAudio.addEventListener('ended', () => {
+			// turn object into JSON
+			var jsonObj = JSON.stringify(timestampsObject);
+			// CODE TO SEND TO SERVER HERE...
+
 			window.location.pathname = 'offboarding';
 		});
 	</script>
