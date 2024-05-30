@@ -17,24 +17,30 @@
 
 <section class="steps">
 	<h2>Getting ready</h2>
-	<div class="stepone">
-		<div>
-			<img src="../lib/images/teststeps/stepone.png" alt="" />
-			<p>Place the phone so that it is in an upright position. For example, against a few books.</p>
+	<div>
+		<div class="stepone">
+			<div>
+				<img src="../lib/images/teststeps/stepone.png" alt="" />
+				<p>
+					Place the phone so that it is in an upright position. For example, against a few books.
+				</p>
+			</div>
 		</div>
-	</div>
 
-	<div class="steptwo">
-		<div>
-			<img src="../lib/images/teststeps/steptwo.png" alt="" />
-			<p>The face should be in the middle of the screen. Make sure the eyes are clearly visible.</p>
+		<div class="steptwo">
+			<div>
+				<img src="../lib/images/teststeps/steptwo.png" alt="" />
+				<p>
+					The face should be in the middle of the screen. Make sure the eyes are clearly visible.
+				</p>
+			</div>
 		</div>
-	</div>
 
-	<div class="stepthree">
-		<div>
-			<img src="../lib/images/teststeps/stepthree.png" alt="" />
-			<p>When doing the test, make sure to look away in order to not distract your child.</p>
+		<div class="stepthree">
+			<div>
+				<img src="../lib/images/teststeps/stepthree.png" alt="" />
+				<p>When doing the test, make sure to look away in order to not distract your child.</p>
+			</div>
 		</div>
 	</div>
 </section>
@@ -58,20 +64,27 @@
 		}
 
 		& > div {
-			border-radius: var(--border-radius);
-			padding: 0.5em;
-			padding-bottom: 0.75em;
-			margin: 0 0 1.5em;
-			background-color: var(--color-text);
-			display: block;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			
+			& > div {
+				border-radius: var(--border-radius);
+				padding: 0.5em;
+				padding-bottom: 0.75em;
+				margin: 0 0 1.5em;
+				background-color: var(--color-text);
+				display: block;
 
-			& p {
-				color: var(--color-darktext);
-				font-size: var(--font-size-storydescr);
-			}
+				& p {
+					color: var(--color-darktext);
+					font-size: var(--font-size-storydescr);
+				}
 
-			& img {
-				max-width: 100%;
+				& img {
+					max-width: 100%;
+				}
 			}
 		}
 	}
