@@ -31,7 +31,8 @@
 </svelte:head>
 
 <body>
-	<a href="/onboarding" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
+	<a href="/onboarding" class="back-button"
+		><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
 	<h1>Attention Test</h1>
@@ -45,7 +46,8 @@
 
 	<div class="popup">
 		<a href="/onboarding" class="back-button">
-			<span class="material-symbols-outlined"> arrow_back_ios </span></a>
+			<span class="material-symbols-outlined"> arrow_back_ios </span></a
+		>
 		<div>
 			<p>
 				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
@@ -629,11 +631,15 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					if(dets[i][3] > 150.0) {
+					var confidenceScore = dets[0][3];
+					if (confidenceScore > 400.0) {
 						faceDetected = true;
 						break;
-					} else if(dets[i][3] < 140.0) {
+					} else if (confidenceScore < 350.0) {
 						faceDetected = false;
+						break;
+					} else {
+						faceDetected = prevFaceDetected;
 						break;
 					}
 				}
@@ -684,16 +690,15 @@
 </body>
 
 <style>
-
 	h1 {
 		margin-top: -3vh;
 	}
 
 	.progress-element {
 		position: relative;
-		top: 85vh; 
+		top: 85vh;
 		left: 0;
-    	width: 100%; 
+		width: 100%;
 	}
 
 	.progressbg {
