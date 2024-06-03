@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	function stopFacedetection() {
+	function stopFaceDetection() {
 		window.location.pathname = 'onboarding';
 	}
 
@@ -35,7 +35,7 @@
 </svelte:head>
 
 <body>
-	<a href="/onboarding" class="back-button" on:click={stopFacedetection}
+	<a href="/onboarding" class="back-button" on:click={stopFaceDetection}
 		><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="popup">
-		<a href="/onboarding" class="back-button" on:click={stopFacedetection}>
+		<a href="/onboarding" class="back-button" on:click={stopFaceDetection}>
 			<span class="material-symbols-outlined"> arrow_back_ios </span></a
 		>
 		<div>
@@ -635,13 +635,17 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
+					// confidenceScore is a Number on how certain the api thinks it detects a face
 					var confidenceScore = dets[0][3];
+					// only when its certainty is above 400, tell it there is a face
 					if (confidenceScore > 400.0) {
 						faceDetected = true;
 						break;
+					// Only when it's below 350, tell it there is no face
 					} else if (confidenceScore < 350.0) {
 						faceDetected = false;
 						break;
+					// if the number is between 350 and 400 keep the same detection as before
 					} else {
 						faceDetected = prevFaceDetected;
 						break;
