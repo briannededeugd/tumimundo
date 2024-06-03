@@ -1,6 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 
+	function stopFacedetection() {
+		window.location.pathname = 'onboarding';
+	}
+
 	onMount(() => {
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
@@ -31,7 +35,7 @@
 </svelte:head>
 
 <body>
-	<a href="/onboarding" class="back-button"
+	<a href="/onboarding" class="back-button" on:click={stopFacedetection}
 		><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
@@ -45,7 +49,7 @@
 	</div>
 
 	<div class="popup">
-		<a href="/onboarding" class="back-button">
+		<a href="/onboarding" class="back-button" on:click={stopFacedetection}>
 			<span class="material-symbols-outlined"> arrow_back_ios </span></a
 		>
 		<div>
