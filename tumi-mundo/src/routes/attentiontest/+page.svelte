@@ -1,6 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 
+	function stopFaceDetection() {
+		window.location.pathname = 'onboarding';
+	}
+
 	onMount(() => {
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
@@ -31,7 +35,8 @@
 </svelte:head>
 
 <body>
-	<a href="/onboarding" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
+	<a href="/onboarding" class="back-button" on:click={stopFaceDetection}
+		><span class="material-symbols-outlined"> arrow_back_ios </span></a
 	>
 
 	<h1>Attention Test</h1>
@@ -44,8 +49,9 @@
 	</div>
 
 	<div class="popup">
-		<a href="/onboarding" class="back-button">
-			<span class="material-symbols-outlined"> arrow_back_ios </span></a>
+		<a href="/onboarding" class="back-button" on:click={stopFaceDetection}>
+			<span class="material-symbols-outlined"> arrow_back_ios </span></a
+		>
 		<div>
 			<p>
 				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
@@ -629,11 +635,19 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					if(dets[i][3] > 150.0) {
+					// confidenceScore is a Number on how certain the api thinks it detects a face
+					var confidenceScore = dets[0][3];
+					// only when its certainty is above 400, tell it there is a face
+					if (confidenceScore > 400.0) {
 						faceDetected = true;
 						break;
-					} else if(dets[i][3] < 140.0) {
+					// Only when it's below 350, tell it there is no face
+					} else if (confidenceScore < 350.0) {
 						faceDetected = false;
+						break;
+					// if the number is between 350 and 400 keep the same detection as before
+					} else {
+						faceDetected = prevFaceDetected;
 						break;
 					}
 				}
@@ -684,16 +698,15 @@
 </body>
 
 <style>
-
 	h1 {
 		margin-top: -3vh;
 	}
 
 	.progress-element {
 		position: relative;
-		top: 85vh; 
+		top: 85vh;
 		left: 0;
-    	width: 100%; 
+		width: 100%;
 	}
 
 	.progressbg {
