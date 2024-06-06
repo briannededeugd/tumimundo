@@ -27,6 +27,7 @@
             // Filter data to include only the last four dates
             const lastFourDates = data.slice(-4);
 
+            
             // x-axis
             const x = d3.scalePoint()
                 .domain(lastFourDates.map(d => d.date))
@@ -34,9 +35,21 @@
                 .padding(0.5);
             svg.append("g")
                 .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x))
+                .call(d3.axisBottom(x)
+                    .tickFormat(d => {
+                        const date = new Date(d);
+                        const month = date.toLocaleString('default', { month: 'short' });
+                        const day = date.getDate();
+                        return `${month} ${day}`;
+                    })
+                )
                 .selectAll(".tick line")
                 .style("visibility", "hidden"); 
+            
+            svg.select(".domain")
+                .attr("d", `M0,0H${width}`);
+
+
 
             // y-axis
             const y = d3.scaleLinear()
@@ -63,28 +76,15 @@
 
             yAxis.selectAll(".tick")
                 .insert('rect', ':first-child')
-                .attr('width', '30')
-                .attr('height', '20')
-                .attr('fill', 'blue')
-                .attr("opacity", "70%")
-                .attr('transform', 'translate(-35, -10)')
+                .attr('width', '35')
+                .attr('height', '21')
+                .attr('fill', '#43756C')
+                .attr("opacity", "1")
+                .attr('transform', 'translate(-40, -10)')
                 .attr('rx', '7')
 
             yAxis.selectAll(".tick text")
-                .style("font-size", "12px");
-
-
-            // yAxis.selectAll('.tick text')
-            //     .style('padding', '16px')
-            //     .style('border-radius', '5px')
-            //     .style('background-color', '#fff')
-            //     .style('color', '#000')
-            //     .style("filter", "url(#solid)");
-                // .attr('x', 0)  // Adjust this value for padding
-                // .attr('y', 0)  // Adjust this value for padding
-                // .attr('dy', '0.32em')  // Adjust this value for vertical alignment
-                // .attr('text-anchor', 'end')  // Adjust this value for horizontal alignment
-                // .style('fill', '#000');  // Adjust this value for text color
+                .style("font-size", "14px");
 
 
 
@@ -138,14 +138,8 @@
 </div>
 
 <style>
-    /* div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-    } */
     :global(svg) {
-        padding: 2em 1em;
+        padding: 2em 0;
     }
 
     :global(rect) {
