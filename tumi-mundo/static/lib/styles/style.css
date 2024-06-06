@@ -59,10 +59,10 @@
 
     /* SIZINGS */
     --font-size-h1: 28px; /* Semibold weight */
-    --font-size-h2: 20px; /* Semibold weight */
-    --font-size-h3: 16px; /* Regular weight */
-    --font-size-storytitle: 12px; /* Semibold weight */
-    --font-size-storydescr: 12px; /* Regular weight */
+    --font-size-h2: 24px; /* Semibold weight */
+    --font-size-h3: 20px; /* Regular weight */
+    --font-size-storytitle: 16px; /* Semibold weight */
+    --font-size-storydescr: 16px; /* Regular weight */
     --font-size-buttons: 11px; /* Inline buttons, subtle buttons etc. */
     --font-size-iconbtn: 18px;
 
