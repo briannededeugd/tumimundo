@@ -689,9 +689,9 @@
 		startTimer();
 		setInterval(updateTime, 100);
 
-		// highFreqAudio.addEventListener('ended', () => {
-		// 	window.location.pathname = 'offboarding';
-		// });
+		highFreqAudio.addEventListener('ended', () => {
+			window.location.pathname = 'offboarding';
+		});
 	</script>
 </body>
 
