@@ -31,22 +31,30 @@
 </svelte:head>
 
 <body>
-	<a href="/onboarding" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a
-	>
+	<nav>
+		<a href="/onboarding"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
-	<h1>Attention Test</h1>
-	<p id="feedback">Let's start!</p>
-
-	<div class="progress-element">
-		<div class="progressbg">
-			<div class="progressbar"></div>
+		<div class="progress-element">
+			<div class="progressbg">
+				<div class="progressbar"></div>
+			</div>
 		</div>
-	</div>
+
+		<button class="confused" aria-label="Toggle explanation">
+			<span class="material-symbols-outlined"> question_mark </span></button
+		>
+	</nav>
+
+	<section class="testcard">
+		<div class="testcard-img"></div>
+		<div class="testcard-info">
+			<h3>é</h3>
+		</div>
+	</section>
 
 	<div class="popup">
-		<a href="/onboarding" class="back-button">
-			<span class="material-symbols-outlined"> arrow_back_ios </span></a>
 		<div>
+			<h3>Start the test?</h3>
 			<p>
 				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
 				in the window below. If all is in order, we can start.
@@ -54,7 +62,16 @@
 			<video id="webcam" autoplay="true">
 				<track kind="captions" />
 			</video>
-			<button onclick="button_callback()" class="start">Start the test</button>
+
+			<div class="startcanceltest">
+				<button onclick="button_callback()" class="start"
+					>Start <span class="material-symbols-outlined"> check </span></button
+				>
+				<a href="/onboarding" class="canceltest">
+					Cancel
+					<span class="material-symbols-outlined"> close </span></a
+				>
+			</div>
 		</div>
 	</div>
 
@@ -664,40 +681,128 @@
 		startTimer();
 		setInterval(updateTime, 100);
 
-		highFreqAudio.addEventListener('ended', () => {
-			window.location.pathname = 'offboarding';
-		});
+		// highFreqAudio.addEventListener('ended', () => {
+		// 	window.location.pathname = 'offboarding';
+		// });
 	</script>
 </body>
 
 <style>
-
 	h1 {
 		margin-top: -3vh;
 	}
 
-	.progress-element {
-		position: relative;
-		top: 85vh; 
-		left: 0;
-    	width: 100%; 
+	h3 {
+		font-weight: 600;
 	}
 
-	.progressbg {
-		height: 25px;
+	nav {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
 		width: 100%;
-		border-radius: var(--border-radius);
-		background-color: var(--color-bg-dark);
 
-		& .progressbar {
+		& a {
+			color: var(--color-text);
+			padding-right: 0;
+
+			& span {
+				padding-left: 0.45em;
+				font-weight: 200 !important;
+			}
+		}
+
+		& .progress-element {
 			position: relative;
-			left: 0;
-			height: 100%;
+			width: 100%;
+			border-radius: 40px;
+			box-shadow: var(--box-shadow-test);
+
+			& .progressbg {
+				height: 15px;
+				width: 100%;
+				border-radius: 40px;
+				background-color: var(--color-text);
+
+				& .progressbar {
+					position: relative;
+					left: 0;
+					height: 100%;
+					border-radius: 40px;
+					width: 0%;
+					background-color: var(--color-interactions);
+				}
+			}
+		}
+
+		& a,
+		& button {
+			min-height: 50px;
+			min-width: 50px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center !important;
+
+			font-size: var(--font-size-iconbtn) !important;
+
 			border-radius: var(--border-radius);
-			width: 0%;
-			background-color: var(--color-bg-light);
-			opacity: 0.4;
-			transition: all 0.3s ease-in-out;
+			border: none;
+			text-decoration: none;
+
+			background-color: var(--color-interactions);
+			color: var(--color-text);
+			text-align: center !important;
+			box-shadow: var(--box-shadow-test);
+		}
+	}
+
+	.startcanceltest {
+		display: flex;
+		justify-content: space-between;
+		min-width: 100%;
+		margin-top: 1em;
+	}
+
+	.canceltest,
+	.start {
+		text-decoration: none;
+		padding: 0.75em 1em;
+		border-radius: var(--border-radius);
+		font-size: var(--font-size-storydesc);
+		font-family: 'Poppins', sans-serif;
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+
+		color: var(--color-darktext);
+		background-color: var(--color-text);
+		box-shadow: var(--box-shadow-test);
+
+		& span {
+			font-size: var(--font-size-storydesc);
+			color: var(--color-cancel);
+		}
+
+		&:hover,
+		&:active {
+			background-color: var(--color-active-cancel);
+		}
+	}
+
+	.start {
+		border: none;
+		background-color: var(--color-start);
+		color: var(--color-text);
+
+		& span {
+			font-weight: 800;
+			color: var(--color-text);
+		}
+
+		&:hover,
+		&:active {
+			background-color: var(--color-active-start);
 		}
 	}
 
@@ -711,19 +816,5 @@
 		border-radius: var(--border-radius);
 		background-color: var(--color-accent-blue);
 		text-align: center;
-	}
-
-	.start {
-		color: var(--color-text);
-		text-decoration: none;
-		background-color: var(--color-accent-lilac);
-		box-shadow: var(--box-shadow);
-		border-radius: var(--border-radius);
-		border: none;
-		padding: 0.5em 2em;
-		width: 100%;
-		margin-top: 1em;
-		text-align: center;
-		display: block;
 	}
 </style>
