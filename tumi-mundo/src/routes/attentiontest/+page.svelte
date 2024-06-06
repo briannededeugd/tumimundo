@@ -31,7 +31,7 @@
 	<title>Attention Test</title>
 </svelte:head>
 
-<body>
+<body class="testingPage">
 	<nav>
 		<a href="/onboarding"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
@@ -696,6 +696,24 @@
 </body>
 
 <style>
+	.testingPage {
+		background: 
+		url('../lib/images/background/e.svg'), 
+		url('../lib/images/background/a.svg'), 
+		url('../lib/images/background/i.svg'), 
+		url('../lib/images/background/o.svg'),
+		url('../lib/images/background/u.svg')
+		#cfd8ed;
+		background-repeat: repeat-y;
+		background-position: 
+		5% 0%, 
+		95% 0%, 
+		50% 30%, 
+		5% 0%, 
+		95% 0%;
+		background-size: 6rem, 6rem, 3rem;
+	}
+
 	h3 {
 		font-weight: 600;
 	}
