@@ -39,6 +39,7 @@
 
 	/* NEW THEME */
 	--color-interactions: #63718e; /* buttons, progress bar */
+	--color-interactions-hover: #4b566c;
 	--color-background: #cfd8ed;
 	
 	--color-cancel: #d51d1d;
@@ -106,6 +107,7 @@ body {
 	color: var(--color-text);
 
     padding: 3vh 5vw;
+	position: relative;
 }
 
 

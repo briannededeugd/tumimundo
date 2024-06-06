@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { crossfade } from 'svelte/transition';
 
 	onMount(() => {
 		const popup = document.querySelector('.popup');
@@ -46,9 +47,11 @@
 	</nav>
 
 	<section class="testcard">
-		<div class="testcard-img"></div>
+		<div class="testcard-img">
+			<p>🐋</p>
+		</div>
 		<div class="testcard-info">
-			<h3>é</h3>
+			<p>é</p>
 		</div>
 	</section>
 
@@ -536,6 +539,9 @@
 		var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 
+		var currentTime = highFreqAudio.currentTime;
+		var duration = highFreqAudio.duration;
+
 		// format the timer to be hh:mm:ss
 		function formatTime() {
 			(seconds = Math.floor((elapsedTime / 1000) % 60)),
@@ -569,7 +575,6 @@
 		function updateTime() {
 			var currentTime = highFreqAudio.currentTime;
 			var duration = highFreqAudio.duration;
-
 			progressBar.style.width = (currentTime / duration) * 100 + '%';
 		}
 
@@ -651,8 +656,6 @@
 					break;
 				}
 
-				const feedbackText = document.querySelector('#feedback');
-
 				// TIMER START / TIMER STOP
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
@@ -660,14 +663,10 @@
 						arrLookAway.push(timeFormat);
 						console.log(arrLookAway);
 						console.log('Baby started paying attention');
-						feedbackText.textContent = 'Baby started paying attention';
-						feedbackText.style.backgroundColor = 'var(--color-accent-green)';
 					} else {
 						arrLookAtScreen.push(timeFormat);
 						console.log(arrLookAtScreen);
 						console.log('Baby stopped paying attention');
-						feedbackText.textContent = 'Baby stopped paying attention';
-						feedbackText.style.backgroundColor = 'var(--color-accent-salmon)';
 					}
 					prevFaceDetected = faceDetected; // Update the previous detection status
 				}
@@ -677,7 +676,16 @@
 			var mycamvas = new camvas(ctx, processfn);
 
 			initialized = true;
+
+			if (highFreqAudio) {
+				// ANIMATE CARD
+				let audioDuration = Math.ceil(highFreqAudio.duration);
+				const card = document.querySelector('.testcard');
+				card.style.animationDuration = `${audioDuration}s`;
+				card.style.animationPlayState = 'running';
+			}
 		}
+
 		startTimer();
 		setInterval(updateTime, 100);
 
@@ -688,10 +696,6 @@
 </body>
 
 <style>
-	h1 {
-		margin-top: -3vh;
-	}
-
 	h3 {
 		font-weight: 600;
 	}
@@ -746,7 +750,7 @@
 
 			font-size: var(--font-size-iconbtn) !important;
 
-			border-radius: var(--border-radius);
+			border-radius: 20px;
 			border: none;
 			text-decoration: none;
 
@@ -754,6 +758,10 @@
 			color: var(--color-text);
 			text-align: center !important;
 			box-shadow: var(--box-shadow-test);
+
+			&:hover {
+				background-color: var(--color-interactions-hover);
+			}
 		}
 	}
 
@@ -806,15 +814,118 @@
 		}
 	}
 
-	#feedback {
+	.testcard {
 		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-
-		padding: 0.5em 1em;
+		width: 70dvw;
+		aspect-ratio: 2/1.75;
+		background-color: var(--color-text);
 		border-radius: var(--border-radius);
-		background-color: var(--color-accent-blue);
-		text-align: center;
+		box-shadow: var(--box-shadow-test);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(-1deg) scale(1);
+		transform-origin: center center;
+		padding: 0.5em;
+
+		animation-name: animateCard;
+		animation-play-state: paused;
+		color: var(--color-interactions);
+
+		& .testcard-img {
+			position: relative;
+			width: 100%;
+			height: 70%;
+			background-color: var(--color-interactions);
+			border-radius: var(--border-radius);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			& p {
+				/* font-size: 185px; */
+				font-size: clamp(100px, 100px + 5vw, 185px);
+				display: inline-block;
+			}
+		}
+
+		& p {
+			font-family: 'Poppins', sans-serif;
+			font-weight: 800;
+			text-align: center;
+			/* font-size: 120px; */
+			font-size: clamp(90px, 80px + 3vw, 120px);
+		}
+	}
+
+	@keyframes animateCard {
+		0% {
+			transform: translate(-50%, -50%) scale(1) rotate(-1deg);
+		}
+		5% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(1deg);
+		}
+		10% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(3deg);
+		}
+		15% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+		}
+		20% {
+			transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
+		}
+		25% {
+			transform: translate(-50%, -50%) scale(1) rotate(0deg);
+		}
+		30% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(4deg);
+		}
+		35% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(2deg);
+		}
+		40% {
+			transform: translate(-50%, -50%) scale(1) rotate(-1deg);
+		}
+		45% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(1deg);
+		}
+		50% {
+			transform: translate(-50%, -50%) scale(1.3) rotate(2deg);
+		}
+		55% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+		}
+		60% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(-2deg);
+		}
+		65% {
+			transform: translate(-50%, -50%) scale(1.3) rotate(1deg);
+		}
+		70% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(3deg);
+		}
+		75% {
+			transform: translate(-50%, -50%) scale(1.3) rotate(2deg);
+		}
+		80% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(-1deg);
+		}
+		85% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
+		}
+		90% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+		}
+		95% {
+			transform: translate(-50%, -50%) scale(1.05) rotate(1deg);
+		}
+		100% {
+			transform: translate(-50%, -50%) scale(1) rotate(-1deg);
+		}
+	}
+
+	@media (min-width: 650px) {
+		.testcard {
+			width: 30dvw;
+		}
 	}
 </style>
