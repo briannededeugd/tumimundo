@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { crossfade } from 'svelte/transition';
 
 	function stopFaceDetection() {
 		window.location.pathname = 'onboarding';
@@ -34,25 +35,33 @@
 	<title>Attention Test</title>
 </svelte:head>
 
-<body>
-	<a href="/onboarding" class="back-button" on:click={stopFaceDetection}
-		><span class="material-symbols-outlined"> arrow_back_ios </span></a
-	>
+<body class="testingPage">
+	<nav>
+		<a href="/onboarding"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
-	<h1>Attention Test</h1>
-	<p id="feedback">Let's start!</p>
-
-	<div class="progress-element">
-		<div class="progressbg">
-			<div class="progressbar"></div>
+		<div class="progress-element">
+			<div class="progressbg">
+				<div class="progressbar"></div>
+			</div>
 		</div>
-	</div>
+
+		<button class="confused" aria-label="Toggle explanation">
+			<span class="material-symbols-outlined"> question_mark </span></button
+		>
+	</nav>
+
+	<section class="testcard">
+		<div class="testcard-img">
+			<p>🐋</p>
+		</div>
+		<div class="testcard-info">
+			<p>é</p>
+		</div>
+	</section>
 
 	<div class="popup">
-		<a href="/onboarding" class="back-button" on:click={stopFaceDetection}>
-			<span class="material-symbols-outlined"> arrow_back_ios </span></a
-		>
 		<div>
+			<h3>Start the test?</h3>
 			<p>
 				Are you and your child properly seated? Make sure that <em>only</em> the baby's face is visible
 				in the window below. If all is in order, we can start.
@@ -60,7 +69,16 @@
 			<video id="webcam" autoplay="true">
 				<track kind="captions" />
 			</video>
-			<button onclick="button_callback()" class="start">Start the test</button>
+
+			<div class="startcanceltest">
+				<button onclick="button_callback()" class="start"
+					>Start <span class="material-symbols-outlined"> check </span></button
+				>
+				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
+					Cancel
+					<span class="material-symbols-outlined"> close </span></a
+				>
+			</div>
 		</div>
 	</div>
 
@@ -524,6 +542,9 @@
 		var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 
+		var currentTime = highFreqAudio.currentTime;
+		var duration = highFreqAudio.duration;
+
 		// format the timer to be hh:mm:ss
 		function formatTime() {
 			(seconds = Math.floor((elapsedTime / 1000) % 60)),
@@ -557,7 +578,6 @@
 		function updateTime() {
 			var currentTime = highFreqAudio.currentTime;
 			var duration = highFreqAudio.duration;
-
 			progressBar.style.width = (currentTime / duration) * 100 + '%';
 		}
 
@@ -652,8 +672,6 @@
 					}
 				}
 
-				const feedbackText = document.querySelector('#feedback');
-
 				// TIMER START / TIMER STOP
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
@@ -664,8 +682,6 @@
 							description: 'Baby started paying attention'
 						});
 						console.log(timestampsObject);
-						feedbackText.textContent = 'Baby started paying attention';
-						feedbackText.style.backgroundColor = 'var(--color-accent-green)';
 					} else {
 						timestampsObject.push({
 							time: timeFormat,
@@ -673,8 +689,6 @@
 							description: 'Baby stopped paying attention'
 						});
 						console.log(timestampsObject);
-						feedbackText.textContent = 'Baby stopped paying attention';
-						feedbackText.style.backgroundColor = 'var(--color-accent-salmon)';
 					}
 					prevFaceDetected = faceDetected; // Update the previous detection status
 				}
@@ -683,7 +697,16 @@
 			var mycamvas = new camvas(ctx, processfn);
 
 			initialized = true;
+
+			if (highFreqAudio) {
+				// ANIMATE CARD
+				let audioDuration = Math.ceil(highFreqAudio.duration);
+				const card = document.querySelector('.testcard');
+				card.style.animationDuration = `${audioDuration}s`;
+				card.style.animationPlayState = 'running';
+			}
 		}
+
 		startTimer();
 		setInterval(updateTime, 100);
 
@@ -698,58 +721,254 @@
 </body>
 
 <style>
-	h1 {
-		margin-top: -3vh;
+	.testingPage {
+		background: 
+		url('../lib/images/background/e.svg'), 
+		url('../lib/images/background/a.svg'), 
+		url('../lib/images/background/i.svg'), 
+		url('../lib/images/background/o.svg'),
+		url('../lib/images/background/u.svg')
+		#cfd8ed;
+		background-repeat: repeat-y;
+		background-position: 
+		5% 0%, 
+		95% 0%, 
+		50% 30%, 
+		5% 0%, 
+		95% 0%;
+		background-size: 6rem, 6rem, 3rem;
 	}
 
-	.progress-element {
-		position: relative;
-		top: 85vh;
-		left: 0;
-		width: 100%;
+	h3 {
+		font-weight: 600;
 	}
 
-	.progressbg {
-		height: 25px;
+	nav {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
 		width: 100%;
-		border-radius: var(--border-radius);
-		background-color: var(--color-bg-dark);
 
-		& .progressbar {
+		& a {
+			color: var(--color-text);
+			padding-right: 0;
+
+			& span {
+				padding-left: 0.45em;
+				font-weight: 200 !important;
+			}
+		}
+
+		& .progress-element {
 			position: relative;
-			left: 0;
-			height: 100%;
-			border-radius: var(--border-radius);
-			width: 0%;
-			background-color: var(--color-bg-light);
-			opacity: 0.4;
-			transition: all 0.3s ease-in-out;
+			width: 100%;
+			border-radius: 40px;
+			box-shadow: var(--box-shadow-test);
+
+			& .progressbg {
+				height: 15px;
+				width: 100%;
+				border-radius: 40px;
+				background-color: var(--color-text);
+
+				& .progressbar {
+					position: relative;
+					left: 0;
+					height: 100%;
+					border-radius: 40px;
+					width: 0%;
+					background-color: var(--color-interactions);
+				}
+			}
+		}
+
+		& a,
+		& button {
+			min-height: 50px;
+			min-width: 50px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center !important;
+
+			font-size: var(--font-size-iconbtn) !important;
+
+			border-radius: 20px;
+			border: none;
+			text-decoration: none;
+
+			background-color: var(--color-interactions);
+			color: var(--color-text);
+			text-align: center !important;
+			box-shadow: var(--box-shadow-test);
+
+			&:hover {
+				background-color: var(--color-interactions-hover);
+			}
 		}
 	}
 
-	#feedback {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+	.startcanceltest {
+		display: flex;
+		justify-content: space-between;
+		min-width: 100%;
+		margin-top: 1em;
+	}
 
-		padding: 0.5em 1em;
+	.canceltest,
+	.start {
+		text-decoration: none;
+		padding: 0.75em 1em;
 		border-radius: var(--border-radius);
-		background-color: var(--color-accent-blue);
-		text-align: center;
+		font-size: var(--font-size-storydesc);
+		font-family: 'Poppins', sans-serif;
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+
+		color: var(--color-darktext);
+		background-color: var(--color-text);
+		box-shadow: var(--box-shadow-test);
+
+		& span {
+			font-size: var(--font-size-storydesc);
+			color: var(--color-cancel);
+		}
+
+		&:hover,
+		&:active {
+			background-color: var(--color-active-cancel);
+		}
 	}
 
 	.start {
-		color: var(--color-text);
-		text-decoration: none;
-		background-color: var(--color-accent-lilac);
-		box-shadow: var(--box-shadow);
-		border-radius: var(--border-radius);
 		border: none;
-		padding: 0.5em 2em;
-		width: 100%;
-		margin-top: 1em;
-		text-align: center;
-		display: block;
+		background-color: var(--color-start);
+		color: var(--color-text);
+
+		& span {
+			font-weight: 800;
+			color: var(--color-text);
+		}
+
+		&:hover,
+		&:active {
+			background-color: var(--color-active-start);
+		}
+	}
+
+	.testcard {
+		position: absolute;
+		width: 70dvw;
+		aspect-ratio: 2/1.75;
+		background-color: var(--color-text);
+		border-radius: var(--border-radius);
+		box-shadow: var(--box-shadow-test);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(-1deg) scale(1);
+		transform-origin: center center;
+		padding: 0.5em;
+
+		animation-name: animateCard;
+		animation-play-state: paused;
+		color: var(--color-interactions);
+
+		& .testcard-img {
+			position: relative;
+			width: 100%;
+			height: 70%;
+			background-color: var(--color-interactions);
+			border-radius: var(--border-radius);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			& p {
+				/* font-size: 185px; */
+				font-size: clamp(100px, 100px + 5vw, 185px);
+				display: inline-block;
+			}
+		}
+
+		& p {
+			font-family: 'Poppins', sans-serif;
+			font-weight: 800;
+			text-align: center;
+			/* font-size: 120px; */
+			font-size: clamp(90px, 80px + 3vw, 120px);
+		}
+	}
+
+	@keyframes animateCard {
+		0% {
+			transform: translate(-50%, -50%) scale(1) rotate(-1deg);
+		}
+		5% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(1deg);
+		}
+		10% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(3deg);
+		}
+		15% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+		}
+		20% {
+			transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
+		}
+		25% {
+			transform: translate(-50%, -50%) scale(1) rotate(0deg);
+		}
+		30% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(4deg);
+		}
+		35% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(2deg);
+		}
+		40% {
+			transform: translate(-50%, -50%) scale(1) rotate(-1deg);
+		}
+		45% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(1deg);
+		}
+		50% {
+			transform: translate(-50%, -50%) scale(1.3) rotate(2deg);
+		}
+		55% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+		}
+		60% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(-2deg);
+		}
+		65% {
+			transform: translate(-50%, -50%) scale(1.3) rotate(1deg);
+		}
+		70% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(3deg);
+		}
+		75% {
+			transform: translate(-50%, -50%) scale(1.3) rotate(2deg);
+		}
+		80% {
+			transform: translate(-50%, -50%) scale(1.2) rotate(-1deg);
+		}
+		85% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
+		}
+		90% {
+			transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+		}
+		95% {
+			transform: translate(-50%, -50%) scale(1.05) rotate(1deg);
+		}
+		100% {
+			transform: translate(-50%, -50%) scale(1) rotate(-1deg);
+		}
+	}
+
+	@media (min-width: 650px) {
+		.testcard {
+			width: 30dvw;
+		}
 	}
 </style>
