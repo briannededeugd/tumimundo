@@ -3,6 +3,7 @@
 	import { crossfade } from 'svelte/transition';
 
 	onMount(() => {
+		document.body.classList.add('attentiontest');
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
 
@@ -696,21 +697,24 @@
 </body>
 
 <style>
+	:global(body.attentiontest) {
+		background-color: var(--color-background);
+	}
+
 	.testingPage {
-		background: 
-		url('../lib/images/background/e.svg'), 
-		url('../lib/images/background/a.svg'), 
-		url('../lib/images/background/i.svg'), 
-		url('../lib/images/background/o.svg'),
-		url('../lib/images/background/u.svg')
-		#cfd8ed;
+		background:
+			url('../lib/images/background/e.svg'),
+			url('../lib/images/background/a.svg'),
+			url('../lib/images/background/i.svg'),
+			url('../lib/images/background/o.svg'),
+			url('../lib/images/background/u.svg') #cfd8ed;
 		background-repeat: repeat-y;
-		background-position: 
-		5% 0%, 
-		95% 0%, 
-		50% 30%, 
-		5% 0%, 
-		95% 0%;
+		background-position:
+			5% 0%,
+			95% 0%,
+			50% 30%,
+			5% 0%,
+			95% 0%;
 		background-size: 6rem, 6rem, 3rem;
 	}
 

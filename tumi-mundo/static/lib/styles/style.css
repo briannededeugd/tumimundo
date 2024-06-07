@@ -99,8 +99,7 @@ html, body {
 }
 
 body {
-	/* background-image: var(--background-gradient); */
-	background-color: var(--color-background);
+	background-image: var(--background-gradient);
     height: max-content;
     background-size: cover;
     background-repeat: no-repeat;

@@ -1,3 +1,11 @@
+<script>
+	import { onMount } from "svelte";
+
+	onMount(() => {
+		document.body.classList.remove('attentiontest');
+	})
+</script>
+
 <svelte:head>
 	<title>TuMi Mundo - Attention Test</title>
 </svelte:head>
