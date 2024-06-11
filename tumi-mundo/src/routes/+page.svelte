@@ -27,7 +27,7 @@
 	> page.
 </p>
 
-<details open>
+<details open class="accordion">
 	<summary on:click={expandState}>
 		<h3>Privacy Statement</h3>
 		<p bind:this={expandButton}>Expand</p>
@@ -44,90 +44,94 @@
 
 <h2>6-12 months</h2>
 
-<!-- Attention span test -->
-<section class="attention-span information-block">
-	<div class="header-container">
-		<h3>Attention span test</h3>
-		<p class="time">10-15 minutes</p>
-	</div>
+<section class="modules">
+	<!-- Attention span test -->
+	<section class="attention-span information-block">
+		<div class="header-container">
+			<h3>Attention span test</h3>
+			<p class="time">10-15 minutes</p>
+		</div>
 
-	<p><strong>How it works</strong></p>
-	<p>
-		The reason to do this test is to measure how long the attention span is for the learned
-		language(s). Before you start the test there will be a few short steps you will have to take
-		before you can start the test. This will be explained to you through a few pictures.
-	</p>
-	<div class="section-button">
-		<a href="/onboarding">Start test</a>
-	</div>
-</section>
+		<p><strong>How it works</strong></p>
+		<p>
+			The reason to do this test is to measure how long the attention span is for the learned
+			language(s). Before you start the test there will be a few short steps you will have to take
+			before you can start the test. This will be explained to you through a few pictures.
+		</p>
+		<div class="section-button">
+			<a href="/onboarding">Start test</a>
+		</div>
+	</section>
 
-<!-- Word recognition -->
-<section class="word-recognition information-block">
-	<div class="header-container">
-		<h3>Word recognition</h3>
-		<p class="time">5-10 minutes</p>
-	</div>
+	<!-- Word recognition -->
+	<section class="word-recognition information-block">
+		<div class="header-container">
+			<h3>Word recognition</h3>
+			<p class="time">5-10 minutes</p>
+		</div>
 
-	<p><strong>How it works</strong></p>
-	<p>
-		This test is provided through the University of Leiden. The results of these tests will be
-		shared with the researchers directly. This is optional and not part of the method or the
-		lessons. You will still receive results after the test. This is only for research purposes. How
-		many of the words heard during the stories stay around?
-	</p>
-	<div class="section-button">
-		<img
-			src="../lib/images/icons/universiteit-leiden-logo.png"
-			alt="Logo of the University of Leiden"
-		/>
-		<a href="/">Start test</a>
-	</div>
+		<p><strong>How it works</strong></p>
+		<p>
+			This test is provided through the University of Leiden. The results of these tests will be
+			shared with the researchers directly. This is optional and not part of the method or the
+			lessons. You will still receive results after the test. This is only for research purposes.
+			How many of the words heard during the stories stay around?
+		</p>
+		<div class="section-button">
+			<img
+				src="../lib/images/icons/universiteit-leiden-logo.png"
+				alt="Logo of the University of Leiden"
+			/>
+			<a href="/">Start test</a>
+		</div>
+	</section>
 </section>
 
 <h2>1-2 years</h2>
 
-<!-- The first words -->
-<section class="first-words information-block">
-	<div class="header-container">
-		<h3>The first words</h3>
-		<p class="time">10-15 minutes</p>
-	</div>
+<section class="modules">
+	<!-- The first words -->
+	<section class="first-words information-block">
+		<div class="header-container">
+			<h3>The first words</h3>
+			<p class="time">10-15 minutes</p>
+		</div>
 
-	<p><strong>How it works</strong></p>
-	<p>
-		This test is provided through the University of Leiden. The results of these tests will be
-		shared with the researchers directly. This is optional and not part of the method or the
-		lessons. You will still receive results after the test. This is only for research purposes. How
-		many of the words heard during the stories stay around?
-	</p>
-	<div class="section-button">
-		<img
-			src="../lib/images/icons/universiteit-leiden-logo.png"
-			alt="Logo of the University of Leiden"
-		/>
-		<a href="/">Start test</a>
-	</div>
-</section>
+		<p><strong>How it works</strong></p>
+		<p>
+			This test is provided through the University of Leiden. The results of these tests will be
+			shared with the researchers directly. This is optional and not part of the method or the
+			lessons. You will still receive results after the test. This is only for research purposes.
+			How many of the words heard during the stories stay around?
+		</p>
+		<div class="section-button">
+			<img
+				src="../lib/images/icons/universiteit-leiden-logo.png"
+				alt="Logo of the University of Leiden"
+			/>
+			<a href="/">Start test</a>
+		</div>
+	</section>
 
-<section class="first-words information-block">
-	<div class="header-container">
-		<h3>The first words</h3>
-		<p class="time">10-15 minutes</p>
-	</div>
+	<section class="first-words information-block">
+		<div class="header-container">
+			<h3>The first words</h3>
+			<p class="time">10-15 minutes</p>
+		</div>
 
-	<p><strong>How it works</strong></p>
-	<p>
-		This test is provided through the University of Leiden. The results of these tests will be
-		shared with the researchers directly. This is optional and not part of the method or the
-		lessons. You will still receive results after the test. This is only for research purposes. How
-		many of the words heard during the stories stay around?
-	</p>
-	<div class="section-button">
-		<img
-			src="../lib/images/icons/universiteit-leiden-logo.png"
-			alt="Logo of the University of Leiden"
-		/>
-		<a href="/">Start test</a>
-	</div>
+		<p><strong>How it works</strong></p>
+		<p>
+			This test is provided through the University of Leiden. The results of these tests will be
+			shared with the researchers directly. This is optional and not part of the method or the
+			lessons. You will still receive results after the test. This is only for research purposes.
+			How many of the words heard during the stories stay around?
+		</p>
+		<div class="section-button">
+			<img
+				src="../lib/images/icons/universiteit-leiden-logo.png"
+				alt="Logo of the University of Leiden"
+			/>
+			<a href="/">Start test</a>
+		</div>
+	</section>
 </section>
