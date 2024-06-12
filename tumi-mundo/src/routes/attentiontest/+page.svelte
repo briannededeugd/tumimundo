@@ -21,6 +21,7 @@
 	var timeFormat = 0;
 
 	onMount(() => {
+		document.body.classList.add('attentiontest');
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
 
@@ -293,6 +294,10 @@
 </body>
 
 <style>
+	:global(body.attentiontest) {
+		background-color: var(--color-background);
+	}
+
 	.testingPage {
 		background:
 			url('../lib/images/background/e.svg'),
@@ -308,6 +313,7 @@
 			5% 0%,
 			95% 0%;
 		background-size: 6rem, 6rem, 3rem;
+		margin: -3vh -5vw;
 	}
 
 	h3 {
