@@ -1,19 +1,17 @@
 <script>
+	import { isActive, icon, audioFile } from '../stores.js';
 	import { onMount } from 'svelte';
-	import { crossfade } from 'svelte/transition';
 
 	function stopFaceDetection() {
 		window.location.pathname = 'onboarding';
 	}
 
-	onMount(() => {
-		const popup = document.querySelector('.popup');
-		const popupButton = document.querySelector('.popup button');
-
-		popupButton.addEventListener('click', () => {
+	function removePopup() {
+			const popup = document.querySelector('.popup');
 			popup.style.display = 'none';
-		});
+		}
 
+	onMount(() => {
 		const video = document.getElementById('webcam');
 
 		if (navigator.mediaDevices.getUserMedia) {
@@ -50,9 +48,9 @@
 		>
 	</nav>
 
-	<section class="testcard">
+	<section class="testcard" style="animation-play-state:{$isActive ? "running" : "paused"}; ">
 		<div class="testcard-img">
-			<p>🐋</p>
+			<p>{$icon.animalIcon}</p>
 		</div>
 		<div class="testcard-info">
 			<p>é</p>
@@ -71,7 +69,7 @@
 			</video>
 
 			<div class="startcanceltest">
-				<button onclick="button_callback()" class="start"
+				<button onclick="button_callback()" on:click={removePopup} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
 				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
@@ -661,11 +659,11 @@
 					if (confidenceScore > 400.0) {
 						faceDetected = true;
 						break;
-					// Only when it's below 350, tell it there is no face
+						// Only when it's below 350, tell it there is no face
 					} else if (confidenceScore < 350.0) {
 						faceDetected = false;
 						break;
-					// if the number is between 350 and 400 keep the same detection as before
+						// if the number is between 350 and 400 keep the same detection as before
 					} else {
 						faceDetected = prevFaceDetected;
 						break;
@@ -703,7 +701,6 @@
 				let audioDuration = Math.ceil(highFreqAudio.duration);
 				const card = document.querySelector('.testcard');
 				card.style.animationDuration = `${audioDuration}s`;
-				card.style.animationPlayState = 'running';
 			}
 		}
 
@@ -722,20 +719,19 @@
 
 <style>
 	.testingPage {
-		background: 
-		url('../lib/images/background/e.svg'), 
-		url('../lib/images/background/a.svg'), 
-		url('../lib/images/background/i.svg'), 
-		url('../lib/images/background/o.svg'),
-		url('../lib/images/background/u.svg')
-		#cfd8ed;
+		background:
+			url('../lib/images/background/e.svg'),
+			url('../lib/images/background/a.svg'),
+			url('../lib/images/background/i.svg'),
+			url('../lib/images/background/o.svg'),
+			url('../lib/images/background/u.svg') #cfd8ed;
 		background-repeat: repeat-y;
-		background-position: 
-		5% 0%, 
-		95% 0%, 
-		50% 30%, 
-		5% 0%, 
-		95% 0%;
+		background-position:
+			5% 0%,
+			95% 0%,
+			50% 30%,
+			5% 0%,
+			95% 0%;
 		background-size: 6rem, 6rem, 3rem;
 	}
 
@@ -866,7 +862,7 @@
 		box-shadow: var(--box-shadow-test);
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%) rotate(-1deg) scale(1);
+		transform: translate(-50%, -50%) scale(1);
 		transform-origin: center center;
 		padding: 0.5em;
 

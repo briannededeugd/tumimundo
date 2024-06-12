@@ -427,9 +427,7 @@ button {
     text-align: center;
 
     .carousel-main {
-        /* background-image: var(--background-overlay), url('../images/panda.jpg'); */
         background-image: linear-gradient(to bottom right, var(--color-text), var(--color-accent-blue), var(--color-accent-lilac)); /* panda */
-
         background-repeat: no-repeat;
         background-size: cover;
         box-shadow: var(--box-shadow);
@@ -437,14 +435,18 @@ button {
         margin: 1.2em 0 1em;
         display: flex;
         flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 20rem;
+		font-size: 3rem;
 
         .icon {
-            font-size: var(--font-size-icon);
+			font-size: 11rem;
         }
 
         .icon-title {
-            font-size: var(--font-size-iconlabel);
-            margin: -1.5em 0 .5em;
+            margin: -0.9em 0 .5em;
+			font-size: 3rem;
         }
     }
 
@@ -493,27 +495,27 @@ button {
 		border: none;
 		border-radius: 1.2em;
 		cursor: pointer;
-		position: relative;
+		padding: 0.1rem;
+		display: flex;
+		justify-content: start;
+	}
+
+	.motionToggle input {
+		display: none;
 	}
 
 	.motionToggle::before {
 		content: '';
-		position: absolute;
-		width: 1.8em;
-		height: 1.8em;
+		display: block;
+		height: 100%;
+		aspect-ratio: 1/1;
 		background-color: white;
 		border-radius: 50%;
-		top: 0.21em;
-		left: 0.2em;
-		transition: transform 0.3s;
-		transform: translateX(2.3em);
 	}
 
-	.active {
+	.motionToggle:has(input:checked) {
 		background-color: green;
-	}
-	.active::before {
-		transform: translateX(0);
+		justify-content: end;
 	}
 
 
