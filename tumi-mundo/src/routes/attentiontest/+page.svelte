@@ -250,9 +250,9 @@
 		>
 	</nav>
 
-	<section class="testcard">
+	<section class="testcard" style="animation-play-state:{isActive ? "running" : "paused"};">
 		<div class="testcard-img">
-			<p>🐋</p>
+			<p>{$icon.animalIcon}</p>
 		</div>
 		<div class="testcard-info">
 			<p>é</p>
@@ -271,7 +271,7 @@
 			</video>
 
 			<div class="startcanceltest">
-				<button on:click={button_callback} class="start"
+				<button on:click={button_callback} on:click={removePopup} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
 				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
