@@ -1,4 +1,3 @@
-<<<<<<< tumi-frontend
 export async function fetchApi(path, method = 'GET', data) {
 	// later token meegeven en authorization header weer aanzetten
 	const url = `https://fdnd-agency.directus.app/items${path}`; // Moet een variabele worden (tm_profile)
@@ -27,10 +26,3 @@ export async function fetchApi(path, method = 'GET', data) {
 		throw Error(error.message);
 	}
 }
-=======
-export async function fetchApi(url, payload = {}) {
-	return await fetch(url, payload)
-		.then((response) => response.json())
-		.catch((error) => error);
-}
->>>>>>> main
