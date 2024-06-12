@@ -716,6 +716,7 @@
 			5% 0%,
 			95% 0%;
 		background-size: 6rem, 6rem, 3rem;
+		margin: -3vh -5vw;
 	}
 
 	h3 {
