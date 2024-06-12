@@ -8,4 +8,4 @@ export const icon = writable({
     animalGradient:
         'linear-gradient(to bottom right, var(--color-text), var(--color-accent-blue), var(--color-accent-lilac))'
 });
-export const audioFile = writable();
+export const audioFile = writable('HF-list1.wav');

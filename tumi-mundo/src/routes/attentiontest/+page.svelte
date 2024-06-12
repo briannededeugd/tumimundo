@@ -50,7 +50,7 @@
 		var prevRandom;
 		var timer;
 
-		highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
+		highFreqAudio = new Audio(`../lib/audios/${$audioFile}`);
 		var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 

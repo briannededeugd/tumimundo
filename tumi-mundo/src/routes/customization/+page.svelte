@@ -40,18 +40,12 @@
 	};
 
 	// Tells which animal is checked
-	// let icon = 'Panda';
-	// stored
 	$: console.log($icon);
 
 	// tells if animation should be included or not (toggle button)
-	// let isActive = false;
-
-	// stored
 	$: console.log($isActive);
 
 	// get audio file (initial value is undefined. after initialization it's the first in the list)
-	// let audioFile;
 	$: console.log($audioFile);
 
 	// speed?
@@ -145,9 +139,9 @@
 	<h2>Audio</h2>
 	<label for="audio">Choose the audio:</label>
 	<select bind:value={$audioFile} name="audio" id="audio">
-		<option value="audio1">audio1.mp3</option>
-		<option value="audio2">audio2.mp3</option>
-		<option value="audio3">audio3.mp3</option>
+		<option value="HF-list1.wav">audio1.mp3</option>
+		<option value="LF-list1.wav">audio2.mp3</option>
+		<option value="ES-HF-audio.m4a">audio3.mp3</option>
 	</select>
 </section>
 
