@@ -662,11 +662,11 @@
 					if (confidenceScore > 400.0) {
 						faceDetected = true;
 						break;
-					// Only when it's below 350, tell it there is no face
+						// Only when it's below 350, tell it there is no face
 					} else if (confidenceScore < 350.0) {
 						faceDetected = false;
 						break;
-					// if the number is between 350 and 400 keep the same detection as before
+						// if the number is between 350 and 400 keep the same detection as before
 					} else {
 						faceDetected = prevFaceDetected;
 						break;
