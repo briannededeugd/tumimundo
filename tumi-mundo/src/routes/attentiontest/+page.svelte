@@ -539,7 +539,7 @@
 
 		var timestampsObject = [];
 
-		var highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
+		var highFreqAudio = new Audio('../lib/audios/ES-HF-audio.m4a');
 		var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 
