@@ -2,7 +2,9 @@ import { fetchApi } from '/static/lib/utils/fetchApi.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Fetch data
+// Script link test
+console.log('Hello, world!');
+
 export async function load() {
 	const directusEndpoint = 'https://fdnd-agency.directus.app/items';
 
@@ -28,38 +30,31 @@ export const actions = {
 		const name_of_child = formData.get('name_of_child');
 		const gender = formData.get('gender');
 		const date_of_birth = formData.get('date_of_birth');
-		const current_languages = formData.getAll('current_languages').map(id => ({ id: parseInt(id, 10) }));
-		const new_language_to_learn = formData.getAll('new_language_to_learn').map(id => ({ id: parseInt(id, 10) }));
-        
-        const data = {
-            name_of_child,
-            gender,
-            date_of_birth,
-            current_languages,
-            new_language_to_learn
-            // current_languages: [{ id: current_languages }], // Format as an array of objects
-            // new_language_to_learn: [{ id: new_language_to_learn }] // Format as an array of objects
-        };
+		const current_languages = formData.getAll('current_languages').map(id => ({ id }));
+		const new_language_to_learn = formData.getAll('new_language_to_learn').map(id => ({ id }));
 
-        console.log("FORMDATA:", data)
-       
+		const data = {
+			name_of_child,
+			gender,
+			date_of_birth,
+			current_languages,
+			new_language_to_learn
+		};
+
 		const directusEndpoint = 'https://fdnd-agency.directus.app/items/tm_profile';
-        // const accessToken = process.env.DIRECTUS_TOKEN;
-        
+
 		try {
 			const response = await fetch(directusEndpoint, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					// Authorization: `Bearer ${accessToken}`
 				},
 				body: JSON.stringify(data)
 			});
 
 			if (!response.ok) {
 				const errorData = await response.json();
-                console.error('Error sending data to Directus:', errorData);
-                
+				console.error('Error sending data to Directus:', errorData);
 				return {
 					success: false,
 					error: 'Failed to submit data to Directus'
