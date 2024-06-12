@@ -2,6 +2,10 @@
 	import { onMount } from 'svelte';
 	import { crossfade } from 'svelte/transition';
 
+	function stopFaceDetection() {
+		window.location.pathname = 'onboarding';
+	}
+
 	onMount(() => {
 		document.body.classList.add('attentiontest');
 		const popup = document.querySelector('.popup');
@@ -71,7 +75,7 @@
 				<button onclick="button_callback()" class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
-				<a href="/onboarding" class="canceltest">
+				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
 					Cancel
 					<span class="material-symbols-outlined"> close </span></a
 				>
@@ -533,8 +537,7 @@
 		var prevRandom;
 		var timer;
 
-		var arrLookAway = [];
-		var arrLookAtScreen = [];
+		var timestampsObject = [];
 
 		var highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
 		var progressBackground = document.querySelector('.progressbg');
@@ -653,27 +656,45 @@
 
 				var faceDetected = false;
 				for (var i = 0; i < dets.length; ++i) {
-					faceDetected = true;
-					break;
+					// confidenceScore is a Number on how certain the api thinks it detects a face
+					var confidenceScore = dets[0][3];
+					// only when its certainty is above 400, tell it there is a face
+					if (confidenceScore > 400.0) {
+						faceDetected = true;
+						break;
+					// Only when it's below 350, tell it there is no face
+					} else if (confidenceScore < 350.0) {
+						faceDetected = false;
+						break;
+					// if the number is between 350 and 400 keep the same detection as before
+					} else {
+						faceDetected = prevFaceDetected;
+						break;
+					}
 				}
 
 				// TIMER START / TIMER STOP
 				if (faceDetected !== prevFaceDetected) {
 					// Check if the detection status has changed
 					if (faceDetected) {
-						arrLookAway.push(timeFormat);
-						console.log(arrLookAway);
-						console.log('Baby started paying attention');
+						timestampsObject.push({
+							time: timeFormat,
+							type: 'attention_start',
+							description: 'Baby started paying attention'
+						});
+						console.log(timestampsObject);
 					} else {
-						arrLookAtScreen.push(timeFormat);
-						console.log(arrLookAtScreen);
-						console.log('Baby stopped paying attention');
+						timestampsObject.push({
+							time: timeFormat,
+							type: 'attention_stop',
+							description: 'Baby stopped paying attention'
+						});
+						console.log(timestampsObject);
 					}
 					prevFaceDetected = faceDetected; // Update the previous detection status
 				}
 			};
 
-			// var ctx = document.createElement('canvas').getContext('2d');
 			var mycamvas = new camvas(ctx, processfn);
 
 			initialized = true;
@@ -691,6 +712,10 @@
 		setInterval(updateTime, 100);
 
 		highFreqAudio.addEventListener('ended', () => {
+			// turn object into JSON
+			var jsonObj = JSON.stringify(timestampsObject);
+			// CODE TO SEND TO SERVER HERE...
+
 			window.location.pathname = 'offboarding';
 		});
 	</script>
