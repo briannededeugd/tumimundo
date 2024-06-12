@@ -1,6 +1,6 @@
 <script>
+	import { isActive, icon, audioFile } from '../stores.js';
 	import { onMount } from 'svelte';
-	import { crossfade } from 'svelte/transition';
 
 	import { pico } from '../../utils/libraries/pico-library.js';
 	import { lploc } from '../../utils/libraries/lploc-library.js';
@@ -22,15 +22,13 @@
 	var hours = 0;
 	var timeFormat = 0;
 
-	onMount(() => {
-		document.body.classList.add('attentiontest');
+	function removePopup() {
 		const popup = document.querySelector('.popup');
-		const popupButton = document.querySelector('.popup button');
-
-		popupButton.addEventListener('click', () => {
-			popup.style.display = 'none';
-		});
-
+		popup.style.display = 'none';
+		}
+		
+		onMount(() => {
+		document.body.classList.add('attentiontest');
 		const video = document.getElementById('webcam');
 
 		if (navigator.mediaDevices.getUserMedia) {
@@ -54,7 +52,7 @@
 		var prevRandom;
 		var timer;
 
-		highFreqAudio = new Audio('../lib/audios/ES-HF-audio.m4a');
+		highFreqAudio = new Audio(`../lib/audios/${$audioFile}`);
 		var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 
@@ -237,7 +235,6 @@
 			let audioDuration = Math.ceil(highFreqAudio.duration);
 			const card = document.querySelector('.testcard');
 			card.style.animationDuration = `${audioDuration}s`;
-			card.style.animationPlayState = 'running';
 		}
 	}
 </script>
@@ -261,9 +258,9 @@
 		>
 	</nav>
 
-	<section class="testcard">
+	<section class="testcard" style="animation-play-state:{isActive ? "running" : "paused"};">
 		<div class="testcard-img">
-			<p>🐋</p>
+			<p>{$icon.animalIcon}</p>
 		</div>
 		<div class="testcard-info">
 			<p>é</p>
@@ -282,7 +279,7 @@
 			</video>
 
 			<div class="startcanceltest">
-				<button on:click={button_callback} class="start"
+				<button on:click={button_callback} on:click={removePopup} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
 				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
@@ -446,7 +443,7 @@
 		box-shadow: var(--box-shadow-test);
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%) rotate(-1deg) scale(1);
+		transform: translate(-50%, -50%) scale(1);
 		transform-origin: center center;
 		padding: 0.5em;
 
