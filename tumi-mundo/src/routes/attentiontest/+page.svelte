@@ -7,6 +7,7 @@
 	}
 
 	onMount(() => {
+		document.body.classList.add('attentiontest');
 		const popup = document.querySelector('.popup');
 		const popupButton = document.querySelector('.popup button');
 
@@ -661,11 +662,11 @@
 					if (confidenceScore > 400.0) {
 						faceDetected = true;
 						break;
-					// Only when it's below 350, tell it there is no face
+						// Only when it's below 350, tell it there is no face
 					} else if (confidenceScore < 350.0) {
 						faceDetected = false;
 						break;
-					// if the number is between 350 and 400 keep the same detection as before
+						// if the number is between 350 and 400 keep the same detection as before
 					} else {
 						faceDetected = prevFaceDetected;
 						break;
@@ -721,22 +722,26 @@
 </body>
 
 <style>
+	:global(body.attentiontest) {
+		background-color: var(--color-background);
+	}
+
 	.testingPage {
-		background: 
-		url('../lib/images/background/e.svg'), 
-		url('../lib/images/background/a.svg'), 
-		url('../lib/images/background/i.svg'), 
-		url('../lib/images/background/o.svg'),
-		url('../lib/images/background/u.svg')
-		#cfd8ed;
+		background:
+			url('../lib/images/background/e.svg'),
+			url('../lib/images/background/a.svg'),
+			url('../lib/images/background/i.svg'),
+			url('../lib/images/background/o.svg'),
+			url('../lib/images/background/u.svg') #cfd8ed;
 		background-repeat: repeat-y;
-		background-position: 
-		5% 0%, 
-		95% 0%, 
-		50% 30%, 
-		5% 0%, 
-		95% 0%;
+		background-position:
+			5% 0%,
+			95% 0%,
+			50% 30%,
+			5% 0%,
+			95% 0%;
 		background-size: 6rem, 6rem, 3rem;
+		margin: -3vh -5vw;
 	}
 
 	h3 {
