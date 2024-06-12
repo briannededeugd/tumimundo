@@ -1,4 +1,4 @@
-import { fetchApi } from '/static/lib/utils/fetchApi.js';
+import { fetchApi } from '../../utils/fetchApi';
 import dotenv from 'dotenv';
 dotenv.config();
 
