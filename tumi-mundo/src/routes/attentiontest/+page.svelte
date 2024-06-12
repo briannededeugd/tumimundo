@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { crossfade } from 'svelte/transition';
-	
+
 	import { pico } from '../../utils/libraries/pico-library.js';
 	import { lploc } from '../../utils/libraries/lploc-library.js';
 	import { camvas } from '../../utils/libraries/camvas-library.js';
@@ -44,16 +44,13 @@
 			console.log('getUserMedia not supported!');
 		}
 
-
-
-	/**===========================================
-	*               PICO INLINE JS              *
-	*==========================================**/
+		/**===========================================
+		 *               PICO INLINE JS              *
+		 *==========================================**/
 
 		var random;
 		var prevRandom;
 		var timer;
-
 
 		highFreqAudio = new Audio('../lib/audios/HF-list1.wav');
 		var progressBackground = document.querySelector('.progressbg');
@@ -98,7 +95,6 @@
 			progressBar.style.width = (currentTime / duration) * 100 + '%';
 		}
 
-		
 		startTimer();
 		setInterval(updateTime, 100);
 
@@ -112,130 +108,130 @@
 	});
 
 	function button_callback() {
-			if (initialized) return;
+		if (initialized) return;
 
-			highFreqAudio.play();
+		highFreqAudio.play();
 
-			var update_memory = pico.instantiate_detection_memory(5);
-			var facefinder_classify_region = function (r, c, s, pixels, ldim) {
-				return -1.0;
-			};
-			var cascadeurl =
-				'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
-			fetch(cascadeurl).then(function (response) {
-				response.arrayBuffer().then(function (buffer) {
-					var bytes = new Int8Array(buffer);
-					facefinder_classify_region = pico.unpack_cascade(bytes);
-					console.log('* facefinder loaded');
-				});
+		var update_memory = pico.instantiate_detection_memory(5);
+		var facefinder_classify_region = function (r, c, s, pixels, ldim) {
+			return -1.0;
+		};
+		var cascadeurl =
+			'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
+		fetch(cascadeurl).then(function (response) {
+			response.arrayBuffer().then(function (buffer) {
+				var bytes = new Int8Array(buffer);
+				facefinder_classify_region = pico.unpack_cascade(bytes);
+				console.log('* facefinder loaded');
 			});
+		});
 
-			var do_puploc = function (r, c, s, nperturbs, pixels, nrows, ncols, ldim) {
-				return [-1.0, -1.0];
-			};
-			var puplocurl = 'https://drone.nenadmarkus.com/data/blog-stuff/puploc.bin';
-			fetch(puplocurl).then(function (response) {
-				response.arrayBuffer().then(function (buffer) {
-					var bytes = new Int8Array(buffer);
-					do_puploc = lploc.unpack_localizer(bytes);
-					console.log('* puploc loaded');
-				});
+		var do_puploc = function (r, c, s, nperturbs, pixels, nrows, ncols, ldim) {
+			return [-1.0, -1.0];
+		};
+		var puplocurl = 'https://drone.nenadmarkus.com/data/blog-stuff/puploc.bin';
+		fetch(puplocurl).then(function (response) {
+			response.arrayBuffer().then(function (buffer) {
+				var bytes = new Int8Array(buffer);
+				do_puploc = lploc.unpack_localizer(bytes);
+				console.log('* puploc loaded');
 			});
-			var ctx = document.getElementsByTagName('canvas')[0].getContext('2d');
-			function rgba_to_grayscale(rgba, nrows, ncols) {
-				var gray = new Uint8Array(nrows * ncols);
-				for (var r = 0; r < nrows; ++r)
-					for (var c = 0; c < ncols; ++c)
-						gray[r * ncols + c] =
-							(2 * rgba[r * 4 * ncols + 4 * c + 0] +
-								7 * rgba[r * 4 * ncols + 4 * c + 1] +
-								1 * rgba[r * 4 * ncols + 4 * c + 2]) /
-							10;
-				return gray;
-			}
-
-			var prevFaceDetected = false; // Add this variable to store the previous detection status
-
-			var processfn = function (video, dt) {
-				// Create an off-screen canvas for processing the video frame
-				var canvas = document.createElement('canvas');
-				canvas.width = 640;
-				canvas.height = 480;
-				var ctx = canvas.getContext('2d');
-
-				ctx.drawImage(video, 0, 0);
-				var rgba = ctx.getImageData(0, 0, 640, 480).data;
-
-				var image = {
-					pixels: rgba_to_grayscale(rgba, 480, 640),
-					nrows: 480,
-					ncols: 640,
-					ldim: 640
-				};
-				var params = {
-					shiftfactor: 0.1,
-					minsize: 100,
-					maxsize: 1000,
-					scalefactor: 1.1
-				};
-
-				var dets = pico.run_cascade(image, facefinder_classify_region, params);
-				dets = update_memory(dets);
-				dets = pico.cluster_detections(dets, 0.2);
-
-				var faceDetected = false;
-				for (var i = 0; i < dets.length; ++i) {
-					// confidenceScore is a Number on how certain the api thinks it detects a face
-					var confidenceScore = dets[0][3];
-					// only when its certainty is above 400, tell it there is a face
-					if (confidenceScore > 400.0) {
-						faceDetected = true;
-						break;
-						// Only when it's below 350, tell it there is no face
-					} else if (confidenceScore < 350.0) {
-						faceDetected = false;
-						break;
-						// if the number is between 350 and 400 keep the same detection as before
-					} else {
-						faceDetected = prevFaceDetected;
-						break;
-					}
-				}
-
-				// TIMER START / TIMER STOP
-				if (faceDetected !== prevFaceDetected) {
-					// Check if the detection status has changed
-					if (faceDetected) {
-						timestampsObject.push({
-							time: timeFormat,
-							type: 'attention_start',
-							description: 'Baby started paying attention'
-						});
-						console.log(timestampsObject);
-					} else {
-						timestampsObject.push({
-							time: timeFormat,
-							type: 'attention_stop',
-							description: 'Baby stopped paying attention'
-						});
-						console.log(timestampsObject);
-					}
-					prevFaceDetected = faceDetected; // Update the previous detection status
-				}
-			};
-
-			var mycamvas = new camvas(ctx, processfn);
-
-			initialized = true;
-
-			if (highFreqAudio) {
-				// ANIMATE CARD
-				let audioDuration = Math.ceil(highFreqAudio.duration);
-				const card = document.querySelector('.testcard');
-				card.style.animationDuration = `${audioDuration}s`;
-				card.style.animationPlayState = 'running';
-			}
+		});
+		var ctx = document.getElementsByTagName('canvas')[0].getContext('2d');
+		function rgba_to_grayscale(rgba, nrows, ncols) {
+			var gray = new Uint8Array(nrows * ncols);
+			for (var r = 0; r < nrows; ++r)
+				for (var c = 0; c < ncols; ++c)
+					gray[r * ncols + c] =
+						(2 * rgba[r * 4 * ncols + 4 * c + 0] +
+							7 * rgba[r * 4 * ncols + 4 * c + 1] +
+							1 * rgba[r * 4 * ncols + 4 * c + 2]) /
+						10;
+			return gray;
 		}
+
+		var prevFaceDetected = false; // Add this variable to store the previous detection status
+
+		var processfn = function (video, dt) {
+			// Create an off-screen canvas for processing the video frame
+			var canvas = document.createElement('canvas');
+			canvas.width = 640;
+			canvas.height = 480;
+			var ctx = canvas.getContext('2d');
+
+			ctx.drawImage(video, 0, 0);
+			var rgba = ctx.getImageData(0, 0, 640, 480).data;
+
+			var image = {
+				pixels: rgba_to_grayscale(rgba, 480, 640),
+				nrows: 480,
+				ncols: 640,
+				ldim: 640
+			};
+			var params = {
+				shiftfactor: 0.1,
+				minsize: 100,
+				maxsize: 1000,
+				scalefactor: 1.1
+			};
+
+			var dets = pico.run_cascade(image, facefinder_classify_region, params);
+			dets = update_memory(dets);
+			dets = pico.cluster_detections(dets, 0.2);
+
+			var faceDetected = false;
+			for (var i = 0; i < dets.length; ++i) {
+				// confidenceScore is a Number on how certain the api thinks it detects a face
+				var confidenceScore = dets[0][3];
+				// only when its certainty is above 400, tell it there is a face
+				if (confidenceScore > 400.0) {
+					faceDetected = true;
+					break;
+					// Only when it's below 350, tell it there is no face
+				} else if (confidenceScore < 350.0) {
+					faceDetected = false;
+					break;
+					// if the number is between 350 and 400 keep the same detection as before
+				} else {
+					faceDetected = prevFaceDetected;
+					break;
+				}
+			}
+
+			// TIMER START / TIMER STOP
+			if (faceDetected !== prevFaceDetected) {
+				// Check if the detection status has changed
+				if (faceDetected) {
+					timestampsObject.push({
+						time: timeFormat,
+						type: 'attention_start',
+						description: 'Baby started paying attention'
+					});
+					console.log(timestampsObject);
+				} else {
+					timestampsObject.push({
+						time: timeFormat,
+						type: 'attention_stop',
+						description: 'Baby stopped paying attention'
+					});
+					console.log(timestampsObject);
+				}
+				prevFaceDetected = faceDetected; // Update the previous detection status
+			}
+		};
+
+		var mycamvas = new camvas(ctx, processfn);
+
+		initialized = true;
+
+		if (highFreqAudio) {
+			// ANIMATE CARD
+			let audioDuration = Math.ceil(highFreqAudio.duration);
+			const card = document.querySelector('.testcard');
+			card.style.animationDuration = `${audioDuration}s`;
+			card.style.animationPlayState = 'running';
+		}
+	}
 </script>
 
 <svelte:head>
@@ -278,7 +274,7 @@
 			</video>
 
 			<div class="startcanceltest">
-				<button on:click={ button_callback } class="start"
+				<button on:click={button_callback} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
 				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
@@ -290,7 +286,6 @@
 	</div>
 
 	<p><center><canvas width="0" height="0"></canvas></center></p>
-
 </body>
 
 <style>
@@ -300,11 +295,11 @@
 
 	.testingPage {
 		background:
-			url('../lib/images/background/e.svg'),
-			url('../lib/images/background/a.svg'),
-			url('../lib/images/background/i.svg'),
-			url('../lib/images/background/o.svg'),
-			url('../lib/images/background/u.svg') #cfd8ed;
+			url('/lib/images/background/e.svg'),
+			url('/lib/images/background/a.svg'),
+			url('/lib/images/background/i.svg'),
+			url('/lib/images/background/o.svg'),
+			url('/lib/images/background/u.svg') #cfd8ed;
 		background-repeat: repeat-y;
 		background-position:
 			5% 0%,
