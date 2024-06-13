@@ -187,6 +187,7 @@
 		/* COLORS */
 		--color-statistics-bg-light: #219b9b;
 		--color-statistics-bg-dark: #1b7070;
+		--color-statistics-bg-contrast-light: #77d2bf;
 
 		--story-item-background: #0b8fac;
 		--statistics-switch-background-color: #1cb854;
@@ -210,7 +211,7 @@
 	}
 
 	:global(body.statistics) {
-		background: var(--statistics-background-gradient);
+		background: var(--color-statistics-bg-contrast-light);
 		display: flex;
 		flex-direction: column;
 		gap: 2.5rem;
