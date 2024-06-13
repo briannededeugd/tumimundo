@@ -6,6 +6,8 @@
 	import { lploc } from '../../utils/libraries/lploc-library.js';
 	import { camvas } from '../../utils/libraries/camvas-library.js';
 
+	// export function populateJSON()
+
 	function stopFaceDetection() {
 		window.location.pathname = 'onboarding';
 	}
@@ -14,7 +16,7 @@
 	let highFreqAudio = null;
 	var timestampsObject = [];
 
-	var elapsedTime = 0; // elapsed time in milliseconds
+	var elapsedTime = 0; // Elapsed time in milliseconds
 	var seconds = 0;
 	var minutes = 0;
 	var hours = 0;
@@ -95,14 +97,20 @@
 
 		startTimer();
 		setInterval(updateTime, 100);
+		
 
-		highFreqAudio.addEventListener('ended', () => {
+		highFreqAudio.addEventListener('ended', async () => {
 			// turn object into JSON
-			var jsonObj = JSON.stringify(timestampsObject);
-			// CODE TO SEND TO SERVER HERE...
+			jsonObj = JSON.stringify(timestampsObject);
 
 			window.location.pathname = 'offboarding';
 		});
+
+		// async function populateJSON() {
+		// 	await timestampsObject;
+		// 	jsonObj = JSON.stringify(timestampsObject);
+		// 	console.log(jsonObj);
+		// }
 	});
 
 	function button_callback() {
