@@ -15,6 +15,7 @@
 }
 
 .material-symbols-outlined {
+	color: var(--color-inlinebutton);
 	font-variation-settings:
 		'FILL' 0,
 		'wght' 400,
@@ -31,10 +32,10 @@
 	--color-links: #42ddf7;
 	--color-inlinebutton: #434b75;
 
-    --color-accent-blue: #599ae7;
-    --color-accent-green: #1cb854;
-    --color-accent-lilac: #707fcf; 
-    --color-accent-turqoise: #37c6ab;
+    --color-accent-blue: #127ab0;
+    --color-accent-green: #008811;
+    --color-accent-lilac: #6a64bf; 
+    --color-accent-turqoise: #2e8182;
     --color-accent-salmon: #fd8c73;
 
 	/* NEW THEME */
@@ -99,11 +100,11 @@ html, body {
 }
 
 body {
-	background-image: var(--background-gradient);
+	background: var(--color-background);
     height: max-content;
     background-size: cover;
     background-repeat: no-repeat;
-	color: var(--color-text);
+	color: var(--color-inlinebutton);
 
     padding: 3vh 5vw;
 	position: relative;
@@ -126,6 +127,9 @@ h1 {
 
 	/* Positioning */
 	text-align: center;
+
+	/* extra padding for more space */
+	padding-bottom: 0.5em;
 }
 
 h2 {
@@ -155,7 +159,7 @@ p a {
     font-size: var(--font-size-storydescr);
     font-weight: var(--font-weight-regular);
 
-    color: var(--color-links);
+    color: var(--color-accent-blue);
 
     cursor: pointer;
 }
@@ -265,7 +269,11 @@ button {
 		background-color: var(--color-accent-blue);
 		border-radius: var(--border-radius);
 
+		color: var(--color-text);
+
 		p {
+			color: var(--color-text);
+
 			&::after {
 				content: 'keyboard_arrow_down';
 
