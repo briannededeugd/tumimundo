@@ -1,74 +1,61 @@
 <script>
-	import { onMount } from 'svelte';
+	import { isActive, icon, audioFile } from '../stores.js';
 
-	const animalNames = ['Panda', 'Fox', 'Bunny', 'Lion', 'Dog'];
-	const animalIcons = {
-		Panda: '🐼',
-		Fox: '🦊',
-		Bunny: '🐰',
-		Lion: '🦁',
-		Dog: '🐶'
-	};
-	const animalBackgrounds = {
-		Panda: '../lib/images/panda.jpg',
-		Fox: '../lib/images/fox.webp',
-		Bunny: '../lib/images/bunny.avif',
-		Lion: '../lib/images/lion.jpg',
-		Dog: '../lib/images/dog.jpg'
-	};
-	const animalGradients = {
-		Panda:
-			'linear-gradient(to bottom right, var(--color-text), var(--color-accent-blue), var(--color-accent-lilac))',
-		Fox: 'linear-gradient(to bottom right, var(--color-accent-lilac), var(--color-accent-turqoise))',
-		Bunny:
-			'linear-gradient(to bottom right, var(--color-accent-turqoise), var(--color-accent-salmon))',
-		Lion: 'linear-gradient(to bottom right, var(--color-accent-salmon), var(--color-accent-green))',
-		Dog: 'linear-gradient(to bottom right, var(--color-accent-green), var(--color-accent-turqoise))'
-	};
-
-	onMount(() => {
-		const animalTitle = document.querySelector('.icon-title');
-		const animalShowing = document.querySelector('.icon');
-		const animalBackground = document.querySelector('.carousel-main');
-
-		var iconButtons = document.querySelectorAll('input[name=icon]');
-		iconButtons.forEach((icon) => {
-			icon.addEventListener('change', () => {
-				let identifier = icon.getAttribute('data-icon');
-
-				changeInformation(identifier);
-			});
-		});
-
-		function changeInformation(identifier) {
-			console.log('changin baby');
-			animalNames.map((name) => {
-				if (name === identifier) {
-					animalTitle.textContent = identifier;
-				}
-			});
-
-			animalShowing.textContent = animalIcons[identifier];
-			// animalBackground.style.backgroundImage = `var(--background-overlay), url(${animalBackgrounds[identifier]})`;
-			animalBackground.style.backgroundImage = `${animalGradients[identifier]}`;
+	const animals = {
+		Panda: {
+			animalName: 'Panda',
+			animalIcon: '🐼',
+			animalBackground: '../lib/images/panda.jpg',
+			animalGradient:
+				'linear-gradient(to bottom right, var(--color-text), var(--color-accent-blue), var(--color-accent-lilac))'
+		},
+		Fox: {
+			animalName: 'Fox',
+			animalIcon: '🦊',
+			animalBackground: '../lib/images/fox.webp',
+			animalGradient:
+				'linear-gradient(to bottom right, var(--color-accent-lilac), var(--color-accent-turqoise))'
+		},
+		Bunny: {
+			animalName: 'Bunny',
+			animalIcon: '🐰',
+			animalBackground: '../lib/images/bunny.avif',
+			animalGradient:
+				'linear-gradient(to bottom right, var(--color-accent-turqoise), var(--color-accent-salmon))'
+		},
+		Lion: {
+			animalName: 'Lion',
+			animalIcon: '🦁',
+			animalBackground: '../lib/images/lion.jpg',
+			animalGradient:
+				'linear-gradient(to bottom right, var(--color-accent-salmon), var(--color-accent-green))'
+		},
+		Dog: {
+			animalName: 'Dog',
+			animalIcon: '🐶',
+			animalBackground: '../lib/images/dog.jpg',
+			animalGradient:
+				'linear-gradient(to bottom right, var(--color-accent-green), var(--color-accent-turqoise))'
 		}
-	});
+	};
 
-	let isActive = false;
+	// Tells which animal is checked
+	$: console.log($icon);
 
-	function motionToggle() {
-		const button = document.getElementById('motionToggle');
-		button.classList.toggle('active');
-		isActive = button.classList.contains('active');
-	}
+	// tells if animation should be included or not (toggle button)
+	$: console.log($isActive);
+
+	// get audio file (initial value is undefined. after initialization it's the first in the list)
+	$: console.log($audioFile);
+
+	// speed?
+
 </script>
 
 <a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
 <h1>Customization</h1>
-<p class="introtext">
-	Customize your child's test to their preferences to hold their attention.
-</p>
+<p class="introtext">Customize your child's test to their preferences to hold their attention.</p>
 
 <section class="characters">
 	<h2 class="customize-heading">Icon</h2>
@@ -76,30 +63,22 @@
 
 	<div class="carousel">
 		<div class="carousel-main">
-			<p class="icon">🐼</p>
-			<p class="icon-title">Panda</p>
+			<p class="icon">{animals[$icon.animalName].animalIcon}</p>
+			<p class="icon-title">{$icon.animalName}</p>
 		</div>
 		<div class="carousel-nav">
-			<label>
-				<input type="radio" name="icon" aria-label="Select the panda" data-icon="Panda" checked />
-				🐼
-			</label>
-			<label>
-				<input type="radio" name="icon" aria-label="Select the fox" data-icon="Fox" />
-				🦊
-			</label>
-			<label>
-				<input type="radio" name="icon" aria-label="Select the bunny" data-icon="Bunny" />
-				🐰
-			</label>
-			<label>
-				<input type="radio" name="icon" aria-label="Select the lion" data-icon="Lion" />
-				🦁
-			</label>
-			<label>
-				<input type="radio" name="icon" aria-label="Select the dog" data-icon="Dog" />
-				🐶
-			</label>
+			{#each Object.entries(animals) as [animal, animalInfo]}
+				<label>
+					<input
+						type="radio"
+						name="icon"
+						aria-label="Select the {animal}"
+						value={animalInfo}
+						bind:group={$icon}
+					/>
+					{animalInfo.animalIcon}
+				</label>
+			{/each}
 		</div>
 	</div>
 </section>
@@ -109,8 +88,16 @@
 	<p class="motion-descr">Select the preferred motion setting.</p>
 
 	<div class="motion-main">
-		<p>{isActive ? 'Dynamic' : 'Static'}</p>
-		<button id="motionToggle" class="motionToggle" on:click={motionToggle}> </button>
+		<p>{$isActive ? 'Dynamic' : 'Static'}</p>
+		<label for="motionActive" class="motionToggle">
+			<input
+				type="checkbox"
+				id="motionActive"
+				name="motionActive"
+				value="motionActive"
+				bind:checked={$isActive}
+			/>
+		</label>
 	</div>
 </section>
 
@@ -118,31 +105,44 @@
 
 <section class="speed">
 	<h2 class="speed-heading">Listening Speed</h2>
-	<p class="speed-descr">Select the preferred listening speed. How fast should the tones be played?</p>
+	<p class="speed-descr">
+		Select the preferred listening speed. How fast should the tones be played?
+	</p>
 	<!-- use slider with steps? -->
 
 	<div class="speed-control">
 		<span class="material-symbols-outlined"> elderly </span>
-		<input
-			type="range"
-			min="1"
-			max="5"
-			value="3"
-			step="1"
-			name="listeningspeed"
-			list="markers"
-			id="marker-input"
-		/>
+		<div>
+			<input
+				type="range"
+				min="1"
+				max="5"
+				value="3"
+				step="1"
+				name="listeningspeed"
+				list="markers"
+				id="marker-input"
+			/>
+			<datalist id="markers">
+				<option value="1" label="1"></option>
+				<option value="2" label="2"></option>
+				<option value="3" label="3"></option>
+				<option value="4" label="4"></option>
+				<option value="5" label="5"></option>
+			</datalist>
+		</div>
 		<span class="material-symbols-outlined"> directions_run </span>
-
-		<datalist id="markers">
-			<option value="1"></option>
-			<option value="2"></option>
-			<option value="3"></option>
-			<option value="4"></option>
-			<option value="5"></option>
-		</datalist>
 	</div>
+</section>
+
+<section class="audio">
+	<h2>Audio</h2>
+	<label for="audio">Choose the audio:</label>
+	<select bind:value={$audioFile} name="audio" id="audio">
+		<option value="HF-list1.wav">audio1.mp3</option>
+		<option value="LF-list1.wav">audio2.mp3</option>
+		<option value="ES-HF-audio.m4a">audio3.mp3</option>
+	</select>
 </section>
 
 <a href="/onboarding" class="fullbutton">Continue</a>
@@ -160,19 +160,20 @@
 		display: flex;
 		margin: 2em 0;
 		gap: 20px;
-
-		& #marker-input {
-			flex-grow: 1;
-			color: var(--color-text);
-
-			& option {
-				color: var(--color-text);
-				background-color: var(--color-text);
-			}
-		}
 	}
 
-    p {
-        line-height: 2;
-    }
+	.speed-control div {
+		flex-grow: 1;
+	}
+
+	input[type='range'] {
+		width: 100%;
+		margin: 0;
+	}
+
+	datalist {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
 </style>
