@@ -47,7 +47,6 @@
 
 	// get audio file (initial value is undefined. after initialization it's the first in the list)
 	$: console.log($audioFile);
-
 </script>
 
 <a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
@@ -56,14 +55,18 @@
 <p class="introtext">Customize your child's test to their preferences to hold their attention.</p>
 
 <section class="characters">
-	<h2 class="customize-heading">Icon</h2>
-	<p class="customize-descr">Pick an icon to display to your child as the audio plays.</p>
-
 	<div class="carousel">
 		<div class="carousel-main">
 			<p class="icon">{animals[$icon.animalName].animalIcon}</p>
 			<p class="icon-title">{$icon.animalName}</p>
 		</div>
+	</div>
+</section>
+
+<div class="cutomize-inputs">
+	<h2 class="customize-heading">Icon</h2>
+	<p class="customize-descr">Pick an icon to display to your child as the audio plays.</p>
+	<section class="iconInput">
 		<div class="carousel-nav">
 			{#each Object.entries(animals) as [animal, animalInfo]}
 				<label>
@@ -78,10 +81,7 @@
 				</label>
 			{/each}
 		</div>
-	</div>
-</section>
-
-<div class="cutomize-inputs">
+	</section>
 	<section class="motion">
 		<h2 class="motion-heading">Motion</h2>
 		<p class="motion-descr">Select the preferred motion setting.</p>
@@ -116,38 +116,20 @@
 </div>
 
 <style>
-	/* Speed controls */
+
+.introtext {
+	text-align: center;
+}
 
 	.characters,
-	.motion,
-	.speed {
+	.motion {
 		margin-bottom: 2.5em;
-	}
-
-	.speed-control {
-		display: flex;
-		margin: 2em 0;
-		gap: 20px;
-	}
-
-	.speed-control div {
-		flex-grow: 1;
-	}
-
-	input[type='range'] {
-		width: 100%;
-		margin: 0;
-	}
-
-	datalist {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
 	}
 
 	.carousel {
 		display: grid;
 		place-content: center;
+		grid-template-columns: minmax(max-content, 23rem)
 	}
 
 	.carousel-main {
@@ -161,7 +143,6 @@
 		display: flex;
 		gap: 0.7rem;
 		flex-wrap: wrap;
-		justify-content: center;
 	}
 
 	.icon-title {

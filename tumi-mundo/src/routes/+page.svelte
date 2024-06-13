@@ -59,7 +59,7 @@
 			before you can start the test. This will be explained to you through a few pictures.
 		</p>
 		<div class="section-button">
-			<a href="/onboarding">Start test</a>
+			<a href="/customization">Start test</a>
 		</div>
 	</section>
 
