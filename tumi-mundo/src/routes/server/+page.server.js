@@ -21,21 +21,6 @@ export async function load() {
 }
 
 // Post data
-<<<<<<< tumi-frontend
-// Deze functie in utils, algemener houden (dus naam is fetchApi en tm_profile wordt steeds een datatype (variabele))
-async function postDataToDirectus() {
-	const data = {
-		name_of_child: 'Test',
-		gender: 'Male',
-		date_of_birth: '2023-10-09',
-		new_language_to_learn: 2
-	};
-
-	fetchApi('/tm_profile', 'POST', data);
-}
-
-postDataToDirectus();
-=======
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async (event) => {
@@ -90,4 +75,3 @@ export const actions = {
 		}
 	}
 };
->>>>>>> main
