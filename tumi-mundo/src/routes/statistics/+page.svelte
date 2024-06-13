@@ -64,7 +64,11 @@
 
 <h1>Statistics</h1>
 <section class="activities-wrapper">
-	<h2>Today's activities</h2>
+	<!-- <h2>Today's activities</h2> -->
+	<p>
+		Welcome to the statistics page! Here, you can view your baby's language learning progress. This helps you understand their development and celebrate their milestones. All data is anonymized to ensure privacy.
+	</p>
+	<p>Happy learning!</p>
 	<section class="activities-data-container">
 		<div class="activities-data">
 			<div class="progress">
@@ -74,6 +78,7 @@
 			</div>
 
 			<h3>Today's listening</h3>
+
 			<p id="activity-time">00:00</p>
 			<p>of your <span>5-minute</span> goal</p>
 		</div>
@@ -86,16 +91,17 @@
 </section>
 
 <section>
-	<h2>Total activities</h2>
+	<!-- <h2>Total activities</h2> -->
 	<section>
 		<!-- TODO: Add  buddy -->
-		<img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="The rat on the couch" />
 		<div class="learning-stats">
 			<h2>You have done a lot of learning!</h2>
 			<p>
 				Here you can see everything you have done since you started learning with TuMi Mundo. I
 				encourage you to keep going and do your best!
 			</p>
+					<img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="The rat on the couch" />
+
 		</div>
 	</section>
 </section>
@@ -107,7 +113,7 @@
 	<!-- graphic -->
 
 	<div class="children-global-stats">
-		<p>See how other children are performing</p>
+		<p>See the average performance of other children</p>
 		<button
 			id="children-global-stats-button"
 			class="children-global-stats-button"
