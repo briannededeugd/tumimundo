@@ -48,8 +48,6 @@
 	// get audio file (initial value is undefined. after initialization it's the first in the list)
 	$: console.log($audioFile);
 
-	// speed?
-
 </script>
 
 <a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
@@ -83,69 +81,39 @@
 	</div>
 </section>
 
-<section class="motion">
-	<h2 class="motion-heading">Motion</h2>
-	<p class="motion-descr">Select the preferred motion setting.</p>
+<div class="cutomize-inputs">
+	<section class="motion">
+		<h2 class="motion-heading">Motion</h2>
+		<p class="motion-descr">Select the preferred motion setting.</p>
 
-	<div class="motion-main">
-		<p>{$isActive ? 'Dynamic' : 'Static'}</p>
-		<label for="motionActive" class="motionToggle">
-			<input
-				type="checkbox"
-				id="motionActive"
-				name="motionActive"
-				value="motionActive"
-				bind:checked={$isActive}
-			/>
-		</label>
-	</div>
-</section>
-
-<!-- Speed controls -->
-
-<section class="speed">
-	<h2 class="speed-heading">Listening Speed</h2>
-	<p class="speed-descr">
-		Select the preferred listening speed. How fast should the tones be played?
-	</p>
-	<!-- use slider with steps? -->
-
-	<div class="speed-control">
-		<span class="material-symbols-outlined"> elderly </span>
-		<div>
-			<input
-				type="range"
-				min="1"
-				max="5"
-				value="3"
-				step="1"
-				name="listeningspeed"
-				list="markers"
-				id="marker-input"
-			/>
-			<datalist id="markers">
-				<option value="1" label="1"></option>
-				<option value="2" label="2"></option>
-				<option value="3" label="3"></option>
-				<option value="4" label="4"></option>
-				<option value="5" label="5"></option>
-			</datalist>
+		<div class="motion-main">
+			<p>{$isActive ? 'Dynamic' : 'Static'}</p>
+			<label for="motionActive" class="motionToggle">
+				<input
+					type="checkbox"
+					id="motionActive"
+					name="motionActive"
+					value="motionActive"
+					bind:checked={$isActive}
+				/>
+			</label>
 		</div>
-		<span class="material-symbols-outlined"> directions_run </span>
-	</div>
-</section>
+	</section>
 
-<section class="audio">
-	<h2>Audio</h2>
-	<label for="audio">Choose the audio:</label>
-	<select bind:value={$audioFile} name="audio" id="audio">
-		<option value="HF-list1.wav">audio1.mp3</option>
-		<option value="LF-list1.wav">audio2.mp3</option>
-		<option value="ES-HF-audio.m4a">audio3.mp3</option>
-	</select>
-</section>
+	<section class="audio">
+		<h2>Audio</h2>
+		<div class="audio-main">
+			<label for="audio">Choose the audio:</label>
+			<select bind:value={$audioFile} name="audio" id="audio">
+				<option value="HF-list1.wav">Dutch 1</option>
+				<option value="LF-list1.wav">Dutch 2</option>
+				<option value="ES-HF-audio.m4a">Spanish</option>
+			</select>
+		</div>
+	</section>
 
-<a href="/onboarding" class="fullbutton">Continue</a>
+	<a href="/onboarding" class="fullbutton">Continue</a>
+</div>
 
 <style>
 	/* Speed controls */
@@ -175,5 +143,47 @@
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+	}
+
+	.carousel {
+		display: grid;
+		place-content: center;
+	}
+
+	.carousel-main {
+		max-width: 40rem;
+		background-color: #63718e;
+		border-bottom: 5rem white solid;
+		position: relative;
+	}
+
+	.carousel-nav {
+		display: flex;
+		gap: 0.7rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.icon-title {
+		position: absolute;
+		bottom: -6rem;
+		color: black;
+	}
+
+	.audio-main {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#audio {
+		width: 7rem;
+		padding: 0.2rem;
+	}
+
+	.cutomize-inputs {
+		max-width: 40rem;
+		transform: translateX(-50%);
+		position: relative;
+		left: 50%;
 	}
 </style>
