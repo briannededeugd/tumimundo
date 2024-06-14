@@ -64,7 +64,7 @@
     --font-size-h3: 20px; /* Regular weight */
     --font-size-storytitle: 16px; /* Semibold weight */
     --font-size-storydescr: 16px; /* Regular weight */
-    --font-size-buttons: 11px; /* Inline buttons, subtle buttons etc. */
+    --font-size-buttons: 14px; /* Inline buttons, subtle buttons etc. */
     --font-size-iconbtn: 18px;
 
 	/* WEIGHTS */
@@ -147,7 +147,6 @@ p {
 	/* Font */
 	font-size: var(--font-size-storydescr);
 	font-weight: var(--font-weight-regular);
-
 	/* Positioning */
 }
 

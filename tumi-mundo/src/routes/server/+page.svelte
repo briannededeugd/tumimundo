@@ -1,6 +1,7 @@
 <h1>Requesting Directus Data</h1>
 
 <script>
+    // import { enhance } from '$app/forms';
     export let data;
     const { data: responseData } = data.data;
 </script>
