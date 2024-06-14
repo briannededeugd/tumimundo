@@ -456,34 +456,34 @@ button {
 			font-size: 3rem;
         }
     }
+}
 
-    .carousel-nav {
+.carousel-nav {
 
-        label {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+	label {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 
-            background-color: var(--color-bg-dark);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            font-size: var(--font-size-h2);
-            padding: .5em 1em;
+		background-color: var(--color-bg-dark);
+		border-radius: var(--border-radius);
+		box-shadow: var(--box-shadow);
+		font-size: var(--font-size-h2);
+		padding: .5em 1em;
 
-            input[type=radio] {
-                appearance: none;
-            }
+		input[type=radio] {
+			appearance: none;
+		}
 
-            &:has(input[type=radio]:checked) {
-                background-color: var(--color-bg-light);
-                border: 2px solid var(--color-text);
-            }
-        }
-    }
+		&:has(input[type=radio]:checked) {
+			background-color: var(--color-bg-light);
+			border: 2px solid var(--color-text);
+		}
+	}
 }
 
 .motion,
-	.speed {
+.iconInput {
 		margin: 1.5em 0;
 	}
 
