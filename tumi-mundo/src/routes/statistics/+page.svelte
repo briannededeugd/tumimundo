@@ -62,56 +62,70 @@
 	<link rel="stylesheet" href="../lib/styles/style.css" />
 </svelte:head>
 
+<a href="/" class="back-button"><img src="../lib/images/icons/home.png" alt="home icon"></a>
+
 <h1>Statistics</h1>
-<section class="activities-wrapper">
-	<!-- <h2>Today's activities</h2> -->
-	<p>
-		Welcome to the statistics page! Here, you can view your baby's language learning progress. This helps you understand their development and celebrate their milestones. All data is anonymized to ensure privacy.
-	</p>
-	<p>Happy learning!</p>
-	<section class="activities-data-container">
-		<div class="activities-data">
-			<div class="progress">
-				<div class="barOverflow">
-					<div class="bar"></div>
-				</div>
-			</div>
-
-			<h3>Today's listening</h3>
-
-			<p id="activity-time">00:00</p>
-			<p>of your <span>5-minute</span> goal</p>
-		</div>
-
-		<div class="section-button">
-			<a href="/">Change goal</a>
-			<a href="/">Go to stories</a>
-		</div>
-	</section>
-</section>
-
 <section>
 	<!-- <h2>Total activities</h2> -->
 	<section>
-		<!-- TODO: Add  buddy -->
 		<div class="learning-stats">
-			<h2>You have done a lot of learning!</h2>
+			<h3>You have done a lot of learning!</h3>
+
+			<img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="The rat on the couch" />
+
 			<p>
 				Here you can see everything you have done since you started learning with TuMi Mundo. I
 				encourage you to keep going and do your best!
 			</p>
-					<img src="../lib/images/buddies/rat/rat-on-couch.svg" alt="The rat on the couch" />
 
 		</div>
 	</section>
 </section>
+
+
+<section class="activities-wrapper">
+	<!-- <h2>Today's activities</h2> -->
+
+	<!-- <div class="introduction">
+	<p>
+		Welcome to the statistics page! Here, you can view your baby's language learning progress. This helps you understand their development and celebrate their milestones. All data is anonymized to ensure privacy.
+	</p>
+	<p>Happy learning!</p>
+	</div> -->
+
+	<h2>Today's listening</h2>
+
+	<section class="left-align">
+		<section class="activities-data-container">
+			<div class="activities-data">
+				<div class="progress">
+					<div class="barOverflow">
+						<div class="bar"></div>
+					</div>
+				</div>
+
+				<!-- <h3>Today's listening</h3> -->
+
+				<p id="activity-time">00:00</p>
+				<p>of your <span>5-minute</span> goal</p>
+			</div>
+
+			<div class="section-button">
+				<a href="/">Change goal</a>
+				<a href="/">Go to stories</a>
+			</div>
+		</section>
+	</section>
+</section>
+
 
 <section>
 	<h2>The attention span test</h2>
 	<p>A test for the first phase of the method. Tap on the points to see more in depth numbers.</p>
 
-	<!-- graphic -->
-
+	<div>
+		<LineChart></LineChart>
+	</div>
 	<div class="children-global-stats">
 		<p>See the average performance of other children</p>
 		<button
@@ -120,10 +134,6 @@
 			on:click={globalStats}
 		>
 		</button>
-	</div>
-
-	<div>
-		<LineChart></LineChart>
 	</div>
 </section>
 
@@ -187,12 +197,13 @@
 		/* COLORS */
 		--color-statistics-bg-light: #219b9b;
 		--color-statistics-bg-dark: #1b7070;
-		--color-statistics-bg-contrast-light: #77d2bf;
+		--color-statistics-bg-contrast-light: #81cdbc;
+		--color-graph-text: white;
 
-		--story-item-background: #0b8fac;
+		--story-item-background: #155D64;
 		--statistics-switch-background-color: #1cb854;
 		--progress-bar-unfilled: white;
-		--progress-bar-filled: #1be0b9;
+		--progress-bar-filled: #6f46c9;
 
 		--statistics-background-gradient: linear-gradient(
 			to bottom,
@@ -201,24 +212,69 @@
 		);
 
 		--color-button-goal: #27b16f;
-		--color-button-stories: #9264f4;
+		--color-button-stories: #502d8e;
 
 		--roadmap-first-step: #1cb854;
 		--roadmap-second-step: #37c6ab;
 		--roadmap-third-step: #059cc0;
 		--roadmap-fourth-step: #ff8c59;
 		--roadmap-fifth-step: #ffa02e;
+
+		/* NEW THEME */
+		--color-interactions: #63718e; /* buttons, progress bar */
+		--color-interactions-hover: #4b566c;
+		--color-background: #cfeddb;
+		
+		--color-cancel: #d51d1d;
+		--color-active-cancel: #e8e6e6;
+		--color-start: #27B16F;
+		--color-active-start: #1f8f59;
+
+		--color-bg-light: #21599b;
+		--color-bg-dark: #1b3d70;
+		--color-inactive-toggle: rgb(216, 241, 241);
+
+		--background-gradient: linear-gradient(to bottom, var(--color-bg-light), var(--color-bg-dark));
+		--background-overlay: linear-gradient(to top, #000000b0, #00000000);
 	}
+
+	
 
 	:global(body.statistics) {
 		background: var(--color-statistics-bg-contrast-light);
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
+		gap: 2rem;
+	}
+
+	:global(svg) {
+		color: var(--color-graph-text);
+		box-shadow: var(--box-shadow);
+		max-width: 30rem
+	}
+
+	.introduction {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.back-button img {
+		height: 1.75rem;
+	}
+
+	h3 {
+		font-weight: bold;
 	}
 
 	.activities-wrapper {
+		gap: 3rem;
+
+
+
 		& .activities-data-container {
+			gap: 2rem;
+
 			& .activities-data {
 				/* SRC Code from https://codepen.io/jagathish/pen/ZXzbzN */
 				/* progress bar */
@@ -257,7 +313,7 @@
 							border-radius: 50%;
 							box-sizing: border-box;
 							/* transform: rotate(30deg); */
-							border: 7px solid var(--progress-bar-unfilled);
+							border: 12px solid var(--progress-bar-unfilled);
 							border-top-color: var(--progress-bar-filled);
 							border-right-color: var(--progress-bar-filled);
 							/* transform: rotate(135deg); */
@@ -272,12 +328,19 @@
 
 				& #activity-time {
 					font-size: 3rem;
+					padding-top: 3rem;
 				}
 
-				& span {
-					font-weight: var(--font-weight-semibold);
-					text-decoration: underline;
+				& p {
+					padding-top: .5rem;
+					padding-bottom: .5rem;
+
+					& span {
+						font-weight: var(--font-weight-semibold);
+						text-decoration: underline;
+					}
 				}
+				
 			}
 		}
 	}
@@ -300,7 +363,7 @@
 			text-decoration: none;
 
 			&:first-of-type {
-				background-color: var(--color-button-goal);
+				background-color: var(--color-active-start);
 			}
 
 			&:last-of-type {
@@ -317,11 +380,12 @@
 		& .story_item {
 			display: flex;
 			align-items: center;
-			gap: 0.25em;
+			gap: 0.5em;
 
 			& .story_item_data {
 				padding: 0.25em 0.5em;
 				background-color: var(--story-item-background);
+				color: var(--color-graph-text);
 				box-shadow: var(--box-shadow);
 				border-radius: 10px;
 			}
@@ -331,15 +395,23 @@
 	section {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 1.25rem;
 
 		& > section {
 			align-items: center;
 		}
 	}
 
-	.learning-stats h2 {
-		padding-bottom: 0.5rem;
+	.learning-stats {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		align-items: center;
+
+		& h2 {
+			padding-bottom: 0.5rem;
+		}
 	}
 
 	.children-global-stats {
@@ -350,23 +422,25 @@
 		& .children-global-stats-button {
 			width: 60px;
 			height: 30px;
-			background-color: #ccc;
+			background-color: var(--color-text);
 			border: none;
 			border-radius: 1.2em;
 			cursor: pointer;
 			position: relative;
+			box-shadow: var(--box-shadow);
+
 
 			&::after {
 				content: '';
 				position: absolute;
 				width: 1.8em;
 				height: 1.8em;
-				background-color: white;
+				background-color: var(--color-statistics-bg-contrast-light);
 				border-radius: 50%;
 				top: 0.21em;
-				left: 0.2em;
+				left: 2.2em;
 				transition: transform 0.3s;
-				transform: translateX(2.3em);
+				transform: translateX(-2em);
 			}
 		}
 
@@ -375,6 +449,7 @@
 
 			&::after {
 				transform: translateX(0);
+				background-color: var(--color-text);
 			}
 		}
 	}
@@ -453,5 +528,28 @@
 
 	.opacity {
 		opacity: 40%;
+	}
+	
+	@media screen and (min-width: 600px) {
+		:global(body:has(.activities-wrapper)) {
+			padding: 0 7rem;
+		}
+
+		.learning-stats {
+			background-color: var(--story-item-background);
+			color: var(--color-graph-text);
+			padding: 2rem;
+			border-radius: 1rem;
+		}
+		& p {
+				max-width: 40rem;
+				/* text-align: center; */
+				/* align-self: center; */
+			}
+
+		.left-align {
+			align-self: flex-start;
+			padding-left: 3rem;
+		}
 	}
 </style>
