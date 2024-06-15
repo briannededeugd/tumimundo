@@ -17,11 +17,6 @@
 	var timestampsObject = [];
 
 	var elapsedTime = 0; // Elapsed time in milliseconds
-	var seconds = 0;
-	var minutes = 0;
-	var hours = 0;
-	var timeFormat = 0;
-	var timer;
 	let progressBar;
 
 	function removePopup() {
@@ -33,16 +28,16 @@
 
 	// format the timer to be hh:mm:ss
 	function formatTime() {
-		(seconds = Math.floor((elapsedTime / 1000) % 60)),
-			(minutes = Math.floor((elapsedTime / (1000 * 60)) % 60)),
-			(hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24));
+		let seconds = Math.floor((elapsedTime / 1000) % 60);
+		let minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+		let hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
 
 		hours = hours < 10 ? '0' + hours : hours;
 		minutes = minutes < 10 ? '0' + minutes : minutes;
 		seconds = seconds < 10 ? '0' + seconds : seconds;
 
-		// save format in variable timeFormat
-		timeFormat = hours + ':' + minutes + ':' + seconds;
+		// return format in hh:mm:ss
+		return hours + ':' + minutes + ':' + seconds;
 	}
 
 	// Function to start a timer
@@ -51,13 +46,11 @@
 		let startTime = Date.now();
 
 		// start interval every 1000ms
-		timer = setInterval(() => {
+		setInterval(() => {
 			// new time of test every 1000ms
 			let now = Date.now();
-			// elapsed time between start time and new time
+			// elapsed time between start time and new time in ms
 			elapsedTime = now - startTime;
-			// format time from ms to hh:mm:ss
-			formatTime();
 		}, 1000);
 	}
 
@@ -200,14 +193,14 @@
 				// Check if the detection status has changed
 				if (faceDetected) {
 					timestampsObject.push({
-						time: timeFormat,
+						time: formatTime(),
 						type: 'attention_start',
 						description: 'Baby started paying attention'
 					});
 					console.log(timestampsObject);
 				} else {
 					timestampsObject.push({
-						time: timeFormat,
+						time: formatTime(),
 						type: 'attention_stop',
 						description: 'Baby stopped paying attention'
 					});
