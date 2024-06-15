@@ -1,16 +1,18 @@
 <script>
 	import { isActive, icon, audioFile } from '../stores.js';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	import { pico } from '../../utils/libraries/pico-library.js';
 	import { lploc } from '../../utils/libraries/lploc-library.js';
 	import { camvas } from '../../utils/libraries/camvas-library.js';
 
+	onDestroy(() => {
+		if(browser) {
+			window.location.pathname = 'onboarding';
+		}
+	})
 	// export function populateJSON()
-
-	function stopFaceDetection() {
-		window.location.pathname = 'onboarding';
-	}
 
 	var initialized = false;
 	let highFreqAudio = null;
@@ -266,7 +268,7 @@
 				<button on:click={button_callback} on:click={removePopup} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
-				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
+				<a href="/onboarding" class="canceltest">
 					Cancel
 					<span class="material-symbols-outlined"> close </span></a
 				>
