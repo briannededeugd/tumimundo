@@ -1,16 +1,11 @@
 import { fetchApi } from '../../utils/fetchApi';
 import { fetchTest } from '../../utils/fetchTest';
 import { jsonObj } from '../../routes/attentiontest/+page.svelte';
-import dotenv from 'dotenv';
 
-dotenv.config();
 console.log(jsonObj);
 
 // Fetch data
 export async function load() {
-	// new Promise((fulfil) => {
-	// 	setTimeout(fulfil, 5000);
-	// });
 	try {
 		const dataJSON = await fetchApi('/tm_tests');
 		const test = await fetchTest(3, dataJSON);
