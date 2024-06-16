@@ -1,33 +1,68 @@
 <script>
 	import { isActive, icon, audioFile } from '../stores.js';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	import { pico } from '../../utils/libraries/pico-library.js';
 	import { lploc } from '../../utils/libraries/lploc-library.js';
 	import { camvas } from '../../utils/libraries/camvas-library.js';
 
+	onDestroy(() => {
+		if(browser) {
+			window.location.pathname = 'onboarding';
+		}
+	})
 	// export function populateJSON()
-
-	function stopFaceDetection() {
-		window.location.pathname = 'onboarding';
-	}
 
 	var initialized = false;
 	let highFreqAudio = null;
 	var timestampsObject = [];
 
 	var elapsedTime = 0; // Elapsed time in milliseconds
-	var seconds = 0;
-	var minutes = 0;
-	var hours = 0;
-	var timeFormat = 0;
+	let progressBar;
 
 	function removePopup() {
 		const popup = document.querySelector('.popup');
 		popup.style.display = 'none';
-		}
-		
-		onMount(() => {
+		startTimer();
+		setInterval(updateTime, 100);
+	}
+
+	// format the timer to be hh:mm:ss
+	function formatTime() {
+		let seconds = Math.floor((elapsedTime / 1000) % 60);
+		let minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+		let hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
+
+		hours = hours < 10 ? '0' + hours : hours;
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+
+		// return format in hh:mm:ss
+		return hours + ':' + minutes + ':' + seconds;
+	}
+
+	// Function to start a timer
+	function startTimer() {
+		// start time of the test
+		let startTime = Date.now();
+
+		// start interval every 1000ms
+		setInterval(() => {
+			// new time of test every 1000ms
+			let now = Date.now();
+			// elapsed time between start time and new time in ms
+			elapsedTime = now - startTime;
+		}, 1000);
+	}
+
+	function updateTime() {
+		var currentTime = highFreqAudio.currentTime;
+		var duration = highFreqAudio.duration;
+		progressBar = (currentTime / duration) * 100 + '%';
+	}
+
+	onMount(() => {
 		document.body.classList.add('attentiontest');
 		const video = document.getElementById('webcam');
 
@@ -48,60 +83,11 @@
 		 *               PICO INLINE JS              *
 		 *==========================================**/
 
-		var random;
-		var prevRandom;
-		var timer;
-
 		highFreqAudio = new Audio(`../lib/audios/${$audioFile}`);
-		var progressBackground = document.querySelector('.progressbg');
-		var progressBar = document.querySelector('.progressbar');
-
-		var currentTime = highFreqAudio.currentTime;
-		var duration = highFreqAudio.duration;
-
-		// format the timer to be hh:mm:ss
-		function formatTime() {
-			(seconds = Math.floor((elapsedTime / 1000) % 60)),
-				(minutes = Math.floor((elapsedTime / (1000 * 60)) % 60)),
-				(hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24));
-
-			hours = hours < 10 ? '0' + hours : hours;
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			seconds = seconds < 10 ? '0' + seconds : seconds;
-
-			// save format in variable timeFormat
-			timeFormat = hours + ':' + minutes + ':' + seconds;
-		}
-
-		// Function to start a timer
-		function startTimer() {
-			// start time of the test
-			let startTime = Date.now();
-
-			// start interval every 1000ms
-			timer = setInterval(() => {
-				// new time of test every 1000ms
-				let now = Date.now();
-				// elapsed time between start time and new time
-				elapsedTime = now - startTime;
-				// format time from ms to hh:mm:ss
-				formatTime();
-			}, 1000);
-		}
-
-		function updateTime() {
-			var currentTime = highFreqAudio.currentTime;
-			var duration = highFreqAudio.duration;
-			progressBar.style.width = (currentTime / duration) * 100 + '%';
-		}
-
-		startTimer();
-		setInterval(updateTime, 100);
-		
 
 		highFreqAudio.addEventListener('ended', async () => {
 			// turn object into JSON
-			jsonObj = JSON.stringify(timestampsObject);
+			let jsonObj = JSON.stringify(timestampsObject);
 
 			window.location.pathname = 'offboarding';
 		});
@@ -209,14 +195,14 @@
 				// Check if the detection status has changed
 				if (faceDetected) {
 					timestampsObject.push({
-						time: timeFormat,
+						time: formatTime(),
 						type: 'attention_start',
 						description: 'Baby started paying attention'
 					});
 					console.log(timestampsObject);
 				} else {
 					timestampsObject.push({
-						time: timeFormat,
+						time: formatTime(),
 						type: 'attention_stop',
 						description: 'Baby stopped paying attention'
 					});
@@ -249,7 +235,7 @@
 
 		<div class="progress-element">
 			<div class="progressbg">
-				<div class="progressbar"></div>
+				<div class="progressbar" style="width: {progressBar};"></div>
 			</div>
 		</div>
 
@@ -258,7 +244,7 @@
 		>
 	</nav>
 
-	<section class="testcard" style="animation-play-state:{isActive ? "running" : "paused"};">
+	<section class="testcard" style="animation-play-state:{isActive ? 'running' : 'paused'};">
 		<div class="testcard-img">
 			<p>{$icon.animalIcon}</p>
 		</div>
@@ -282,7 +268,7 @@
 				<button on:click={button_callback} on:click={removePopup} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
-				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
+				<a href="/onboarding" class="canceltest">
 					Cancel
 					<span class="material-symbols-outlined"> close </span></a
 				>

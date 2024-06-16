@@ -1,9 +1,7 @@
 import { fetchApi } from '../../utils/fetchApi';
 import { fetchTest } from '../../utils/fetchTest';
 import { jsonObj } from '../../routes/attentiontest/+page.svelte';
-import dotenv from 'dotenv';
 
-dotenv.config();
 console.log(jsonObj);
 
 // Fetch data
