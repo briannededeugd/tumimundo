@@ -29,8 +29,8 @@
 		setInterval(updateTime, 100);
 	}
 
-		// format the timer to be hh:mm:ss
-		function formatTime() {
+	// format the timer to be hh:mm:ss
+	function formatTime() {
 		let seconds = Math.floor((elapsedTime / 1000) % 60);
 		let minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
 
