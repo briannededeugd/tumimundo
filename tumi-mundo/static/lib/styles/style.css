@@ -15,6 +15,7 @@
 }
 
 .material-symbols-outlined {
+	color: var(--color-inlinebutton);
 	font-variation-settings:
 		'FILL' 0,
 		'wght' 400,
@@ -31,10 +32,10 @@
 	--color-links: #42ddf7;
 	--color-inlinebutton: #434b75;
 
-    --color-accent-blue: #599ae7;
-    --color-accent-green: #1cb854;
-    --color-accent-lilac: #707fcf; 
-    --color-accent-turqoise: #37c6ab;
+    --color-accent-blue: #127ab0;
+    --color-accent-green: #008811;
+    --color-accent-lilac: #6a64bf; 
+    --color-accent-turqoise: #2e8182;
     --color-accent-salmon: #fd8c73;
 
 	/* NEW THEME */
@@ -63,7 +64,7 @@
     --font-size-h3: 20px; /* Regular weight */
     --font-size-storytitle: 16px; /* Semibold weight */
     --font-size-storydescr: 16px; /* Regular weight */
-    --font-size-buttons: 11px; /* Inline buttons, subtle buttons etc. */
+    --font-size-buttons: 14px; /* Inline buttons, subtle buttons etc. */
     --font-size-iconbtn: 18px;
 
 	/* WEIGHTS */
@@ -99,11 +100,11 @@ html, body {
 }
 
 body {
-	background-image: var(--background-gradient);
+	background: var(--color-background);
     height: max-content;
     background-size: cover;
     background-repeat: no-repeat;
-	color: var(--color-text);
+	color: var(--color-inlinebutton);
 
     padding: 3vh 5vw;
 	position: relative;
@@ -126,6 +127,9 @@ h1 {
 
 	/* Positioning */
 	text-align: center;
+
+	/* extra padding for more space */
+	padding-bottom: 0.5em;
 }
 
 h2 {
@@ -143,7 +147,6 @@ p {
 	/* Font */
 	font-size: var(--font-size-storydescr);
 	font-weight: var(--font-weight-regular);
-
 	/* Positioning */
 }
 
@@ -155,7 +158,7 @@ p a {
     font-size: var(--font-size-storydescr);
     font-weight: var(--font-weight-regular);
 
-    color: var(--color-links);
+    color: var(--color-accent-blue);
 
     cursor: pointer;
 }
@@ -265,7 +268,11 @@ button {
 		background-color: var(--color-accent-blue);
 		border-radius: var(--border-radius);
 
+		color: var(--color-text);
+
 		p {
+			color: var(--color-text);
+
 			&::after {
 				content: 'keyboard_arrow_down';
 
@@ -448,34 +455,34 @@ button {
 			font-size: 3rem;
         }
     }
+}
 
-    .carousel-nav {
+.carousel-nav {
 
-        label {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+	label {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 
-            background-color: var(--color-bg-dark);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            font-size: var(--font-size-h2);
-            padding: .5em 1em;
+		background-color: var(--color-bg-dark);
+		border-radius: var(--border-radius);
+		box-shadow: var(--box-shadow);
+		font-size: var(--font-size-h2);
+		padding: .5em 1em;
 
-            input[type=radio] {
-                appearance: none;
-            }
+		input[type=radio] {
+			appearance: none;
+		}
 
-            &:has(input[type=radio]:checked) {
-                background-color: var(--color-bg-light);
-                border: 2px solid var(--color-text);
-            }
-        }
-    }
+		&:has(input[type=radio]:checked) {
+			background-color: var(--color-bg-light);
+			border: 2px solid var(--color-text);
+		}
+	}
 }
 
 .motion,
-	.speed {
+.iconInput {
 		margin: 1.5em 0;
 	}
 

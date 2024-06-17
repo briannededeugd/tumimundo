@@ -45,6 +45,10 @@
                 )
                 .selectAll(".tick line")
                 .style("visibility", "hidden"); 
+            svg.selectAll(".tick text")
+                    .style("font-size", "16px");
+
+
             
             svg.select(".domain")
                 .attr("d", `M0,0H${width}`);

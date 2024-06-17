@@ -1,15 +1,19 @@
 <script>
 	import { isActive, icon, audioFile } from '../stores.js';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	import { pico } from '../../utils/libraries/pico-library.js';
 	import { lploc } from '../../utils/libraries/lploc-library.js';
 	import { camvas } from '../../utils/libraries/camvas-library.js';
 	import { submitForm } from '../../utils/fetchHelpers/submitForm';
 
-	function stopFaceDetection() {
-		window.location.pathname = 'onboarding';
-	}
+	onDestroy(() => {
+		if(browser) {
+			window.location.pathname = 'onboarding';
+		}
+	})
+	// export function populateJSON()
 
 	var initialized = false;
 	let highFreqAudio = null;
@@ -18,41 +22,10 @@
 	var elapsedTime = 0; // Elapsed time in milliseconds
 	var seconds = 0;
 	var minutes = 0;
-	var hours = 0;
+// 	var hours = 0;
 	var timeFormat = 0;
-    
-	function removePopup() {
-		const popup = document.querySelector('.popup');
-		    popup.style.display = 'none';
-		}
-		
-		onMount(() => {
-		document.body.classList.add('attentiontest');
-		const video = document.getElementById('webcam');
-
-		if (navigator.mediaDevices.getUserMedia) {
-			navigator.mediaDevices
-				.getUserMedia({ video: true })
-				.then(function (stream) {
-					video.srcObject = stream;
-				})
-				.catch(function (error) {
-					console.log('Something went wrong!');
-				});
-		} else {
-			console.log('getUserMedia not supported!');
-		}
-
-		/**===========================================
-		 *               PICO INLINE JS              *
-		 *==========================================**/
-
-		var random;
-		var prevRandom;
-		var timer;
-
-		highFreqAudio = new Audio(`../lib/audios/${$audioFile}`);
-		var progressBackground = document.querySelector('.progressbg');
+  
+  var progressBackground = document.querySelector('.progressbg');
 		var progressBar = document.querySelector('.progressbar');
 
 		var currentTime = highFreqAudio.currentTime;
@@ -99,6 +72,34 @@
 
 		startTimer();
 		setInterval(updateTime, 100);
+    
+	function removePopup() {
+		const popup = document.querySelector('.popup');
+		    popup.style.display = 'none';
+		}
+		
+		onMount(() => {
+		document.body.classList.add('attentiontest');
+		const video = document.getElementById('webcam');
+
+		if (navigator.mediaDevices.getUserMedia) {
+			navigator.mediaDevices
+				.getUserMedia({ video: true })
+				.then(function (stream) {
+					video.srcObject = stream;
+				})
+				.catch(function (error) {
+					console.log('Something went wrong!');
+				});
+		} else {
+			console.log('getUserMedia not supported!');
+		}
+
+		/**===========================================
+		 *               PICO INLINE JS              *
+		 *==========================================**/
+
+		highFreqAudio = new Audio(`../lib/audios/${$audioFile}`);
 
         highFreqAudio.addEventListener('ended', async (event) => {
             const form = document.querySelector("form");
@@ -212,14 +213,14 @@
 				// Check if the detection status has changed
 				if (faceDetected) {
 					timestampsObject.push({
-						time: timeFormat,
+						time: formatTime(),
 						type: 'attention_start',
 						description: 'Baby started paying attention'
 					});
 					console.log(timestampsObject);
 				} else {
 					timestampsObject.push({
-						time: timeFormat,
+						time: formatTime(),
 						type: 'attention_stop',
 						description: 'Baby stopped paying attention'
 					});
@@ -259,7 +260,7 @@
 
 		<div class="progress-element">
 			<div class="progressbg">
-				<div class="progressbar"></div>
+				<div class="progressbar" style="width: {progressBar};"></div>
 			</div>
 		</div>
 
@@ -268,7 +269,7 @@
 		>
 	</nav>
 
-	<section class="testcard" style="animation-play-state:{isActive ? "running" : "paused"};">
+	<section class="testcard" style="animation-play-state:{isActive ? 'running' : 'paused'};">
 		<div class="testcard-img">
 			<p>{$icon.animalIcon}</p>
 		</div>
@@ -292,7 +293,7 @@
 				<button on:click={button_callback} on:click={removePopup} class="start"
 					>Start <span class="material-symbols-outlined"> check </span></button
 				>
-				<a href="/onboarding" class="canceltest" on:click={stopFaceDetection}>
+				<a href="/onboarding" class="canceltest">
 					Cancel
 					<span class="material-symbols-outlined"> close </span></a
 				>

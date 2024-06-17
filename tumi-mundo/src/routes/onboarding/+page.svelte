@@ -10,7 +10,7 @@
 	<title>TuMi Mundo - Attention Test</title>
 </svelte:head>
 
-<a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
+<a href="/customization" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
 <h1>Attention Test</h1>
 <p>
