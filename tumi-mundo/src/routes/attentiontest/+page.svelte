@@ -9,76 +9,64 @@
 	import { submitForm } from '../../utils/fetchHelpers/submitForm';
 
 	onDestroy(() => {
-		if(browser) {
+		if (browser) {
 			window.location.pathname = 'onboarding';
 		}
-	})
-	// export function populateJSON()
+	});
 
 	var initialized = false;
 	let highFreqAudio = null;
-    var timestampsObject = [];
+	var timestampsObject = [];
+	var timeFormat = 0;
 
 	var elapsedTime = 0; // Elapsed time in milliseconds
-	var seconds = 0;
-	var minutes = 0;
-// 	var hours = 0;
-	var timeFormat = 0;
-  
-  var progressBackground = document.querySelector('.progressbg');
-		var progressBar = document.querySelector('.progressbar');
+	let progressBar;
 
-		var currentTime = highFreqAudio.currentTime;
-		var duration = highFreqAudio.duration;
-
-		// format the timer to be hh:mm:ss
-		function formatTime() {
-			(seconds = Math.floor((elapsedTime / 1000) % 60)),
-			(minutes = Math.floor((elapsedTime / (1000 * 60)) % 60));
-			// (hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24));
-
-			// hours = hours < 10 ? '0' + hours : hours;
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			seconds = seconds < 10 ? '0' + seconds : seconds;
-
-			const midnightToday = new Date(new Date().setHours(0, 0, 0));
-			midnightToday.setHours(2, minutes, seconds);
-
-			// save format in variable timeFormat
-			timeFormat = midnightToday;
-		}
-
-		// Function to start a timer
-		function startTimer() {
-			// start time of the test
-			let startTime = Date.now();
-
-			// start interval every 1000ms
-			timer = setInterval(() => {
-				// new time of test every 1000ms
-				let now = Date.now();
-				// elapsed time between start time and new time
-				elapsedTime = now - startTime;
-				// format time from ms to hh:mm:ss
-				formatTime();
-			}, 1000);
-		}
-
-		function updateTime() {
-			var currentTime = highFreqAudio.currentTime;
-			var duration = highFreqAudio.duration;
-			progressBar.style.width = (currentTime / duration) * 100 + '%';
-		}
-
-		startTimer();
-		setInterval(updateTime, 100);
-    
 	function removePopup() {
 		const popup = document.querySelector('.popup');
-		    popup.style.display = 'none';
-		}
-		
-		onMount(() => {
+		popup.style.display = 'none';
+		startTimer();
+		setInterval(updateTime, 100);
+	}
+
+	// format the timer to be hh:mm:ss
+	function formatTime() {
+		let seconds = Math.floor((elapsedTime / 1000) % 60);
+		let minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+
+		const midnightToday = new Date(new Date().setHours(0, 0, 0));
+		midnightToday.setHours(2, minutes, seconds);
+
+		// save format in variable timeFormat
+		timeFormat = midnightToday;
+	}
+
+	// Function to start a timer
+	function startTimer() {
+		// start time of the test
+		let startTime = Date.now();
+
+		// start interval every 1000ms
+		setInterval(() => {
+			// new time of test every 1000ms
+			let now = Date.now();
+			// elapsed time between start time and new time
+			elapsedTime = now - startTime;
+			// format time from ms to hh:mm:ss
+			formatTime();
+		}, 1000);
+	}
+
+	function updateTime() {
+		var currentTime = highFreqAudio.currentTime;
+		var duration = highFreqAudio.duration;
+		progressBar = (currentTime / duration) * 100 + '%';
+	}
+
+	onMount(() => {
 		document.body.classList.add('attentiontest');
 		const video = document.getElementById('webcam');
 
@@ -101,20 +89,20 @@
 
 		highFreqAudio = new Audio(`../lib/audios/${$audioFile}`);
 
-        highFreqAudio.addEventListener('ended', async (event) => {
-            const form = document.querySelector("form");
-            if (form) {
-                const formInput = form.querySelector('input[name="timestampsObjectInput"]');
-                const stringifiedTimestampsObject = JSON.stringify(timestampsObject);
-                formInput.value = stringifiedTimestampsObject;
+		highFreqAudio.addEventListener('ended', async (event) => {
+			const form = document.querySelector('form');
+			if (form) {
+				const formInput = form.querySelector('input[name="timestampsObjectInput"]');
+				const stringifiedTimestampsObject = JSON.stringify(timestampsObject);
+				formInput.value = stringifiedTimestampsObject;
 
-                event.preventDefault();
+				event.preventDefault();
 
-                await submitForm();
+				await submitForm();
 
-                window.location.href = '/offboarding';
-            }
-        });
+				window.location.href = '/offboarding';
+			}
+		});
 	});
 
 	function button_callback() {
@@ -213,14 +201,14 @@
 				// Check if the detection status has changed
 				if (faceDetected) {
 					timestampsObject.push({
-						time: formatTime(),
+						time: timeFormat,
 						type: 'attention_start',
 						description: 'Baby started paying attention'
 					});
 					console.log(timestampsObject);
 				} else {
 					timestampsObject.push({
-						time: formatTime(),
+						time: timeFormat,
 						type: 'attention_stop',
 						description: 'Baby stopped paying attention'
 					});
@@ -248,14 +236,13 @@
 </svelte:head>
 
 <body class="testingPage">
+	<form method="POST" action="/attentiontest">
+		<label>
+			<input name="timestampsObjectInput" type="hidden" value="" />
+		</label>
+	</form>
 
-    <form method="POST" action="/attentiontest">
-        <label>
-            <input name="timestampsObjectInput" type="hidden" value="">
-        </label>
-    </form>
-	
-    <nav>
+	<nav>
 		<a href="/onboarding"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
 		<div class="progress-element">
