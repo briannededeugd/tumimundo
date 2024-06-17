@@ -1,8 +1,5 @@
 import { fetchApi } from '../../utils/fetchApi';
 import { fetchTest } from '../../utils/fetchTest';
-import { jsonObj } from '../../routes/attentiontest/+page.svelte';
-
-console.log(jsonObj);
 
 // Fetch data
 export async function load() {

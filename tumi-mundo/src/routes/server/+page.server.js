@@ -1,6 +1,4 @@
 import { fetchApi } from '../../utils/fetchApi';
-import dotenv from 'dotenv';
-dotenv.config();
 
 // Script link test
 console.log('Hello, world!');
