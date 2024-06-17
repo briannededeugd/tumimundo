@@ -5,8 +5,7 @@
 	import { pico } from '../../utils/libraries/pico-library.js';
 	import { lploc } from '../../utils/libraries/lploc-library.js';
 	import { camvas } from '../../utils/libraries/camvas-library.js';
-
-	// export function populateJSON()
+	import { submitForm } from '../../utils/fetchHelpers/submitForm';
 
 	function stopFaceDetection() {
 		window.location.pathname = 'onboarding';
@@ -14,17 +13,17 @@
 
 	var initialized = false;
 	let highFreqAudio = null;
-	var timestampsObject = [];
+    var timestampsObject = [];
 
 	var elapsedTime = 0; // Elapsed time in milliseconds
 	var seconds = 0;
 	var minutes = 0;
 	var hours = 0;
 	var timeFormat = 0;
-
+    
 	function removePopup() {
 		const popup = document.querySelector('.popup');
-		popup.style.display = 'none';
+		    popup.style.display = 'none';
 		}
 		
 		onMount(() => {
@@ -62,15 +61,18 @@
 		// format the timer to be hh:mm:ss
 		function formatTime() {
 			(seconds = Math.floor((elapsedTime / 1000) % 60)),
-				(minutes = Math.floor((elapsedTime / (1000 * 60)) % 60)),
-				(hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24));
+			(minutes = Math.floor((elapsedTime / (1000 * 60)) % 60));
+			// (hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24));
 
-			hours = hours < 10 ? '0' + hours : hours;
+			// hours = hours < 10 ? '0' + hours : hours;
 			minutes = minutes < 10 ? '0' + minutes : minutes;
 			seconds = seconds < 10 ? '0' + seconds : seconds;
 
+			const midnightToday = new Date(new Date().setHours(0, 0, 0));
+			midnightToday.setHours(2, minutes, seconds);
+
 			// save format in variable timeFormat
-			timeFormat = hours + ':' + minutes + ':' + seconds;
+			timeFormat = midnightToday;
 		}
 
 		// Function to start a timer
@@ -97,20 +99,21 @@
 
 		startTimer();
 		setInterval(updateTime, 100);
-		
 
-		highFreqAudio.addEventListener('ended', async () => {
-			// turn object into JSON
-			jsonObj = JSON.stringify(timestampsObject);
+        highFreqAudio.addEventListener('ended', async (event) => {
+            const form = document.querySelector("form");
+            if (form) {
+                const formInput = form.querySelector('input[name="timestampsObjectInput"]');
+                const stringifiedTimestampsObject = JSON.stringify(timestampsObject);
+                formInput.value = stringifiedTimestampsObject;
 
-			window.location.pathname = 'offboarding';
-		});
+                event.preventDefault();
 
-		// async function populateJSON() {
-		// 	await timestampsObject;
-		// 	jsonObj = JSON.stringify(timestampsObject);
-		// 	console.log(jsonObj);
-		// }
+                await submitForm();
+
+                window.location.href = '/offboarding';
+            }
+        });
 	});
 
 	function button_callback() {
@@ -244,7 +247,14 @@
 </svelte:head>
 
 <body class="testingPage">
-	<nav>
+
+    <form method="POST" action="/attentiontest">
+        <label>
+            <input name="timestampsObjectInput" type="hidden" value="">
+        </label>
+    </form>
+	
+    <nav>
 		<a href="/onboarding"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
 
 		<div class="progress-element">
