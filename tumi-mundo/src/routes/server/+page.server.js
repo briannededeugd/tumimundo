@@ -1,4 +1,4 @@
-import { fetchApi } from '../../utils/fetchApi';
+import { fetchApi } from '../../utils/fetchHelpers/fetchApi';
 
 // Script link test
 console.log('Hello, world!');
