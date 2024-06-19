@@ -8,11 +8,16 @@
 	import { camvas } from '../../utils/libraries/camvas-library.js';
 	import { submitForm } from '../../utils/fetchHelpers/submitForm';
 
+	$: $isActive;
+
 	onDestroy(() => {
 		if (browser) {
 			window.location.pathname = 'onboarding';
 		}
 	});
+
+	let toggleAnimationBtn;
+	let card;
 
 	var initialized = false;
 	let highFreqAudio = null;
@@ -103,6 +108,9 @@
 				window.location.href = '/offboarding';
 			}
 		});
+
+		toggleAnimationBtn = document.querySelector('.confused');
+		card = document.querySelector('.testcard');
 	});
 
 	function button_callback() {
@@ -229,6 +237,7 @@
 			card.style.animationDuration = `${audioDuration}s`;
 		}
 	}
+
 </script>
 
 <svelte:head>
@@ -251,12 +260,25 @@
 			</div>
 		</div>
 
-		<button class="confused" aria-label="Toggle explanation">
-			<span class="material-symbols-outlined"> question_mark </span></button
+		<label class="confused" aria-label="Toggle animation">
+			<input
+				type="checkbox"
+				name="animation"
+				id="playstate"
+				on:click={() => {
+					if ($isActive) {
+						$isActive = false;
+					} else {
+						$isActive = true;
+					}
+				}}
+
+			/>
+			<span class="material-symbols-outlined"> animation </span></label
 		>
 	</nav>
 
-	<section class="testcard" style="animation-play-state:{isActive ? 'running' : 'paused'};">
+	<section class="testcard" style="animation-play-state:{$isActive ? 'running' : 'paused'};">
 		<div class="testcard-img">
 			<p>{$icon.animalIcon}</p>
 		</div>
@@ -359,7 +381,7 @@
 		}
 
 		& a,
-		& button {
+		& label {
 			min-height: 50px;
 			min-width: 50px;
 			display: inline-flex;
@@ -377,7 +399,24 @@
 			text-align: center !important;
 			box-shadow: var(--box-shadow-test);
 
+			& span {
+				color: var(--color-text);
+			}
+
 			&:hover {
+				background-color: var(--color-interactions-hover);
+			}
+		}
+
+		& label {
+			& input {
+				visibility: hidden;
+				opacity: 0;
+				height: 0;
+				width: 0;
+			}
+
+			&:has(input:checked) {
 				background-color: var(--color-interactions-hover);
 			}
 		}
