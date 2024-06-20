@@ -24,14 +24,6 @@
 		}
 	};
 
-	// Tells which animal is checked
-	$: console.log($icon);
-
-	// tells if animation should be included or not (toggle button)
-	$: console.log($isActive);
-
-	// get audio file (initial value is undefined. after initialization it's the first in the list)
-	$: console.log($audioFile);
 </script>
 
 <a href="/" class="back-button"><span class="material-symbols-outlined"> arrow_back_ios </span></a>
