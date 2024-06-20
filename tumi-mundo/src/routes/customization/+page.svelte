@@ -4,38 +4,23 @@
 	const animals = {
 		Panda: {
 			animalName: 'Panda',
-			animalIcon: '🐼',
-			animalBackground: '../lib/images/panda.jpg',
-			animalGradient:
-				'linear-gradient(to bottom right, var(--color-text), var(--color-accent-blue), var(--color-accent-lilac))'
+			animalIcon: '🐼'
 		},
 		Fox: {
 			animalName: 'Fox',
-			animalIcon: '🦊',
-			animalBackground: '../lib/images/fox.webp',
-			animalGradient:
-				'linear-gradient(to bottom right, var(--color-accent-lilac), var(--color-accent-turqoise))'
+			animalIcon: '🦊'
 		},
 		Bunny: {
 			animalName: 'Bunny',
-			animalIcon: '🐰',
-			animalBackground: '../lib/images/bunny.avif',
-			animalGradient:
-				'linear-gradient(to bottom right, var(--color-accent-turqoise), var(--color-accent-salmon))'
+			animalIcon: '🐰'
 		},
 		Lion: {
 			animalName: 'Lion',
-			animalIcon: '🦁',
-			animalBackground: '../lib/images/lion.jpg',
-			animalGradient:
-				'linear-gradient(to bottom right, var(--color-accent-salmon), var(--color-accent-green))'
+			animalIcon: '🦁'
 		},
 		Dog: {
 			animalName: 'Dog',
-			animalIcon: '🐶',
-			animalBackground: '../lib/images/dog.jpg',
-			animalGradient:
-				'linear-gradient(to bottom right, var(--color-accent-green), var(--color-accent-turqoise))'
+			animalIcon: '🐶'
 		}
 	};
 
