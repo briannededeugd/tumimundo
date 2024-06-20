@@ -476,7 +476,6 @@
 			background-color: #219b9b;
 			text-align: center;
 			list-style: decimal inside;
-			/* width: max-content; */
 			padding: 0.5rem 0.75rem;
 			border-radius: 0.5rem;
 
@@ -492,7 +491,6 @@
 		& li:nth-of-type(1) {
 			background-color: var(--roadmap-first-step);
 			grid-area: 1 / 1 / 2 / 4;
-			/* justify-items: stretch; */
 		}
 		& li:nth-of-type(2) {
 			background-color: var(--roadmap-second-step);
@@ -512,8 +510,6 @@
 		}
 		& img:nth-of-type(1) {
 			grid-area: 2 / 1 / 4 / 3;
-			/* padding-left: 1rem; */
-			/* width: 13rem; */
 		}
 		& img:nth-of-type(2) {
 			grid-area: 4 / 4 / 6 / 5;
