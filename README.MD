@@ -3,10 +3,20 @@ Welcome to the attention test of TuMi Mundo! This test is intended for children 
 
 ## Table of Contents
 
-1. [Collaboration rules](#collaboration-rules)
+1. [How To Install](#how-to-install)
+2. [Collaboration rules](#collaboration-rules)
     - [Merging into your branch](#merging-into-your-branch)
     - [Commit conventions](#commit-conventions)
-    - [Labels](#labels)
+3. [Credits and Thanks](#credits-and-thanks)
+
+## How To Install
+
+Assuming you have `Git` and `npm` installed on your device.
+1. Click the green `Code` button on this page and copy the string that's given;
+2. Open your terminal and type `git clone`, then paste the string after it and click Enter;
+3. Change directories to the `tumimundo` folder by then typing `cd tumi-mundo` and click Enter;
+4. Install all necessary dependencies by typing `npm i`;
+4. Run the app in the localhost by using `npm run dev`.
 
 ## Collaboration rules
 To make sure that we're working as efficiently as possible, we've established collaboration rules, which serve as a resource as to how we streamline our work to create one whole. This includes instructions on how we merge the main branch into our seperate branches, how we commit and make use of commit messages, and what labels we utilize (and when). 
@@ -32,4 +42,5 @@ CODES:
 - `README` - Documentation;
 - `COM` - Comments for clarification
 
-### Labels
+## Credits and Thanks
+This app was developed for Jaap van Woudenberg and Roy ter Haar, in collaboration with the University of Leiden, who we'd like to thank for their genuine enthusiasm and passion. We'd also like to thank professor Claartje Levelt for her insights and opening her lab at the University of Leiden to our curious eyes and burning questions. 
